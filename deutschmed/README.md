@@ -26,8 +26,8 @@ Migrations live in `supabase/migrations/` and are applied in filename order:
 | `20261104000000_initial_schema.sql` | Enums, `profiles`, `medical_scenarios`, `simulation_sessions`, `vocabulary_dictionary`, `user_flashcards`, RLS policies |
 | `20261104000100_profile_signup_and_indexes.sql` | Creates a `profiles` row on sign-up, pins function `search_path`, adds indexes for due cards and recent sessions |
 
-`supabase/seed.sql` adds the three starter cases (ACS, Appendizitis, Apoplex) and a
-starter vocabulary deck.
+`supabase/seed.sql` adds the training data: 5 cases (3 for doctors, 2 for nurses) and 17
+vocabulary entries.
 
 **Hosted project (quickest):** open the Supabase SQL editor and run both migration
 files in order, then `seed.sql`.

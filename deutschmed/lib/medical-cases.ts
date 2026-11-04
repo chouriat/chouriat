@@ -2,8 +2,8 @@ import type { LanguageLevel, MedicalRole } from "@/lib/database.types";
 
 /**
  * Static fallback cases, shaped like rows in public.medical_scenarios.
- * Used when Supabase is not configured (local dev, offline) and as the
- * source for supabase/seed.sql. Keep the two in sync.
+ * Used when Supabase is not configured (local dev, offline) and as a
+ * reference shape for the AI patient. Database content lives in supabase/seed.sql.
  */
 
 export type PatientDemographics = {

@@ -1,0 +1,37 @@
+import "server-only";
+
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
+
+import type { Database } from "@/lib/database.types";
+
+/**
+ * Supabase client for Server Components, Route Handlers and Server Actions.
+ * Reads and refreshes the auth session from cookies, so RLS policies see
+ * the signed-in user (auth.uid()).
+ */
+export async function createSupabaseServerClient() {
+  const cookieStore = await cookies();
+
+  return createServerClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return cookieStore.getAll();
+        },
+        setAll(cookiesToSet) {
+          try {
+            cookiesToSet.forEach(({ name, value, options }) =>
+              cookieStore.set(name, value, options)
+            );
+          } catch {
+            // Called from a Server Component, where cookies are read-only.
+            // Safe to ignore: session refresh will live in middleware once auth is added.
+          }
+        },
+      },
+    }
+  );
+}

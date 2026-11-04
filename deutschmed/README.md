@@ -30,8 +30,9 @@ Migrations live in `supabase/migrations/` and are applied in filename order:
 `supabase/seed.sql` adds the training data: 5 cases (3 for doctors, 2 for nurses) and 17
 vocabulary entries.
 
-**Hosted project (quickest):** open the Supabase SQL editor and run the migration
-files in order, then `seed.sql`.
+**Hosted project (quickest):** open the Supabase SQL editor and run the first two
+migration files in order, then `supabase/training-data-combined.sql`. That one file holds
+`seed.sql` and the draft content, and it runs in a single transaction. Run it once only.
 
 The draft migration is generated. Edit the JSON/CSV files in `supabase/content/` and run
 `python3 scripts/build_draft_content.py` instead of editing the SQL. Until a clinician has

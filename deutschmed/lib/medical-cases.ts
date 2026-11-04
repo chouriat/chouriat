@@ -32,6 +32,12 @@ export type ClinicalFacts = {
     family: string;
   };
   labs?: Record<string, string>;
+  // Optional fields used by the draft content set (supabase/content/cases):
+  exam?: string; // Körperliche Untersuchung
+  speaker?: string; // Who the AI plays when it is not the patient, e.g. "Tochter (Fremdanamnese)"
+  nursing_goals?: string; // Pflegeziele und -maßnahmen for nurse cases
+  teaching_note?: string; // Pitfall the AI evaluator should check for
+  slug?: string;
 };
 
 export type MedicalCase = {

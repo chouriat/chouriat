@@ -17,6 +17,8 @@ export type Json =
 export type MedicalRole = "doctor" | "nurse";
 export type LanguageLevel = "B1" | "B2" | "C1";
 export type ScenarioType = "anamnese" | "arztbrief" | "uebergabe";
+/** Draft content has not been clinically reviewed yet; see supabase/content/README.md. */
+export type ContentStatus = "draft" | "reviewed";
 
 type Timestamp = string;
 
@@ -57,6 +59,7 @@ export type Database = {
           patient_demographics: Json;
           chief_complaint: string;
           clinical_facts: Json;
+          content_status: ContentStatus;
           created_at: Timestamp;
         };
         Insert: {
@@ -68,6 +71,7 @@ export type Database = {
           patient_demographics: Json;
           chief_complaint: string;
           clinical_facts: Json;
+          content_status?: ContentStatus;
           created_at?: Timestamp;
         };
         Update: Partial<Database["public"]["Tables"]["medical_scenarios"]["Insert"]>;
@@ -112,6 +116,7 @@ export type Database = {
           example_sentence: string | null;
           audio_url: string | null;
           category: string;
+          content_status: ContentStatus;
         };
         Insert: {
           id?: string;
@@ -121,6 +126,7 @@ export type Database = {
           example_sentence?: string | null;
           audio_url?: string | null;
           category: string;
+          content_status?: ContentStatus;
         };
         Update: Partial<Database["public"]["Tables"]["vocabulary_dictionary"]["Insert"]>;
         Relationships: [];

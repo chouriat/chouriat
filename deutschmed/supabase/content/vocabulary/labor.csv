@@ -1,0 +1,60 @@
+fachbegriff;gemeinsprache;umgangssprache;example_sentence
+Hämoglobin (Hb);Roter Blutfarbstoff;Blutwert / Eisenwert;Das Hb liegt bei 8,2 g/dl.
+Hämatokrit (Hkt);Anteil der Blutzellen am Blutvolumen;;Der Hämatokrit ist bei Exsikkose erhöht.
+Erythrozyten;Rote Blutkörperchen;Rote Blutkörperchen;Die Erythrozyten sind vermindert.
+Leukozyten;Weiße Blutkörperchen;Entzündungswerte;Die Leukozyten sind auf 15,4 /nl erhöht.
+Leukozytose;Erhöhte Zahl weißer Blutkörperchen;Entzündungswerte hoch;Es besteht eine Leukozytose.
+Leukopenie;Verminderte Zahl weißer Blutkörperchen;;Unter Chemotherapie trat eine Leukopenie auf.
+Thrombozyten;Blutplättchen;Blutplättchen;Die Thrombozyten liegen bei 45 /nl.
+Thrombozytopenie;Mangel an Blutplättchen;Zu wenig Blutplättchen;Es besteht eine heparininduzierte Thrombozytopenie.
+Differenzialblutbild;Genaue Aufschlüsselung der weißen Blutkörperchen;;Im Differenzialblutbild zeigt sich eine Linksverschiebung.
+Mittleres korpuskuläres Volumen (MCV);Durchschnittliche Größe der roten Blutkörperchen;;Das MCV ist mit 72 fl erniedrigt (mikrozytär).
+Ferritin;Eisenspeicherwert;Eisenwert;Das Ferritin ist mit 6 µg/l deutlich erniedrigt.
+C-reaktives Protein (CRP);Entzündungswert;Entzündungswert;Das CRP ist auf 145 mg/l erhöht.
+Procalcitonin (PCT);Marker für bakterielle Infektionen;;Das PCT spricht für eine bakterielle Genese.
+Blutsenkungsgeschwindigkeit (BSG);Blutsenkung;Blutsenkung;Die BSG ist beschleunigt.
+Kreatinin;Nierenwert;Nierenwert;Das Kreatinin ist auf 2,1 mg/dl gestiegen.
+Glomeruläre Filtrationsrate (eGFR);Maß für die Nierenfunktion;Nierenleistung;Die eGFR beträgt 38 ml/min.
+Harnstoff;Nierenwert;Nierenwert;Der Harnstoff ist bei Exsikkose erhöht.
+Kalium;Kalium;Kalium;Das Kalium liegt bei 5,9 mmol/l (Hyperkaliämie).
+Natrium;Natrium (Salz);Salzwert;Es besteht eine Hyponatriämie von 126 mmol/l.
+Kalzium;Kalzium;Kalziumwert;Das Kalzium ist bei Knochenmetastasen erhöht.
+Magnesium;Magnesium;Magnesium;Das Magnesium wurde substituiert.
+Hyperkaliämie;Erhöhter Kaliumwert;Zu viel Kalium;Bei Hyperkaliämie zeigen sich zeltförmige T-Wellen.
+Hypokaliämie;Erniedrigter Kaliumwert;Zu wenig Kalium;Unter Diuretika entwickelte sich eine Hypokaliämie.
+Hyponatriämie;Erniedrigter Natriumwert;Zu wenig Salz im Blut;Die Hyponatriämie ist am ehesten medikamentös bedingt.
+Glukose (Blutzucker);Blutzucker;Zuckerwert;Der Nüchternblutzucker liegt bei 168 mg/dl.
+HbA1c;Langzeitblutzucker;Langzeitzucker;Der HbA1c beträgt 8,4 %.
+Troponin;Herzmuskelenzym;Herzwert;Das hochsensitive Troponin T ist dynamisch ansteigend.
+Kreatinkinase (CK);Muskelenzym;Muskelwert;Die CK ist nach dem Sturz erhöht.
+NT-proBNP;Herzinsuffizienzmarker;Herzwert;Das NT-proBNP ist deutlich erhöht.
+D-Dimere;Gerinnungsabbauprodukte;Thrombosewert;Die D-Dimere sind erhöht.
+International Normalized Ratio (INR);Gerinnungswert;Quick / Marcumarwert;Der INR liegt im Zielbereich von 2–3.
+Quick-Wert;Gerinnungswert;Quickwert;Der Quick ist unter Marcumar auf 25 % gesenkt.
+Partielle Thromboplastinzeit (PTT);Gerinnungswert;;Die PTT ist unter Heparin verlängert.
+Bilirubin;Gallenfarbstoff;Gelbsuchtwert;Das Bilirubin ist auf 4,2 mg/dl erhöht.
+Transaminasen (GOT/GPT);Leberwerte;Leberwerte;Die Transaminasen sind auf das Dreifache erhöht.
+Gamma-GT (γ-GT);Leber- und Gallenwert;Leberwert;Die γ-GT ist bei Alkoholkonsum erhöht.
+Alkalische Phosphatase (AP);Gallen- und Knochenwert;;Die AP ist bei Cholestase erhöht.
+Lipase;Bauchspeicheldrüsenenzym;Bauchspeicheldrüsenwert;Die Lipase ist auf das Dreifache des Normwerts erhöht.
+Albumin;Bluteiweiß;Eiweißwert;Das Albumin ist bei Leberzirrhose erniedrigt.
+Laktat;Milchsäure;;Das Laktat ist bei Sepsis auf 4,1 mmol/l erhöht.
+Laktatdehydrogenase (LDH);Zellzerfallsenzym;;Die LDH ist bei Hämolyse erhöht.
+Thyreoidea-stimulierendes Hormon (TSH);Schilddrüsenwert;Schilddrüsenwert;Das TSH ist supprimiert.
+Freies Thyroxin (fT4);Schilddrüsenhormon;Schilddrüsenwert;Das fT4 ist erhöht.
+Harnsäure;Harnsäure;Gichtwert;Die Harnsäure liegt bei 9,2 mg/dl.
+Cholesterin (LDL/HDL);Blutfette;Cholesterin;Das LDL-Cholesterin beträgt 165 mg/dl.
+Triglyzeride;Blutfette;Blutfette;Die Triglyzeride sind deutlich erhöht.
+Beta-HCG (β-HCG);Schwangerschaftshormon;Schwangerschaftstest;Das β-HCG im Serum ist positiv.
+Urinstatus (U-Stix);Urinschnelltest;Urinteststreifen;Im U-Stix zeigen sich Leukozyten und Nitrit.
+Urinkultur;Bakterienanzucht aus dem Urin;Urinprobe ins Labor;Die Urinkultur ergab E. coli > 10^5 KBE/ml.
+Blutkultur;Bakterienanzucht aus dem Blut;Blutprobe auf Bakterien;Vor Antibiotikagabe wurden zwei Blutkulturpaare abgenommen.
+Antibiogramm;Resistenztestung;Welches Antibiotikum hilft;Laut Antibiogramm ist der Erreger sensibel auf Ceftriaxon.
+Abstrich;Probenentnahme von Schleimhaut oder Wunde;Abstrich;Es wurde ein Wundabstrich auf MRSA entnommen.
+Proteinurie;Eiweiß im Urin;Eiweiß im Urin;Es besteht eine Proteinurie bei diabetischer Nephropathie.
+Glukosurie;Zucker im Urin;Zucker im Urin;Unter SGLT2-Hemmern tritt eine Glukosurie auf.
+Azidose;Übersäuerung des Blutes;Übersäuerung;Die BGA zeigt eine metabolische Azidose.
+Alkalose;Basenüberschuss im Blut;;Bei Hyperventilation entsteht eine respiratorische Alkalose.
+Normwert;Referenzbereich;Normal;Die Werte liegen im Normbereich.
+Liquordiagnostik;Untersuchung des Nervenwassers;Nervenwasseruntersuchung;Die Liquordiagnostik zeigt eine Pleozytose.
+Tumormarker;Laborwerte bei Krebserkrankungen;Krebswert;Tumormarker eignen sich vor allem zur Verlaufskontrolle.

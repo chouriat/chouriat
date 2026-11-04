@@ -25,12 +25,18 @@ Migrations live in `supabase/migrations/` and are applied in filename order:
 | --- | --- |
 | `20261104000000_initial_schema.sql` | Enums, `profiles`, `medical_scenarios`, `simulation_sessions`, `vocabulary_dictionary`, `user_flashcards`, RLS policies |
 | `20261104000100_profile_signup_and_indexes.sql` | Creates a `profiles` row on sign-up, pins function `search_path`, adds indexes for due cards and recent sessions |
+| `20261104000200_draft_content.sql` | Adds `content_status` (`draft` / `reviewed`) to cases and vocabulary, and inserts the **draft** content set: 45 cases and 653 vocabulary entries. Not clinically reviewed, see `supabase/content/README.md` |
 
 `supabase/seed.sql` adds the training data: 5 cases (3 for doctors, 2 for nurses) and 17
 vocabulary entries.
 
-**Hosted project (quickest):** open the Supabase SQL editor and run both migration
+**Hosted project (quickest):** open the Supabase SQL editor and run the migration
 files in order, then `seed.sql`.
+
+The draft migration is generated. Edit the JSON/CSV files in `supabase/content/` and run
+`python3 scripts/build_draft_content.py` instead of editing the SQL. Until a clinician has
+reviewed them, filter learner-facing queries with `.eq("content_status", "reviewed")` or show
+an "Entwurf" badge.
 
 **With the Supabase CLI:**
 

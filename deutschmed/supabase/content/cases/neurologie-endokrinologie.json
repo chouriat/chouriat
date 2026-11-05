@@ -1,0 +1,246 @@
+[
+  {
+    "slug": "subarachnoidalblutung",
+    "title": "Subarachnoidalblutung (SAB)",
+    "difficulty": "C1",
+    "target_role": "doctor",
+    "specialty": "Neurologie",
+    "patient_demographics": { "name": "Frau Julia Lange", "age": 44, "gender": "W", "occupation": "Rechtsanwältin" },
+    "chief_complaint": "Beim Sport hat's plötzlich im Kopf geknallt, so was Schlimmes hab ich noch nie erlebt. Der ganze Nacken ist steif, und das Licht tut mir in den Augen weh.",
+    "clinical_facts": {
+      "diagnosis": "Aneurysmatische Subarachnoidalblutung (Hunt & Hess Grad II)",
+      "differentials": ["Migräne", "Meningitis", "Intrazerebrale Blutung", "Reversibles zerebrales Vasokonstriktionssyndrom", "Hypertensiver Notfall"],
+      "vitals": { "rr": "175/100", "hf": 64, "af": 16, "temp": 37.0, "spo2": 98 },
+      "history": {
+        "current": "Vor ca. 2 Stunden beim Krafttraining schlagartig einsetzende, stärkste Kopfschmerzen (\"Vernichtungskopfschmerz\"), Übelkeit, zweimaliges Erbrechen, Nackensteifigkeit, Photophobie. Keine Bewusstlosigkeit.",
+        "previous": ["Polyzystische Nierenerkrankung (ADPKD)", "Arterielle Hypertonie"],
+        "medication": ["Ramipril 5 mg 1-0-0"],
+        "allergies": ["Keine bekannt"],
+        "social": "Raucherin, 10 pack years. Alkohol gelegentlich. Verheiratet, ein Kind.",
+        "family": "Mutter ist mit 50 Jahren an einer Hirnblutung verstorben."
+      },
+      "exam": "Meningismus, Photophobie. GCS 14 (verlangsamt). Keine fokalneurologischen Defizite.",
+      "labs": { "Gerinnung": "INR 1,0, PTT 28 s", "Thrombozyten": "280 /nl", "Natrium": "139 mmol/l" }
+    }
+  },
+  {
+    "slug": "migraene-mit-aura",
+    "title": "Migräne mit Aura",
+    "difficulty": "B1",
+    "target_role": "doctor",
+    "specialty": "Neurologie",
+    "patient_demographics": { "name": "Frau Laura Kaya", "age": 29, "gender": "W", "occupation": "Grafikdesignerin" },
+    "chief_complaint": "Zuerst hab ich so Zickzacklinien und Flimmern gesehen, und danach kamen diese pochenden Kopfschmerzen links. Mir ist kotzübel, und jedes Geräusch ist zu viel.",
+    "clinical_facts": {
+      "diagnosis": "Migräne mit Aura (visuelle Aura)",
+      "differentials": ["TIA", "Subarachnoidalblutung", "Sinusvenenthrombose", "Spannungskopfschmerz", "Epileptischer Anfall mit visueller Aura"],
+      "vitals": { "rr": "120/75", "hf": 78, "af": 14, "temp": 36.8, "spo2": 99 },
+      "history": {
+        "current": "Vor ca. 4 Stunden ca. 30 Minuten dauerndes Flimmerskotom, danach einseitige, pulsierende Kopfschmerzen links (NRS 8/10), Übelkeit, Photo- und Phonophobie, Verstärkung bei Bewegung. Ähnliche Episoden ca. 2x/Monat seit der Jugend, heute stärker als sonst.",
+        "previous": ["Migräne seit dem 16. Lebensjahr"],
+        "medication": ["Kombiniertes orales Kontrazeptivum 1-0-0", "Ibuprofen 400 mg bei Bedarf (ca. 8 Tage/Monat)"],
+        "allergies": ["Keine bekannt"],
+        "social": "Raucherin, 5 Zigaretten/Tag. Viel Bildschirmarbeit, Stress. Ledig.",
+        "family": "Mutter und Schwester haben Migräne."
+      },
+      "exam": "Neurologisch unauffällig, kein Meningismus. Abdunkelt den Raum.",
+      "labs": { "Blutbild": "unauffällig", "CRP": "< 5 mg/l" },
+      "teaching_note": "Kombinierte orale Kontrazeptiva bei Migräne mit Aura und Rauchen: erhöhtes Schlaganfallrisiko, Beratung erforderlich."
+    }
+  },
+  {
+    "slug": "epileptischer-anfall",
+    "title": "Erstmaliger generalisierter tonisch-klonischer Anfall",
+    "difficulty": "B2",
+    "target_role": "doctor",
+    "specialty": "Neurologie",
+    "patient_demographics": { "name": "Herr Kevin Schneider", "age": 34, "gender": "M", "occupation": "Koch" },
+    "chief_complaint": "Meine Kollegen sagen, ich bin in der Küche umgefallen und hab gezuckt. Ich weiß nur noch, dass ich danach hier aufgewacht bin. Meine Zunge tut weh.",
+    "clinical_facts": {
+      "diagnosis": "Erstmaliger generalisierter tonisch-klonischer Krampfanfall, provoziert durch Schlafentzug und Alkoholentzug",
+      "differentials": ["Konvulsive Synkope", "Psychogener nicht-epileptischer Anfall", "Hypoglykämie", "Intrazerebrale Raumforderung", "Alkoholentzugskrampf"],
+      "vitals": { "rr": "140/90", "hf": 98, "af": 18, "temp": 37.3, "spo2": 96 },
+      "history": {
+        "current": "Laut Fremdanamnese plötzlicher Sturz mit Bewusstlosigkeit und rhythmischen Zuckungen aller Extremitäten für ca. 2 Minuten, danach ca. 20 Minuten verwirrt. Lateraler Zungenbiss, Einnässen. Seit 2 Nächten kaum geschlafen (Doppelschichten), am Vortag abrupter Verzicht auf Alkohol nach regelmäßigem Konsum.",
+        "previous": ["Keine"],
+        "medication": ["Keine"],
+        "allergies": ["Keine bekannt"],
+        "social": "Alkohol ca. 4 Bier/Tag. Raucher. Ledig. Fährt täglich Auto zur Arbeit.",
+        "family": "Cousin hat Epilepsie."
+      },
+      "exam": "Lateraler Zungenbiss rechts, Muskelkater. Neurologisch aktuell ohne Defizit, wieder voll orientiert.",
+      "labs": { "Blutzucker": "98 mg/dl", "Natrium": "136 mmol/l", "CK": "620 U/l (erhöht)", "Laktat": "2,8 mmol/l (leicht erhöht)", "Ethanol": "0,0 ‰" },
+      "teaching_note": "Fahreignung ansprechen: nach erstmaligem Anfall in der Regel Fahrpause (Begutachtungsleitlinien)."
+    }
+  },
+  {
+    "slug": "bakterielle-meningitis",
+    "title": "Bakterielle Meningitis",
+    "difficulty": "C1",
+    "target_role": "doctor",
+    "specialty": "Neurologie",
+    "patient_demographics": { "name": "Herr Jonas Weber", "age": 19, "gender": "M", "occupation": "Auszubildender" },
+    "chief_complaint": "Mein Kopf platzt gleich, und ich kann den Nacken nicht mehr nach vorne beugen. Seit heute Nacht hab ich hohes Fieber.",
+    "clinical_facts": {
+      "diagnosis": "Bakterielle Meningitis (V. a. Meningokokken)",
+      "differentials": ["Virale Meningitis", "Subarachnoidalblutung", "Enzephalitis (HSV)", "Sepsis anderer Ursache", "Hirnabszess"],
+      "vitals": { "rr": "100/60", "hf": 122, "af": 22, "temp": 39.8, "spo2": 96 },
+      "history": {
+        "current": "Seit ca. 12 Stunden starke holozephale Kopfschmerzen, Fieber bis 40 °C, Nackensteifigkeit, Erbrechen, Lichtempfindlichkeit, zunehmende Schläfrigkeit. Wohnt im Wohnheim, Mitbewohner war letzte Woche krank.",
+        "previous": ["Keine"],
+        "medication": ["Keine"],
+        "allergies": ["Keine bekannt"],
+        "social": "Wohnheim. Raucher. Impfstatus unklar.",
+        "family": "Unauffällig."
+      },
+      "exam": "Somnolent, Meningismus, Kernig- und Brudzinski-Zeichen positiv. Petechiale Hauteinblutungen an den Unterschenkeln.",
+      "labs": { "Leukozyten": "24,6 /nl (erhöht)", "CRP": "240 mg/l (erhöht)", "Procalcitonin": "8,4 ng/ml (erhöht)", "Liquor": "trüb, 3.200 Zellen/µl (granulozytär), Glukose erniedrigt, Laktat erhöht" },
+      "teaching_note": "Meldepflicht nach IfSG; Umgebungsprophylaxe für enge Kontaktpersonen."
+    }
+  },
+  {
+    "slug": "lumbaler-bandscheibenvorfall",
+    "title": "Lumbaler Bandscheibenvorfall L5/S1",
+    "difficulty": "B1",
+    "target_role": "doctor",
+    "specialty": "Orthopädie",
+    "patient_demographics": { "name": "Herr Andreas Vogel", "age": 42, "gender": "M", "occupation": "Paketzusteller" },
+    "chief_complaint": "Mir ist's beim Heben von einem Paket voll ins Kreuz geschossen. Jetzt zieht's bis runter in den linken Fuß, und die Zehen fühlen sich ganz pelzig an.",
+    "clinical_facts": {
+      "diagnosis": "Lumbaler Bandscheibenvorfall L5/S1 links mit S1-Radikulopathie",
+      "differentials": ["Lumbago ohne Radikulopathie", "Kauda-equina-Syndrom", "Spinalkanalstenose", "Spondylodiszitis", "Wirbelkörpermetastase"],
+      "vitals": { "rr": "135/85", "hf": 82, "af": 14, "temp": 36.6, "spo2": 99 },
+      "history": {
+        "current": "Seit 3 Tagen nach Heben eines schweren Pakets einschießende Rückenschmerzen mit Ausstrahlung über die Rückseite des linken Beins bis in die Fußsohle und Kleinzehe, Taubheitsgefühl lateraler Fußrand. Keine Blasen- oder Mastdarmstörung, keine Reithosenanästhesie.",
+        "previous": ["Rezidivierende Lumbago"],
+        "medication": ["Ibuprofen 600 mg 1-1-1 seit 3 Tagen"],
+        "allergies": ["Keine bekannt"],
+        "social": "Nichtraucher. Übergewichtig. Verheiratet, zwei Kinder.",
+        "family": "Unauffällig."
+      },
+      "exam": "Lasègue-Zeichen links bei 40° positiv. ASR links abgeschwächt, Hypästhesie Dermatom S1 links, Zehenstand links leicht abgeschwächt (Kraftgrad 4/5).",
+      "labs": { "CRP": "< 5 mg/l", "Leukozyten": "7,2 /nl" }
+    }
+  },
+  {
+    "slug": "diabetische-ketoazidose",
+    "title": "Diabetische Ketoazidose",
+    "difficulty": "C1",
+    "target_role": "doctor",
+    "specialty": "Endokrinologie",
+    "patient_demographics": { "name": "Frau Mia Hofmann", "age": 19, "gender": "W", "occupation": "Schülerin (Abitur)" },
+    "chief_complaint": "Ich hab seit Tagen ständig Durst und muss dauernd aufs Klo. Jetzt tut mir der Bauch weh, ich muss brechen, und ich bin so müde.",
+    "clinical_facts": {
+      "diagnosis": "Diabetische Ketoazidose bei Erstmanifestation Diabetes mellitus Typ 1",
+      "differentials": ["Akute Appendizitis", "Gastroenteritis", "Akute Pankreatitis", "Intoxikation", "Hyperosmolares hyperglykämisches Syndrom"],
+      "vitals": { "rr": "100/60", "hf": 118, "af": 28, "temp": 37.0, "spo2": 99 },
+      "history": {
+        "current": "Seit ca. 3 Wochen Polydipsie, Polyurie, ungewollter Gewichtsverlust von 5 kg. Seit 2 Tagen diffuse Bauchschmerzen, Übelkeit, Erbrechen, zunehmende Müdigkeit. Tiefe Atmung, Mutter bemerkt \"komischen Geruch\" aus dem Mund.",
+        "previous": ["Hashimoto-Thyreoiditis"],
+        "medication": ["L-Thyroxin 50 µg 1-0-0"],
+        "allergies": ["Keine bekannt"],
+        "social": "Lebt bei den Eltern. Nichtraucherin.",
+        "family": "Vater hat Diabetes mellitus Typ 1."
+      },
+      "exam": "Kussmaul-Atmung, Azetongeruch, trockene Schleimhäute. Abdomen: diffuser Druckschmerz ohne Abwehrspannung (Pseudoperitonitis).",
+      "labs": { "Blutzucker": "512 mg/dl (deutlich erhöht)", "BGA": "pH 7,12, HCO3- 8 mmol/l, BE -20", "Ketonkörper (β-Hydroxybutyrat)": "6,2 mmol/l (erhöht)", "Kalium": "5,6 mmol/l", "HbA1c": "11,8 %" }
+    }
+  },
+  {
+    "slug": "hypoglykaemie",
+    "title": "Schwere Hypoglykämie unter Insulintherapie",
+    "difficulty": "B1",
+    "target_role": "doctor",
+    "specialty": "Endokrinologie",
+    "patient_demographics": { "name": "Herr Friedrich Bauer", "age": 77, "gender": "M", "occupation": "Rentner" },
+    "chief_complaint": "Ich weiß nicht, was los war. Meine Frau hat mich ganz verschwitzt und durcheinander im Bad gefunden. Jetzt geht's wieder, aber ich zittere noch.",
+    "clinical_facts": {
+      "diagnosis": "Schwere Hypoglykämie bei Diabetes mellitus Typ 2 unter Insulin, Auslöser: verminderte Nahrungsaufnahme und eingeschränkte Nierenfunktion",
+      "differentials": ["TIA/Apoplex", "Epileptischer Anfall", "Synkope", "Delir anderer Ursache", "Intoxikation"],
+      "vitals": { "rr": "150/85", "hf": 102, "af": 16, "temp": 36.4, "spo2": 97 },
+      "history": {
+        "current": "Heute Morgen von Ehefrau verwirrt, kaltschweißig und zitternd aufgefunden. Notarzt: Blutzucker 32 mg/dl, nach 40 ml Glukose 40 % i.v. rasche Besserung. Hat wegen Magen-Darm-Infekt seit 2 Tagen kaum gegessen, Insulin aber in gewohnter Dosis gespritzt.",
+        "previous": ["Diabetes mellitus Typ 2 seit 20 Jahren", "Diabetische Nephropathie (eGFR 35 ml/min)", "KHK"],
+        "medication": ["Insulin glargin 24 IE 0-0-1", "Insulin aspart nach Schema zu den Mahlzeiten", "Glimepirid 2 mg 1-0-0", "ASS 100 mg 1-0-0"],
+        "allergies": ["Keine bekannt"],
+        "social": "Lebt mit Ehefrau, die beim Insulin hilft. Nichtraucher.",
+        "family": "Unauffällig."
+      },
+      "exam": "Aktuell wach, orientiert, neurologisch ohne Defizit. Leichter Tremor.",
+      "labs": { "Blutzucker": "108 mg/dl (nach Glukosegabe)", "Kreatinin": "1,9 mg/dl (erhöht)", "HbA1c": "6,4 %", "Kalium": "4,4 mmol/l" },
+      "teaching_note": "Sulfonylharnstoff bei Niereninsuffizienz: hohes Risiko prolongierter Hypoglykämien, Überwachung über mehrere Stunden."
+    }
+  },
+  {
+    "slug": "hyperthyreose-basedow",
+    "title": "Hyperthyreose bei Morbus Basedow",
+    "difficulty": "B2",
+    "target_role": "doctor",
+    "specialty": "Endokrinologie",
+    "patient_demographics": { "name": "Frau Nina Schwarz", "age": 33, "gender": "W", "occupation": "Krankenpflegerin" },
+    "chief_complaint": "Ich bin ständig nervös, schwitze dauernd und mein Herz klopft wie wild. Ich esse wie ein Scheunendrescher und nehme trotzdem ab.",
+    "clinical_facts": {
+      "diagnosis": "Hyperthyreose bei Morbus Basedow mit endokriner Orbitopathie",
+      "differentials": ["Autonomes Adenom", "Hashimoto-Thyreoiditis (hyperthyreote Phase)", "Angststörung", "Phäochromozytom", "Hyperthyreosis factitia"],
+      "vitals": { "rr": "145/70", "hf": 112, "af": 16, "temp": 37.4, "spo2": 99 },
+      "history": {
+        "current": "Seit ca. 3 Monaten Unruhe, Schlafstörungen, Wärmeintoleranz, vermehrtes Schwitzen, Palpitationen, Gewichtsverlust von 6 kg trotz Heißhunger, häufiger weicher Stuhlgang, Haarausfall. Seit einigen Wochen Druckgefühl hinter den Augen.",
+        "previous": ["Keine"],
+        "medication": ["Keine"],
+        "allergies": ["Keine bekannt"],
+        "social": "Raucherin, 8 pack years. Schichtdienst. Kinderwunsch in den nächsten Jahren.",
+        "family": "Tante hat eine Schilddrüsenerkrankung."
+      },
+      "exam": "Feinschlägiger Tremor, warme feuchte Haut, diffuse Struma ohne Knoten, Exophthalmus beidseits.",
+      "labs": { "TSH": "< 0,01 mU/l (supprimiert)", "fT4": "4,2 ng/dl (erhöht)", "fT3": "12,1 pg/ml (erhöht)", "TRAK": "9,8 IU/l (positiv)" }
+    }
+  },
+  {
+    "slug": "hypothyreose",
+    "title": "Hypothyreose bei Hashimoto-Thyreoiditis",
+    "difficulty": "B1",
+    "target_role": "doctor",
+    "specialty": "Endokrinologie",
+    "patient_demographics": { "name": "Frau Brigitte Krause", "age": 54, "gender": "W", "occupation": "Buchhalterin" },
+    "chief_complaint": "Ich bin nur noch müde und friere ständig, obwohl alle anderen schwitzen. Ich hab zugenommen, und meine Haut ist so trocken.",
+    "clinical_facts": {
+      "diagnosis": "Manifeste Hypothyreose bei Hashimoto-Thyreoiditis",
+      "differentials": ["Depression", "Eisenmangelanämie", "Chronisches Fatigue-Syndrom", "Herzinsuffizienz", "Nebenniereninsuffizienz"],
+      "vitals": { "rr": "140/90", "hf": 56, "af": 14, "temp": 36.0, "spo2": 98 },
+      "history": {
+        "current": "Seit ca. 6 Monaten zunehmende Müdigkeit, Kälteintoleranz, Gewichtszunahme von 7 kg, Obstipation, trockene Haut, brüchige Haare, Konzentrationsstörungen, depressive Verstimmung.",
+        "previous": ["Diabetes mellitus Typ 2 (diätetisch eingestellt)", "Hypercholesterinämie"],
+        "medication": ["Keine"],
+        "allergies": ["Keine bekannt"],
+        "social": "Nichtraucherin. Verheiratet, zwei erwachsene Kinder. Perimenopausal.",
+        "family": "Schwester hat ebenfalls Hashimoto."
+      },
+      "exam": "Teigige Haut, periorbitale Schwellung, verlangsamte Reflexe, raue Stimme. Schilddrüse nicht vergrößert tastbar.",
+      "labs": { "TSH": "28,4 mU/l (deutlich erhöht)", "fT4": "0,5 ng/dl (erniedrigt)", "TPO-AK": "860 IU/ml (positiv)", "LDL-Cholesterin": "190 mg/dl (erhöht)" }
+    }
+  },
+  {
+    "slug": "eisenmangelanaemie",
+    "title": "Eisenmangelanämie",
+    "difficulty": "B1",
+    "target_role": "doctor",
+    "specialty": "Innere Medizin",
+    "patient_demographics": { "name": "Frau Fatima Al-Hassan", "age": 36, "gender": "W", "occupation": "Reinigungskraft" },
+    "chief_complaint": "Ich bin so schlapp, dass ich kaum die Treppe hochkomme. Mir wird schnell schwindelig, und meine Haare fallen aus.",
+    "clinical_facts": {
+      "diagnosis": "Eisenmangelanämie bei Hypermenorrhö (Uterus myomatosus)",
+      "differentials": ["Gastrointestinale Blutung", "Zöliakie mit Malabsorption", "Thalassämie", "Vitamin-B12-Mangel", "Hypothyreose"],
+      "vitals": { "rr": "105/65", "hf": 98, "af": 16, "temp": 36.6, "spo2": 99 },
+      "history": {
+        "current": "Seit ca. 4 Monaten zunehmende Müdigkeit, Belastungsdyspnoe, Schwindel, Haarausfall, brüchige Nägel. Seit 1 Jahr verstärkte und verlängerte Regelblutungen (7–8 Tage, bis zu 8 Binden/Tag). Lust auf Eiswürfel (Pagophagie).",
+        "previous": ["Uterus myomatosus (gynäkologisch bekannt)", "Drei Schwangerschaften"],
+        "medication": ["Keine"],
+        "allergies": ["Keine bekannt"],
+        "social": "Nichtraucherin. Vegetarische Ernährung. Verheiratet, drei Kinder.",
+        "family": "Unauffällig."
+      },
+      "exam": "Blasse Haut und Konjunktiven, Mundwinkelrhagaden, Hohlnägel (Koilonychie). Systolikum 2/6 über Erb.",
+      "labs": { "Hb": "8,6 g/dl (erniedrigt)", "MCV": "71 fl (erniedrigt)", "MCH": "22 pg (erniedrigt)", "Ferritin": "4 µg/l (erniedrigt)", "Transferrinsättigung": "6 % (erniedrigt)" }
+    }
+  }
+]

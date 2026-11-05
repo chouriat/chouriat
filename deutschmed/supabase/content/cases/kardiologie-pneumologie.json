@@ -1,0 +1,600 @@
+[
+  {
+    "slug": "lungenarterienembolie",
+    "title": "Lungenarterienembolie (LAE)",
+    "difficulty": "C1",
+    "target_role": "doctor",
+    "specialty": "Innere Medizin",
+    "patient_demographics": {
+      "name": "Frau Sabine Hoffmann",
+      "age": 38,
+      "gender": "W",
+      "occupation": "Bürokauffrau"
+    },
+    "chief_complaint": "Ich krieg seit heute früh so schlecht Luft, und beim Einatmen sticht's rechts in der Brust. Mein Herz rast die ganze Zeit.",
+    "clinical_facts": {
+      "diagnosis": "Akute Lungenarterienembolie bei tiefer Beinvenenthrombose links",
+      "differentials": [
+        "Pneumothorax",
+        "Pneumonie mit Pleuritis",
+        "Akutes Koronarsyndrom",
+        "Perikarditis",
+        "Panikattacke"
+      ],
+      "vitals": {
+        "rr": "110/70",
+        "hf": 118,
+        "af": 26,
+        "temp": 37.4,
+        "spo2": 89
+      },
+      "history": {
+        "current": "Seit ca. 6 Stunden plötzlich aufgetretene Dyspnoe und atemabhängige Thoraxschmerzen rechts. Seit 4 Tagen Schwellung und Spannungsgefühl der linken Wade. Rückflug aus Thailand vor 6 Tagen (11 Stunden).",
+        "previous": [
+          "Keine relevanten Vorerkrankungen"
+        ],
+        "medication": [
+          "Kombiniertes orales Kontrazeptivum (Ethinylestradiol/Levonorgestrel) 1-0-0"
+        ],
+        "allergies": [
+          "Keine bekannt"
+        ],
+        "social": "Raucherin, ca. 10 Zigaretten/Tag seit 15 Jahren. Alkohol gelegentlich. Ledig.",
+        "family": "Mutter hatte mit 45 Jahren eine Beinvenenthrombose."
+      },
+      "exam": "Tachypnoe, Tachykardie. Pulmo: vesikuläres Atemgeräusch beidseits. Linke Wade überwärmt, Umfangsdifferenz 3 cm, Wadenkompressionsschmerz.",
+      "labs": {
+        "D-Dimere": "4,8 mg/l FEU (erhöht)",
+        "hs-Troponin T": "22 ng/l (leicht erhöht)",
+        "BGA": "pO2 58 mmHg, pCO2 30 mmHg",
+        "β-HCG": "negativ"
+      }
+    }
+  },
+  {
+    "slug": "ambulant-erworbene-pneumonie",
+    "title": "Ambulant erworbene Pneumonie",
+    "difficulty": "B1",
+    "target_role": "doctor",
+    "specialty": "Innere Medizin",
+    "patient_demographics": {
+      "name": "Herr Wolfgang Richter",
+      "age": 71,
+      "gender": "M",
+      "occupation": "Rentner, ehem. Schlosser"
+    },
+    "chief_complaint": "Ich hab seit drei Tagen hohes Fieber und huste so gelbgrünes Zeug ab. Ich bin total schlapp und krieg beim Treppensteigen kaum Luft.",
+    "clinical_facts": {
+      "diagnosis": "Ambulant erworbene Pneumonie im rechten Unterlappen (CRB-65: 2 Punkte)",
+      "differentials": [
+        "Akute Bronchitis",
+        "Exazerbierte COPD",
+        "Lungenarterienembolie",
+        "Bronchialkarzinom mit Retentionspneumonie",
+        "Dekompensierte Herzinsuffizienz"
+      ],
+      "vitals": {
+        "rr": "105/65",
+        "hf": 104,
+        "af": 24,
+        "temp": 39.2,
+        "spo2": 91
+      },
+      "history": {
+        "current": "Seit 3 Tagen Fieber bis 39,5 °C mit Schüttelfrost, produktiver Husten mit gelb-grünem Auswurf, Belastungsdyspnoe, rechtsseitige atemabhängige Thoraxschmerzen.",
+        "previous": [
+          "Arterielle Hypertonie",
+          "Benigne Prostatahyperplasie"
+        ],
+        "medication": [
+          "Candesartan 8 mg 1-0-0",
+          "Tamsulosin 0,4 mg 0-0-1"
+        ],
+        "allergies": [
+          "Keine bekannt"
+        ],
+        "social": "Ex-Raucher (20 pack years, seit 10 Jahren abstinent). Lebt mit Ehefrau, selbstständig.",
+        "family": "Unauffällig."
+      },
+      "exam": "Pulmo: rechts basal ohrnahe feinblasige Rasselgeräusche, Klopfschalldämpfung, verstärkter Stimmfremitus.",
+      "labs": {
+        "Leukozyten": "16,8 /nl (erhöht)",
+        "CRP": "186 mg/l (erhöht)",
+        "Procalcitonin": "1,9 ng/ml (erhöht)",
+        "Harnstoff": "52 mg/dl (erhöht)"
+      }
+    }
+  },
+  {
+    "slug": "dekompensierte-herzinsuffizienz",
+    "title": "Dekompensierte Herzinsuffizienz",
+    "difficulty": "B2",
+    "target_role": "doctor",
+    "specialty": "Kardiologie",
+    "patient_demographics": {
+      "name": "Frau Gertrud Wagner",
+      "age": 79,
+      "gender": "W",
+      "occupation": "Rentnerin"
+    },
+    "chief_complaint": "Ich kann nachts nicht mehr flach liegen, ich muss mit drei Kissen schlafen. Und meine Beine sind so dick geworden, die Schuhe passen nicht mehr.",
+    "clinical_facts": {
+      "diagnosis": "Akut dekompensierte Herzinsuffizienz (NYHA IV) bei ischämischer Kardiomyopathie, Auslöser: Medikamenten-Non-Adhärenz",
+      "differentials": [
+        "Akutes Koronarsyndrom",
+        "Pneumonie",
+        "Lungenarterienembolie",
+        "Niereninsuffizienz mit Hypervolämie",
+        "Tachykardes Vorhofflimmern"
+      ],
+      "vitals": {
+        "rr": "150/90",
+        "hf": 96,
+        "af": 26,
+        "temp": 36.7,
+        "spo2": 88
+      },
+      "history": {
+        "current": "Seit ca. 10 Tagen zunehmende Belastungsdyspnoe, jetzt Ruhedyspnoe, Orthopnoe (3 Kissen), nächtliche Hustenattacken, Gewichtszunahme um 4 kg, beidseitige Beinödeme. Hat die Wassertabletten vor 2 Wochen abgesetzt, weil sie nachts so oft auf die Toilette musste.",
+        "previous": [
+          "KHK, Z. n. Myokardinfarkt 2018 mit Stent-Implantation (RIVA)",
+          "Herzinsuffizienz mit reduzierter EF (35 %)",
+          "Arterielle Hypertonie",
+          "Chronische Niereninsuffizienz Stadium G3a"
+        ],
+        "medication": [
+          "Torasemid 10 mg 1-0-0 (eigenständig abgesetzt)",
+          "Sacubitril/Valsartan 49/51 mg 1-0-1",
+          "Bisoprolol 5 mg 1-0-0",
+          "ASS 100 mg 1-0-0",
+          "Atorvastatin 40 mg 0-0-1"
+        ],
+        "allergies": [
+          "Keine bekannt"
+        ],
+        "social": "Verwitwet, lebt allein, Pflegegrad 1, Tochter kommt täglich. Nichtraucherin.",
+        "family": "Unauffällig."
+      },
+      "exam": "Halsvenenstauung, beidseits basale feuchte Rasselgeräusche, prätibiale Ödeme beidseits (dellbar), 3. Herzton.",
+      "labs": {
+        "NT-proBNP": "8.400 pg/ml (deutlich erhöht)",
+        "Kreatinin": "1,6 mg/dl (erhöht)",
+        "Natrium": "132 mmol/l (erniedrigt)",
+        "Kalium": "4,9 mmol/l",
+        "hs-Troponin T": "18 ng/l"
+      }
+    }
+  },
+  {
+    "slug": "tachykardes-vorhofflimmern",
+    "title": "Tachykardes Vorhofflimmern",
+    "difficulty": "B2",
+    "target_role": "doctor",
+    "specialty": "Kardiologie",
+    "patient_demographics": {
+      "name": "Herr Jürgen Neumann",
+      "age": 66,
+      "gender": "M",
+      "occupation": "Steuerberater"
+    },
+    "chief_complaint": "Seit gestern Abend stolpert mein Herz total unregelmäßig und rast. Mir ist ein bisschen schwindelig, und ich hab so ein Flattern in der Brust.",
+    "clinical_facts": {
+      "diagnosis": "Erstdiagnose Vorhofflimmern mit tachykarder Überleitung (CHA2DS2-VASc: 2 Punkte)",
+      "differentials": [
+        "Vorhofflattern",
+        "Hyperthyreose",
+        "Akutes Koronarsyndrom",
+        "Supraventrikuläre Tachykardie",
+        "Elektrolytstörung"
+      ],
+      "vitals": {
+        "rr": "135/85",
+        "hf": 142,
+        "af": 18,
+        "temp": 36.6,
+        "spo2": 96
+      },
+      "history": {
+        "current": "Seit ca. 16 Stunden Palpitationen, unregelmäßiger schneller Herzschlag, leichter Schwindel, keine Synkope, keine Thoraxschmerzen. Am Vorabend Geburtstagsfeier mit reichlich Alkohol.",
+        "previous": [
+          "Arterielle Hypertonie",
+          "Obstruktives Schlafapnoe-Syndrom (CPAP)"
+        ],
+        "medication": [
+          "Ramipril 5 mg 1-0-0"
+        ],
+        "allergies": [
+          "Jod-haltiges Kontrastmittel (Urtikaria)"
+        ],
+        "social": "Alkohol ca. 2 Gläser Wein/Tag, Nichtraucher. Verheiratet.",
+        "family": "Bruder hat Vorhofflimmern."
+      },
+      "exam": "Arrhythmia absoluta, Pulsdefizit ca. 20/min. Pulmo frei. Keine Ödeme.",
+      "labs": {
+        "TSH": "1,8 mU/l",
+        "Kalium": "3,6 mmol/l",
+        "Magnesium": "0,72 mmol/l",
+        "hs-Troponin T": "12 ng/l"
+      }
+    }
+  },
+  {
+    "slug": "hypertensive-entgleisung",
+    "title": "Hypertensiver Notfall",
+    "difficulty": "B2",
+    "target_role": "doctor",
+    "specialty": "Innere Medizin",
+    "patient_demographics": {
+      "name": "Herr Dragan Petrović",
+      "age": 55,
+      "gender": "M",
+      "occupation": "Lkw-Fahrer"
+    },
+    "chief_complaint": "Mir brummt seit heute Mittag der Schädel wie verrückt, und ich seh so verschwommen. Mein Blutdruckgerät hat 230 angezeigt.",
+    "clinical_facts": {
+      "diagnosis": "Hypertensiver Notfall mit hypertensiver Retinopathie und Enzephalopathie-Zeichen",
+      "differentials": [
+        "Intrazerebrale Blutung",
+        "Subarachnoidalblutung",
+        "Apoplex",
+        "Phäochromozytom",
+        "Aortendissektion"
+      ],
+      "vitals": {
+        "rr": "230/130",
+        "hf": 92,
+        "af": 18,
+        "temp": 36.8,
+        "spo2": 97
+      },
+      "history": {
+        "current": "Seit ca. 5 Stunden okzipitale Kopfschmerzen, Sehstörungen (verschwommen), Übelkeit. Blutdruckmedikamente seit 3 Wochen nicht genommen (Rezept abgelaufen). Keine Paresen.",
+        "previous": [
+          "Arterielle Hypertonie seit 10 Jahren",
+          "Adipositas (BMI 34)",
+          "Hyperurikämie"
+        ],
+        "medication": [
+          "Amlodipin 10 mg 1-0-0 (pausiert)",
+          "Hydrochlorothiazid 25 mg 1-0-0 (pausiert)",
+          "Allopurinol 300 mg 1-0-0"
+        ],
+        "allergies": [
+          "Keine bekannt"
+        ],
+        "social": "Raucher, 25 pack years. Alkohol am Wochenende. Viel unterwegs, unregelmäßige Mahlzeiten.",
+        "family": "Mutter Hypertonie, Vater Schlaganfall mit 63 Jahren."
+      },
+      "exam": "Neurologisch grob orientierend unauffällig. Fundoskopie: Papillenödem, streifige Blutungen.",
+      "labs": {
+        "Kreatinin": "1,4 mg/dl (erhöht)",
+        "Urinstatus": "Protein ++",
+        "hs-Troponin T": "16 ng/l"
+      }
+    }
+  },
+  {
+    "slug": "asthma-anfall",
+    "title": "Akuter Asthmaanfall",
+    "difficulty": "B1",
+    "target_role": "doctor",
+    "specialty": "Pneumologie",
+    "patient_demographics": {
+      "name": "Frau Ayşe Demir",
+      "age": 27,
+      "gender": "W",
+      "occupation": "Erzieherin"
+    },
+    "chief_complaint": "Ich krieg keine Luft, meine Brust ist ganz eng. Mein Spray hab ich schon dreimal genommen, aber es wird nicht besser.",
+    "clinical_facts": {
+      "diagnosis": "Schwerer akuter Asthmaanfall bei allergischem Asthma bronchiale, Auslöser Katzenhaarexposition",
+      "differentials": [
+        "Anaphylaxie",
+        "Pneumothorax",
+        "Vocal Cord Dysfunction",
+        "Fremdkörperaspiration",
+        "Panikattacke mit Hyperventilation"
+      ],
+      "vitals": {
+        "rr": "130/80",
+        "hf": 124,
+        "af": 30,
+        "temp": 36.9,
+        "spo2": 90
+      },
+      "history": {
+        "current": "Seit ca. 2 Stunden zunehmende Atemnot, Engegefühl in der Brust, trockener Husten. Am Abend bei einer Freundin mit zwei Katzen. Spricht nur in kurzen Sätzen.",
+        "previous": [
+          "Allergisches Asthma bronchiale seit Kindheit",
+          "Allergische Rhinokonjunktivitis (Gräser, Katzenhaare)"
+        ],
+        "medication": [
+          "Budesonid/Formoterol 160/4,5 µg 1 Hub 1-0-1 und bei Bedarf",
+          "Cetirizin 10 mg bei Bedarf"
+        ],
+        "allergies": [
+          "Katzenhaare",
+          "Gräserpollen",
+          "Ibuprofen (Atemnot)"
+        ],
+        "social": "Nichtraucherin, kein Alkohol. Lebt mit Partner.",
+        "family": "Mutter hat Neurodermitis."
+      },
+      "exam": "Sitzende Position, Sprechdyspnoe. Pulmo: ubiquitäres exspiratorisches Giemen, verlängertes Exspirium. Peak-Flow 40 % des persönlichen Bestwerts.",
+      "labs": {
+        "BGA": "pH 7,46, pCO2 33 mmHg, pO2 62 mmHg",
+        "Eosinophile": "8 % (erhöht)"
+      }
+    }
+  },
+  {
+    "slug": "spontanpneumothorax",
+    "title": "Primärer Spontanpneumothorax",
+    "difficulty": "B1",
+    "target_role": "doctor",
+    "specialty": "Thoraxchirurgie",
+    "patient_demographics": {
+      "name": "Herr Lukas Braun",
+      "age": 21,
+      "gender": "M",
+      "occupation": "Student (Informatik)"
+    },
+    "chief_complaint": "Ich saß einfach am Schreibtisch, und plötzlich hat's links in der Brust gestochen wie ein Messer. Seitdem krieg ich schlecht Luft.",
+    "clinical_facts": {
+      "diagnosis": "Primärer Spontanpneumothorax links",
+      "differentials": [
+        "Lungenarterienembolie",
+        "Perikarditis",
+        "Interkostalneuralgie",
+        "Akutes Koronarsyndrom",
+        "Pleuritis"
+      ],
+      "vitals": {
+        "rr": "125/80",
+        "hf": 102,
+        "af": 22,
+        "temp": 36.7,
+        "spo2": 94
+      },
+      "history": {
+        "current": "Seit 2 Stunden plötzlich in Ruhe aufgetretener stechender Thoraxschmerz links mit Ausstrahlung in die linke Schulter, Dyspnoe, Reizhusten. Kein Trauma.",
+        "previous": [
+          "Keine"
+        ],
+        "medication": [
+          "Keine"
+        ],
+        "allergies": [
+          "Keine bekannt"
+        ],
+        "social": "Raucher, ca. 10 Zigaretten/Tag seit 5 Jahren, gelegentlich Cannabis. Groß und schlank (1,92 m, 68 kg).",
+        "family": "Unauffällig."
+      },
+      "exam": "Pulmo: links abgeschwächtes bis aufgehobenes Atemgeräusch, hypersonorer Klopfschall links. Trachea mittelständig.",
+      "labs": {
+        "D-Dimere": "0,3 mg/l FEU (normal)",
+        "hs-Troponin T": "< 5 ng/l"
+      }
+    }
+  },
+  {
+    "slug": "bronchialkarzinom",
+    "title": "Bronchialkarzinom (Erstdiagnose)",
+    "difficulty": "C1",
+    "target_role": "doctor",
+    "specialty": "Pneumologie",
+    "patient_demographics": {
+      "name": "Herr Horst Lehmann",
+      "age": 64,
+      "gender": "M",
+      "occupation": "Dachdecker"
+    },
+    "chief_complaint": "Mein Raucherhusten ist seit ein paar Monaten anders, und letzte Woche war Blut im Taschentuch. Ich hab auch ganz schön abgenommen, ohne dass ich's wollte.",
+    "clinical_facts": {
+      "diagnosis": "V. a. zentrales Bronchialkarzinom rechts (Histologie ausstehend)",
+      "differentials": [
+        "Lungentuberkulose",
+        "Chronische Bronchitis",
+        "Bronchiektasen",
+        "Lungenarterienembolie mit Infarktpneumonie",
+        "Lungenmetastasen eines anderen Primarius"
+      ],
+      "vitals": {
+        "rr": "130/80",
+        "hf": 84,
+        "af": 18,
+        "temp": 37.1,
+        "spo2": 94
+      },
+      "history": {
+        "current": "Seit ca. 3 Monaten veränderter Husten, seit 1 Woche Hämoptysen (blutig tingierter Auswurf), ungewollter Gewichtsverlust von 8 kg in 3 Monaten, Nachtschweiß, zunehmende Heiserkeit.",
+        "previous": [
+          "COPD GOLD 2",
+          "Arterielle Hypertonie"
+        ],
+        "medication": [
+          "Tiotropium 18 µg 1-0-0",
+          "Lisinopril 10 mg 1-0-0"
+        ],
+        "allergies": [
+          "Keine bekannt"
+        ],
+        "social": "Raucher, 45 pack years. Beruflich Asbestexposition in den 80er Jahren. Verheiratet, zwei erwachsene Kinder.",
+        "family": "Vater an Lungenkrebs verstorben."
+      },
+      "exam": "Kachektischer Ernährungszustand. Supraklavikulär rechts derber, nicht verschieblicher Lymphknoten (1,5 cm). Pulmo: rechts zentral abgeschwächtes Atemgeräusch.",
+      "labs": {
+        "Hb": "11,2 g/dl (erniedrigt)",
+        "Kalzium": "2,8 mmol/l (erhöht)",
+        "CRP": "28 mg/l",
+        "LDH": "310 U/l (erhöht)"
+      }
+    }
+  },
+  {
+    "slug": "tiefe-beinvenenthrombose",
+    "title": "Tiefe Beinvenenthrombose (TVT)",
+    "difficulty": "B1",
+    "target_role": "doctor",
+    "specialty": "Angiologie",
+    "patient_demographics": {
+      "name": "Frau Monika Schulz",
+      "age": 58,
+      "gender": "W",
+      "occupation": "Verkäuferin"
+    },
+    "chief_complaint": "Mein rechtes Bein ist seit drei Tagen dick und tut weh, vor allem in der Wade. Das fühlt sich so warm und gespannt an.",
+    "clinical_facts": {
+      "diagnosis": "Tiefe Beinvenenthrombose der V. poplitea und V. femoralis rechts",
+      "differentials": [
+        "Baker-Zyste (rupturiert)",
+        "Erysipel",
+        "Muskelfaserriss",
+        "Lymphödem",
+        "Oberflächliche Thrombophlebitis"
+      ],
+      "vitals": {
+        "rr": "135/80",
+        "hf": 84,
+        "af": 16,
+        "temp": 37.2,
+        "spo2": 98
+      },
+      "history": {
+        "current": "Seit 3 Tagen zunehmende Schwellung und ziehende Schmerzen im rechten Unterschenkel, Spannungsgefühl. Vor 2 Wochen Kniegelenksarthroskopie rechts mit Unterschenkelschiene, Thromboseprophylaxe nach 3 Tagen eigenständig beendet. Keine Dyspnoe.",
+        "previous": [
+          "Adipositas (BMI 32)",
+          "Varikosis beidseits",
+          "Hypothyreose"
+        ],
+        "medication": [
+          "L-Thyroxin 75 µg 1-0-0 (nüchtern)"
+        ],
+        "allergies": [
+          "Keine bekannt"
+        ],
+        "social": "Nichtraucherin. Verheiratet. Arbeitet viel im Stehen.",
+        "family": "Unauffällig."
+      },
+      "exam": "Rechter Unterschenkel geschwollen, Umfangsdifferenz 4 cm, überwärmt, livide verfärbt. Payr- und Meyer-Zeichen positiv. Wells-Score: 3 Punkte.",
+      "labs": {
+        "D-Dimere": "3,1 mg/l FEU (erhöht)",
+        "CRP": "14 mg/l",
+        "Thrombozyten": "260 /nl"
+      }
+    }
+  },
+  {
+    "slug": "bauchaortenaneurysma",
+    "title": "Symptomatisches Bauchaortenaneurysma",
+    "difficulty": "C1",
+    "target_role": "doctor",
+    "specialty": "Gefäßchirurgie",
+    "patient_demographics": {
+      "name": "Herr Heinz Zimmermann",
+      "age": 73,
+      "gender": "M",
+      "occupation": "Rentner, ehem. Maurer"
+    },
+    "chief_complaint": "Ich hab seit ein paar Stunden so einen heftigen Schmerz im Bauch, der in den Rücken zieht. Und vorhin ist mir ganz kurz schwarz vor Augen geworden.",
+    "clinical_facts": {
+      "diagnosis": "Symptomatisches (gedeckt rupturiertes) infrarenales Bauchaortenaneurysma (6,8 cm)",
+      "differentials": [
+        "Nierenkolik",
+        "Akute Pankreatitis",
+        "Mesenterialischämie",
+        "Aortendissektion",
+        "Akutes Koronarsyndrom (Hinterwand)"
+      ],
+      "vitals": {
+        "rr": "95/60",
+        "hf": 112,
+        "af": 22,
+        "temp": 36.4,
+        "spo2": 95
+      },
+      "history": {
+        "current": "Seit ca. 3 Stunden plötzlich aufgetretene, starke Bauch- und Flankenschmerzen links mit Ausstrahlung in den Rücken. Einmalige kurze Präsynkope. Bekanntes Aneurysma, Kontrolle seit 2 Jahren nicht wahrgenommen.",
+        "previous": [
+          "Bauchaortenaneurysma (2022: 5,1 cm)",
+          "pAVK Stadium IIa",
+          "Arterielle Hypertonie",
+          "COPD"
+        ],
+        "medication": [
+          "ASS 100 mg 1-0-0",
+          "Simvastatin 40 mg 0-0-1",
+          "Metoprololsuccinat 47,5 mg 1-0-0"
+        ],
+        "allergies": [
+          "Keine bekannt"
+        ],
+        "social": "Raucher, 55 pack years. Verheiratet.",
+        "family": "Bruder ist an einem Aneurysma verstorben."
+      },
+      "exam": "Blass, kaltschweißig. Abdomen: pulsierende, druckschmerzhafte Resistenz periumbilikal. Leistenpulse beidseits schwach tastbar.",
+      "labs": {
+        "Hb": "10,1 g/dl (erniedrigt)",
+        "Laktat": "3,2 mmol/l (erhöht)",
+        "Kreatinin": "1,3 mg/dl"
+      }
+    }
+  },
+  {
+    "slug": "synkope",
+    "title": "Synkope (rhythmogen)",
+    "difficulty": "C1",
+    "target_role": "doctor",
+    "specialty": "Kardiologie",
+    "patient_demographics": {
+      "name": "Frau Elfriede König",
+      "age": 81,
+      "gender": "W",
+      "occupation": "Rentnerin"
+    },
+    "chief_complaint": "Ich stand in der Küche, und auf einmal lag ich auf dem Boden. Ich weiß gar nicht, was passiert ist. Das war schon das zweite Mal diesen Monat.",
+    "clinical_facts": {
+      "diagnosis": "Rhythmogene Synkope bei AV-Block III. Grades",
+      "differentials": [
+        "Orthostatische Synkope",
+        "Vasovagale Synkope",
+        "Epileptischer Anfall",
+        "Aortenklappenstenose",
+        "Hypoglykämie",
+        "TIA"
+      ],
+      "vitals": {
+        "rr": "150/60",
+        "hf": 36,
+        "af": 16,
+        "temp": 36.5,
+        "spo2": 96
+      },
+      "history": {
+        "current": "Heute Morgen plötzlicher Bewusstseinsverlust ohne Prodromi für ca. 30 Sekunden (Fremdanamnese Ehemann), danach sofort wieder orientiert. Kein Zungenbiss, kein Einnässen. Platzwunde an der Stirn. Bereits vor 2 Wochen ähnliches Ereignis. Seit Wochen Müdigkeit und Leistungsminderung.",
+        "previous": [
+          "Arterielle Hypertonie",
+          "Diabetes mellitus Typ 2",
+          "Gonarthrose beidseits"
+        ],
+        "medication": [
+          "Bisoprolol 2,5 mg 1-0-0",
+          "Metformin 500 mg 1-0-1",
+          "Ibuprofen 400 mg bei Bedarf"
+        ],
+        "allergies": [
+          "Sulfonamide (Exanthem)"
+        ],
+        "social": "Lebt mit Ehemann im Einfamilienhaus, selbstständig. Nichtraucherin.",
+        "family": "Unauffällig."
+      },
+      "exam": "Bradykarder, regelmäßiger Puls. 2 cm lange Platzwunde frontal. Neurologisch unauffällig. Kein Herzgeräusch.",
+      "labs": {
+        "Blutzucker": "142 mg/dl",
+        "Kalium": "4,6 mmol/l",
+        "hs-Troponin T": "14 ng/l",
+        "TSH": "2,1 mU/l"
+      }
+    }
+  }
+]

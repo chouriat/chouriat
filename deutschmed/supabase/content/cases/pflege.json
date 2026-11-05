@@ -1,0 +1,127 @@
+[
+  {
+    "slug": "pflege-sturz-im-patientenzimmer",
+    "title": "Sturz im Patientenzimmer (Pflege)",
+    "difficulty": "B1",
+    "target_role": "nurse",
+    "specialty": "Innere Medizin",
+    "patient_demographics": { "name": "Herr Alfred Seidel", "age": 86, "gender": "M", "occupation": "Rentner" },
+    "chief_complaint": "Ich wollte doch nur schnell allein aufs Klo, ich wollte niemanden wecken. Und dann sind mir die Beine weggesackt. Mein Kopf tut ein bisschen weh.",
+    "clinical_facts": {
+      "diagnosis": "Sturzereignis bei orthostatischer Dysregulation, Kopfplatzwunde occipital, unter Antikoagulation",
+      "differentials": ["Synkope kardialer Ursache", "Hypoglykämie", "Delir", "Intrakranielle Blutung (unter Antikoagulation)", "Hüftfraktur"],
+      "vitals": { "rr": "105/60 (liegend 130/75)", "hf": 92, "af": 16, "temp": 36.6, "spo2": 95 },
+      "history": {
+        "current": "Nachts um 2:30 Uhr neben dem Bett aufgefunden. Ist ohne Klingel und ohne Rollator aufgestanden. Kein Bewusstseinsverlust laut Patient. 2 cm Platzwunde am Hinterkopf.",
+        "previous": ["Herzinsuffizienz", "Vorhofflimmern", "Benigne Prostatahyperplasie (Nykturie 3–4x)", "Bekannte Sturzneigung"],
+        "medication": ["Apixaban 2,5 mg 1-0-1", "Torasemid 20 mg 1-0-0", "Tamsulosin 0,4 mg 0-0-1"],
+        "allergies": ["Keine bekannt"],
+        "social": "Seit 3 Tagen stationär wegen Herzinsuffizienz. Rollator, Brille, Hörgerät links.",
+        "family": "Nicht relevant."
+      },
+      "exam": "Wach, orientiert. Pupillen isokor, lichtreagibel. Bewegt alle Extremitäten, keine Beinverkürzung. Platzwunde occipital, gering blutend.",
+      "labs": { "Blutzucker (BZ-Stix)": "118 mg/dl" },
+      "nursing_goals": "Erstversorgung und Vitalzeichenkontrolle (inkl. Schellong-Test nach Absprache), Arzt sofort informieren (Antikoagulation, Kopfanprall), neurologische Überwachung (Bewusstsein, Pupillen) nach Anordnung, Sturzprotokoll ausfüllen, Sturzprophylaxe nach Expertenstandard (Klingel in Reichweite, Bett niedrig, Nachtlicht, Urinflasche, Rollator am Bett)."
+    }
+  },
+  {
+    "slug": "pflege-dekubitus-risiko",
+    "title": "Dekubitus Kategorie 2 am Sakrum (Pflege)",
+    "difficulty": "B2",
+    "target_role": "nurse",
+    "specialty": "Geriatrie",
+    "patient_demographics": { "name": "Frau Hedwig Albrecht", "age": 91, "gender": "W", "occupation": "Rentnerin" },
+    "chief_complaint": "Schwester, mir brennt's so am Po, ich kann gar nicht mehr richtig liegen. Und ich hab einfach keinen Hunger.",
+    "clinical_facts": {
+      "diagnosis": "Dekubitus Kategorie 2 (EPUAP) sakral bei Immobilität, Mangelernährung und Inkontinenz",
+      "differentials": ["Inkontinenzassoziierte Dermatitis (IAD)", "Intertrigo", "Dekubitus Kategorie 1", "Herpes zoster"],
+      "vitals": { "rr": "110/65", "hf": 82, "af": 16, "temp": 37.2, "spo2": 95 },
+      "history": {
+        "current": "Seit 10 Tagen stationär nach Pneumonie, überwiegend bettlägerig. Bei der Grundpflege offene, flache Hautläsion (2 x 3 cm) mit rosafarbenem Wundgrund am Sakrum, umgebende Haut gerötet und nicht wegdrückbar. Isst ca. ein Viertel der Portionen.",
+        "previous": ["Demenz vom Alzheimer-Typ (mittelgradig)", "Harn- und Stuhlinkontinenz", "Herzinsuffizienz", "Z. n. Apoplex mit Hemiparese links"],
+        "medication": ["Ramipril 2,5 mg 1-0-0", "Bisoprolol 2,5 mg 1-0-0", "Melperon 25 mg 0-0-1"],
+        "allergies": ["Pflaster (Hautreizung)"],
+        "social": "Lebt im Pflegeheim, Pflegegrad 4. Gewicht 46 kg, Größe 1,60 m (BMI 18).",
+        "family": "Tochter ist Betreuerin."
+      },
+      "exam": "Braden-Skala 11 Punkte (hohes Risiko). Haut trocken, dünn. Ferse links gerötet, aber wegdrückbar.",
+      "labs": { "Albumin": "2,8 g/dl (erniedrigt)", "Hb": "10,9 g/dl" },
+      "nursing_goals": "Wunde nach EPUAP einstufen, fotografieren und dokumentieren, Arzt und Wundexperten informieren, Bewegungsplan (30°-Lagerung, Mikrolagerung), Druckentlastung Ferse, Wechseldruckmatratze prüfen, Inkontinenzversorgung und Hautschutz, Ernährungsprotokoll und Rücksprache mit Ernährungsberatung."
+    }
+  },
+  {
+    "slug": "pflege-naechtliches-delir",
+    "title": "Nächtliche Unruhe und Delir nach OP (Pflege)",
+    "difficulty": "C1",
+    "target_role": "nurse",
+    "specialty": "Chirurgie",
+    "patient_demographics": { "name": "Herr Werner Fuchs", "age": 79, "gender": "M", "occupation": "Rentner, ehem. Polizist" },
+    "chief_complaint": "Lassen Sie mich sofort raus hier! Die Männer da in der Ecke wollen mir was antun. Wo ist meine Frau? Ich muss zur Arbeit!",
+    "clinical_facts": {
+      "diagnosis": "Postoperatives hyperaktives Delir (2. Tag nach Hemikolektomie)",
+      "differentials": ["Alkoholentzugsdelir", "Hypoxie", "Harnverhalt", "Infektion/Sepsis", "Schmerzbedingte Unruhe", "Hypoglykämie"],
+      "vitals": { "rr": "165/90", "hf": 104, "af": 20, "temp": 37.8, "spo2": 92 },
+      "history": {
+        "current": "Seit ca. 23 Uhr zunehmend unruhig, desorientiert, optische Halluzinationen, versucht den ZVK und den Blasenkatheter zu ziehen. Tagsüber noch orientiert und freundlich. Hat seit der OP kaum geschlafen.",
+        "previous": ["Leichte kognitive Störung", "Schwerhörigkeit beidseits", "Arterielle Hypertonie", "Z. n. Delir nach Knie-OP 2021"],
+        "medication": ["Piritramid 3 mg i.v. bei Bedarf (zuletzt 21 Uhr)", "Metamizol 1 g i.v. 1-1-1-1", "Enoxaparin 40 mg s.c. 0-0-1"],
+        "allergies": ["Keine bekannt"],
+        "social": "Verheiratet, Ehefrau zu Hause. Alkohol laut Ehefrau 1 Glas Wein am Abend. Hörgeräte liegen in der Schublade.",
+        "family": "Nicht relevant."
+      },
+      "exam": "Desorientiert zu Zeit, Ort und Situation, Nu-DESC positiv. Brille und Hörgeräte nicht angelegt.",
+      "labs": { "Blutzucker (BZ-Stix)": "132 mg/dl" },
+      "nursing_goals": "Eigen- und Fremdschutz, ruhig und in kurzen Sätzen ansprechen, Reorientierung (Uhr, Licht, Brille, Hörgeräte), Ursachen prüfen (SpO2, Schmerz, Blase, Temperatur, BZ), Arzt informieren, keine Fixierung ohne richterliche Genehmigung bzw. ärztliche Anordnung im Notfall, Ehefrau einbeziehen, Verlauf dokumentieren."
+    }
+  },
+  {
+    "slug": "pflege-transfusionsreaktion",
+    "title": "Transfusionsreaktion während Erythrozytengabe (Pflege)",
+    "difficulty": "C1",
+    "target_role": "nurse",
+    "specialty": "Hämatologie",
+    "patient_demographics": { "name": "Frau Doris Schuster", "age": 65, "gender": "W", "occupation": "Rentnerin" },
+    "chief_complaint": "Mir ist auf einmal so kalt, ich zittere am ganzen Körper. Und mein Rücken tut weh. Ist das normal mit dem Blut?",
+    "clinical_facts": {
+      "diagnosis": "Akute Transfusionsreaktion (V. a. febrile nicht-hämolytische vs. hämolytische Reaktion) 15 Minuten nach Beginn der Transfusion",
+      "differentials": ["Akute hämolytische Transfusionsreaktion (AB0-Inkompatibilität)", "Bakterielle Kontamination", "Allergische Reaktion", "TRALI", "Volumenüberlastung (TACO)"],
+      "vitals": { "rr": "95/60 (vor Transfusion 125/75)", "hf": 118, "af": 22, "temp": 38.9, "spo2": 94 },
+      "history": {
+        "current": "Erhält das 2. von 2 Erythrozytenkonzentraten bei Hb 7,1 g/dl. Ca. 15 Minuten nach Beginn Schüttelfrost, Fieber, Rückenschmerzen, Unruhe. Erstes EK gestern ohne Probleme.",
+        "previous": ["Myelodysplastisches Syndrom", "Transfusionsbedürftige Anämie"],
+        "medication": ["Folsäure 5 mg 1-0-0", "Pantoprazol 20 mg 1-0-0"],
+        "allergies": ["Keine bekannt"],
+        "social": "Verheiratet. Nichtraucherin.",
+        "family": "Nicht relevant."
+      },
+      "exam": "Schüttelfrost, kaltschweißig. Urin im Beutel rötlich-braun.",
+      "labs": { "Bedside-Test": "wurde vor dem 1. EK durchgeführt, Dokumentation für das 2. EK fehlt" },
+      "nursing_goals": "Transfusion sofort stoppen, venösen Zugang belassen und mit NaCl 0,9 % offen halten, Arzt sofort rufen, Vitalzeichen engmaschig, Konserve und Besteck aufbewahren (nicht verwerfen), Blutproben nach Anordnung, Urinbeobachtung, Meldung an Transfusionsverantwortlichen/Hämovigilanz, lückenlose Dokumentation."
+    }
+  },
+  {
+    "slug": "pflege-aufnahme-diabetisches-fusssyndrom",
+    "title": "Pflegeaufnahme bei diabetischem Fußsyndrom (Pflege)",
+    "difficulty": "B1",
+    "target_role": "nurse",
+    "specialty": "Endokrinologie",
+    "patient_demographics": { "name": "Herr Ivan Popescu", "age": 63, "gender": "M", "occupation": "Busfahrer" },
+    "chief_complaint": "Ich hab da so eine Wunde unter dem Fuß, die tut gar nicht weh, aber sie geht seit Wochen nicht zu. Meine Frau sagt, die riecht komisch.",
+    "clinical_facts": {
+      "diagnosis": "Diabetisches Fußsyndrom mit neuropathischem Ulkus plantar Metatarsale-I-Köpfchen rechts (Wagner 2, Armstrong B)",
+      "differentials": ["Ischämisches Ulkus bei pAVK", "Osteomyelitis", "Druckulkus durch Schuhwerk", "Plantarwarze"],
+      "vitals": { "rr": "145/85", "hf": 80, "af": 16, "temp": 37.6, "spo2": 97 },
+      "history": {
+        "current": "Seit ca. 6 Wochen nicht heilende, schmerzlose Wunde an der rechten Fußsohle, seit einigen Tagen übelriechende Sekretion. Barfußlaufen im Urlaub. Spürt die Füße seit Jahren kaum.",
+        "previous": ["Diabetes mellitus Typ 2 seit 15 Jahren, insulinpflichtig", "Diabetische Polyneuropathie", "Diabetische Retinopathie", "Arterielle Hypertonie"],
+        "medication": ["Insulin glargin 30 IE 0-0-1", "Metformin 1000 mg 1-0-1", "Empagliflozin 10 mg 1-0-0", "Ramipril 10 mg 1-0-0"],
+        "allergies": ["Keine bekannt"],
+        "social": "Verheiratet. Raucher, 35 pack years. Spricht gut Deutsch, liest aber schlecht (Sehschwäche).",
+        "family": "Mutter Diabetes mellitus Typ 2, Unterschenkelamputation."
+      },
+      "exam": "Ulkus 1,5 x 1,5 cm plantar MTK I rechts mit Hyperkeratoserand, belegt, übelriechend, Umgebungsrötung 1 cm. Fußpulse tastbar. Monofilament-Test beidseits pathologisch.",
+      "labs": { "HbA1c": "9,6 %", "Blutzucker (BZ-Stix)": "246 mg/dl", "CRP": "38 mg/l" },
+      "nursing_goals": "Pflegeanamnese inkl. Sturz-, Dekubitus- und Ernährungsrisiko, Wunddokumentation mit Foto und Wundabstrich nach Anordnung, Druckentlastung (Entlastungsschuh), BZ-Kontrollen nach Schema, Schulung Fußpflege und tägliche Fußinspektion (Spiegel, Angehörige einbeziehen wegen Sehschwäche), Rauchstopp-Beratung anbieten."
+    }
+  }
+]

@@ -1,68 +1,168 @@
-import Link from "next/link";
-import { Stethoscope } from "lucide-react";
+// deutschmed/app/page.tsx
+'use client';
 
-import { Badge } from "@/components/ui/badge";
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { MEDICAL_CASES } from "@/lib/medical-cases";
-import { TRAINING_MODULES } from "@/lib/modules";
+import React from 'react';
+import Link from 'next/link';
+import { TRAINING_MODULES } from '@/lib/modules';
+import { MEDICAL_CASES, VOCABULARY_LIST } from '@/lib/medical-cases';
+import { useProgressStore } from '@/lib/store';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 export default function DashboardPage() {
-  return (
-    <main className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 sm:py-12">
-      <header className="mb-8 flex items-center gap-3">
-        <span className="bg-primary text-primary-foreground flex size-10 items-center justify-center rounded-lg">
-          <Stethoscope className="size-5" />
-        </span>
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight">DeutschMed</h1>
-          <p className="text-muted-foreground text-sm">
-            Medizinisches Deutsch für FSP und Kenntnisprüfung
-          </p>
-        </div>
-      </header>
+  const { progress, isLoaded } = useProgressStore();
 
-      <section aria-labelledby="modules-heading">
-        <h2 id="modules-heading" className="mb-4 text-lg font-medium">
-          Trainingsmodule
-        </h2>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {TRAINING_MODULES.map(({ href, title, description, icon: Icon }) => (
-            <Link
-              key={href}
-              href={href}
-              className="focus-visible:ring-ring/50 rounded-xl outline-none focus-visible:ring-[3px]"
-            >
-              <Card className="hover:border-primary/40 h-full transition-colors">
-                <CardHeader>
-                  <div className="flex items-center gap-3">
-                    <span className="bg-accent text-accent-foreground flex size-9 items-center justify-center rounded-md">
-                      <Icon className="size-4" />
-                    </span>
-                    <CardTitle>{title}</CardTitle>
-                  </div>
-                  <CardDescription className="pt-1">{description}</CardDescription>
-                </CardHeader>
-              </Card>
-            </Link>
+  const totalCases = MEDICAL_CASES.length;
+  const totalVocab = VOCABULARY_LIST.length;
+
+  const totalTasks = totalCases * 3 + totalVocab;
+  const completedTasks =
+    progress.completedAnamneseCases.length +
+    progress.completedArztbriefCases.length +
+    progress.completedUebergabeCases.length +
+    progress.masteredVocabularyIds.length;
+
+  const overallPercentage =
+    totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+
+  const getModuleProgress = (id: string) => {
+    switch (id) {
+      case 'anamnese':
+        return `${progress.completedAnamneseCases.length} / ${totalCases} Fälle`;
+      case 'arztbrief':
+        return `${progress.completedArztbriefCases.length} / ${totalCases} Briefe`;
+      case 'uebergabe':
+        return `${progress.completedUebergabeCases.length} / ${totalCases} Übergaben`;
+      case 'vocabulary':
+        return `${progress.masteredVocabularyIds.length} / ${totalVocab} Begriffe`;
+      default:
+        return '';
+    }
+  };
+
+  return (
+    <main className="max-w-6xl mx-auto p-6 space-y-8">
+      {/* Hero & Fortschritts-Banner */}
+      <section className="rounded-2xl bg-slate-900 text-white p-6 sm:p-8 shadow-sm">
+        <div className="flex flex-wrap items-center justify-between gap-6">
+          <div className="space-y-2 max-w-2xl">
+            <Badge className="bg-blue-600 text-white">
+              DeutschMed • Vorbereitung Fachsprachprüfung (FSP)
+            </Badge>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
+              Medizinisches C1-Kommunikations- & Dokumentationstraining
+            </h1>
+            <p className="text-slate-300 text-sm sm:text-base">
+              Trainieren Sie alle drei Teile der ärztlichen Fachsprachprüfung praxisnah an realen klinischen Notfall- und Stationsfällen.
+            </p>
+          </div>
+
+          <div className="bg-slate-800/90 border border-slate-700 rounded-xl p-4 min-w-[240px] space-y-2">
+            <div className="flex items-center justify-between text-xs text-slate-400">
+              <span>Gesamtfortschritt</span>
+              <span className="font-semibold text-emerald-400">
+                {isLoaded ? `${progress.xp} XP` : '...'}
+              </span>
+            </div>
+            <div className="w-full bg-slate-700 h-2.5 rounded-full overflow-hidden">
+              <div
+                className="bg-emerald-500 h-full transition-all duration-300"
+                style={{ width: `${isLoaded ? overallPercentage : 0}%` }}
+              />
+            </div>
+            <div className="flex items-center justify-between text-xs text-slate-300 pt-1">
+              <span>FSP-Bereitschaft</span>
+              <span className="font-bold">{isLoaded ? `${overallPercentage}%` : '0%'}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Die 4 Trainingsmodule */}
+      <section className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-bold text-slate-900">FSP-Trainingsmodule</h2>
+          <span className="text-xs text-slate-500">
+            Wählen Sie einen Prüfungsteil zum Trainieren
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {TRAINING_MODULES.map((mod) => (
+            <Card key={mod.id} className="flex flex-col justify-between hover:border-blue-500/60 transition">
+              <CardHeader className="space-y-2">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <Badge variant="outline">{mod.fspPart}</Badge>
+                  <Badge className="bg-blue-50 text-blue-700 border border-blue-200">
+                    {isLoaded ? getModuleProgress(mod.id) : '...'}
+                  </Badge>
+                </div>
+                <CardTitle className="text-xl pt-1">{mod.title}</CardTitle>
+                <p className="text-xs font-medium text-blue-600">{mod.subtitle}</p>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-sm text-slate-600 leading-relaxed">{mod.description}</p>
+                <div className="pt-2 flex items-center justify-between">
+                  <span className="text-xs text-slate-500">{mod.badgeText}</span>
+                  <Link href={mod.href}>
+                    <Button>Training starten →</Button>
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </section>
 
-      <section aria-labelledby="cases-heading" className="mt-10">
-        <h2 id="cases-heading" className="mb-4 text-lg font-medium">
-          Verfügbare Fälle
-        </h2>
-        <ul className="bg-card divide-y rounded-xl border">
-          {MEDICAL_CASES.map((c) => (
-            <li key={c.slug} className="flex flex-wrap items-center justify-between gap-2 px-4 py-3">
-              <div>
-                <p className="font-medium">{c.title}</p>
-                <p className="text-muted-foreground text-sm">{c.specialty}</p>
-              </div>
-              <Badge variant="outline">{c.difficulty}</Badge>
-            </li>
-          ))}
-        </ul>
+      {/* Klinische Fallübersicht */}
+      <section className="space-y-4">
+        <h2 className="text-xl font-bold text-slate-900">Verfügbare klinische Prüfungsfälle</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {MEDICAL_CASES.map((medCase) => {
+            const anamneseDone = progress.completedAnamneseCases.includes(medCase.id);
+            const arztbriefDone = progress.completedArztbriefCases.includes(medCase.id);
+            const uebergabeDone = progress.completedUebergabeCases.includes(medCase.id);
+
+            return (
+              <Card key={medCase.id}>
+                <CardHeader className="pb-2">
+                  <div className="flex items-center justify-between">
+                    <Badge>{medCase.specialty}</Badge>
+                    <Badge variant="outline">{medCase.difficulty}</Badge>
+                  </div>
+                  <CardTitle className="text-base mt-2">{medCase.title}</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3 text-sm text-slate-600">
+                  <p>
+                    <strong>Patient:</strong> {medCase.patient.name} ({medCase.patient.age} J.) –{' '}
+                    {medCase.patient.chiefComplaint}
+                  </p>
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    <Badge
+                      variant="outline"
+                      className={anamneseDone ? 'border-emerald-600 text-emerald-700 bg-emerald-50' : ''}
+                    >
+                      {anamneseDone ? '✓ Anamnese' : '○ Anamnese'}
+                    </Badge>
+                    <Badge
+                      variant="outline"
+                      className={arztbriefDone ? 'border-emerald-600 text-emerald-700 bg-emerald-50' : ''}
+                    >
+                      {arztbriefDone ? '✓ Arztbrief' : '○ Arztbrief'}
+                    </Badge>
+                    <Badge
+                      variant="outline"
+                      className={uebergabeDone ? 'border-emerald-600 text-emerald-700 bg-emerald-50' : ''}
+                    >
+                      {uebergabeDone ? '✓ Übergabe' : '○ Übergabe'}
+                    </Badge>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
       </section>
     </main>
   );

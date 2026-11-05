@@ -1,0 +1,77 @@
+fachbegriff;gemeinsprache;umgangssprache;example_sentence
+o.B.;ohne Befund;Alles in Ordnung;Abdomen: weich, kein Druckschmerz, Darmgeräusche o.B.
+o.p.B.;ohne pathologischen Befund;Nichts Krankhaftes;Röntgen-Thorax o.p.B.
+Z. n.;Zustand nach;Hatte ich schon mal;Z. n. Appendektomie 1998.
+V. a.;Verdacht auf;Vielleicht ist es;V. a. Pneumonie rechts basal.
+DD;Differenzialdiagnose;Was es sonst noch sein könnte;DD: Lungenarterienembolie.
+i.v.;intravenös (in die Vene);Über die Infusion / in die Vene;Ceftriaxon 2 g i.v.
+i.m.;intramuskulär (in den Muskel);Spritze in den Muskel;Adrenalin 0,5 mg i.m.
+s.c.;subkutan (unter die Haut);Spritze unter die Haut;Enoxaparin 40 mg s.c.
+p.o.;per os (über den Mund);Zum Schlucken;Paracetamol 1 g p.o.
+s.l.;sublingual (unter die Zunge);Unter die Zunge;Nitroglycerin 0,4 mg s.l.
+b. B.;bei Bedarf;Nur wenn nötig;Ibuprofen 400 mg b. B.
+1-0-1;Morgens eine, mittags keine, abends eine;Morgens und abends;Metformin 1000 mg 1-0-1.
+St. p.;Status post (Zustand nach);;St. p. Myokardinfarkt 2018.
+AZ;Allgemeinzustand;Wie es Ihnen insgesamt geht;Patient in reduziertem AZ.
+EZ;Ernährungszustand;Gewicht / wie gut genährt;Adipöser EZ (BMI 34).
+RR;Blutdruck (nach Riva-Rocci);Blutdruck;RR 145/90 mmHg.
+HF;Herzfrequenz;Puls;HF 98/min, rhythmisch.
+AF;Atemfrequenz;Wie schnell man atmet;AF 24/min.
+SpO2;Sauerstoffsättigung;Sauerstoffwert;SpO2 92 % unter Raumluft.
+GCS;Glasgow Coma Scale;;GCS 15.
+NRS;Numerische Rating-Skala (Schmerzskala 0–10);Wie stark von 0 bis 10;Schmerzen NRS 7/10.
+VAS;Visuelle Analogskala (Schmerzskala);Schmerzlineal;Schmerzen VAS 8.
+NYHA;Klassifikation der Herzinsuffizienz;;Herzinsuffizienz NYHA III.
+EF;Ejektionsfraktion (Auswurfleistung des Herzens);Pumpleistung;LVEF 35 %.
+ZVK;Zentraler Venenkatheter;Großer Zugang am Hals;Anlage eines ZVK über die V. jugularis interna rechts.
+PVK;Peripherer Venenkatheter;Zugang / Braunüle;PVK 18G am linken Handrücken.
+DK;Dauerkatheter (Blasenkatheter);Katheter;Anlage eines transurethralen DK.
+SPK;Suprapubischer Katheter;Bauchdeckenkatheter;Versorgung mit SPK bei Harnverhalt.
+PEG;Perkutane endoskopische Gastrostomie;Magensonde durch den Bauch;Ernährung über PEG.
+NaCl;Kochsalzlösung;Salzwasser-Infusion;NaCl 0,9 % 500 ml i.v.
+EK;Erythrozytenkonzentrat;Blutkonserve;Gabe von 2 EK.
+FFP;Gefrorenes Frischplasma;Plasma;Gabe von 4 FFP bei Gerinnungsstörung.
+Pat.;Patient/Patientin;;Pat. wach, orientiert.
+J.;Jahre;;72 J. alte Patientin.
+Lj.;Lebensjahr;;Seit dem 40. Lj. Hypertonie.
+SSW;Schwangerschaftswoche;Welche Woche;Patientin in der 32. SSW.
+KHK;Koronare Herzkrankheit;Verkalkte Herzadern;Bekannte KHK, 3-Gefäßerkrankung.
+HWI;Harnwegsinfekt;Blasenentzündung;Rezidivierende HWI.
+TVT;Tiefe Venenthrombose;Thrombose;TVT links, Antikoagulation für 3 Monate.
+LAE;Lungenarterienembolie;Lungenembolie;Ausschluss einer LAE mittels CT-Angiografie.
+SHT;Schädel-Hirn-Trauma;Kopfverletzung;Leichtes SHT nach Sturz.
+DM;Diabetes mellitus;Zucker;DM Typ 2 seit 2015.
+aHT;Arterielle Hypertonie;Bluthochdruck;aHT, medikamentös eingestellt.
+VHF;Vorhofflimmern;Herzstolpern;Paroxysmales VHF.
+AP;Angina pectoris (oder: alkalische Phosphatase);Brustenge;Typische AP-Beschwerden unter Belastung.
+NSTEMI;Nicht-ST-Hebungsinfarkt;Herzinfarkt;NSTEMI, Koronarangiografie innerhalb von 24 Stunden.
+STEMI;ST-Hebungsinfarkt;Herzinfarkt;STEMI der Vorderwand, sofortige PCI.
+EKG;Elektrokardiogramm;Herzstromkurve;
+CT;Computertomografie;CT / Röhre;
+MRT;Magnetresonanztomografie;Kernspin;
+OP;Operation;Operation;OP am 12.03.
+Bds.;beidseits;Auf beiden Seiten;Ödeme bds.
+re./li.;rechts/links;;Druckschmerz re. Unterbauch.
+Tbl.;Tablette;Tablette;1 Tbl. morgens.
+Amp.;Ampulle;;1 Amp. Butylscopolamin i.v.
+Gtt.;Tropfen;Tropfen;Metamizol 40 Gtt. p.o.
+IE;Internationale Einheiten;Einheiten;Insulin glargin 20 IE s.c. abends.
+mg/kg KG;Milligramm pro Kilogramm Körpergewicht;;Dosierung 1 mg/kg KG.
+NW;Nebenwirkung;Nebenwirkung;Keine NW bekannt.
+KI;Kontraindikation;Darf nicht gegeben werden;KI für ASS: aktive Blutung.
+DRU;Digital-rektale Untersuchung;;DRU: Ampulle leer.
+ÖGD;Ösophagogastroduodenoskopie (Magenspiegelung);Magenspiegelung;ÖGD am Folgetag geplant.
+BZ;Blutzucker;Zucker;BZ 89 mg/dl.
+BGA;Blutgasanalyse;;BGA arteriell unauffällig.
+BB;Blutbild;Blutbild;Kleines BB unauffällig.
+Hb;Hämoglobin;Blutwert;Hb-Abfall auf 7,9 g/dl.
+Leukos;Leukozyten;Entzündungswerte;Leukos 14,2 /nl.
+OSG;Oberes Sprunggelenk;Knöchel;Distorsion des OSG rechts.
+HWS/BWS/LWS;Hals-/Brust-/Lendenwirbelsäule;Nacken / Rücken / Kreuz;LWS klopfschmerzhaft.
+ED;Erstdiagnose;Zum ersten Mal festgestellt;ED Diabetes mellitus Typ 1.
+Rö;Röntgen;Röntgen;Rö-Thorax in 2 Ebenen.
+TEP;Totalendoprothese;Künstliches Gelenk;Knie-TEP links 2021.
+PONV;Postoperative Übelkeit und Erbrechen;Übelkeit nach der Narkose;PONV-Prophylaxe mit Ondansetron.
+AO;Ärztliche Anordnung;Was der Arzt angeordnet hat;Bedarfsmedikation laut AO.
+ASS;Acetylsalicylsäure;Aspirin;ASS 100 mg 1-0-0.
+NPO / nüchtern;Nichts essen und trinken;Nüchtern bleiben;Pat. ab 0 Uhr nüchtern.

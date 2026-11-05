@@ -1,0 +1,224 @@
+[
+  {
+    "slug": "nierenkolik-urolithiasis",
+    "title": "Nierenkolik bei Urolithiasis",
+    "difficulty": "B1",
+    "target_role": "doctor",
+    "specialty": "Urologie",
+    "patient_demographics": { "name": "Herr Stefan Huber", "age": 41, "gender": "M", "occupation": "Bauingenieur" },
+    "chief_complaint": "Ich hab so wahnsinnige Schmerzen in der rechten Flanke, die ziehen bis in die Leiste. Ich kann nicht stillsitzen, ich lauf die ganze Zeit hin und her.",
+    "clinical_facts": {
+      "diagnosis": "Harnleiterkolik rechts bei distalem Harnleiterstein (5 mm) mit Harnstauung I. Grades",
+      "differentials": ["Akute Appendizitis", "Pyelonephritis", "Bauchaortenaneurysma", "Lumbago", "Hodentorsion"],
+      "vitals": { "rr": "155/90", "hf": 104, "af": 18, "temp": 36.9, "spo2": 98 },
+      "history": {
+        "current": "Seit ca. 3 Stunden wellenartige, stärkste Schmerzen in der rechten Flanke mit Ausstrahlung in die rechte Leiste und den Hoden, Bewegungsdrang, Übelkeit, Erbrechen. Rötlicher Urin. Kein Fieber.",
+        "previous": ["Z. n. Nierenkolik links 2020 (Spontanabgang)", "Hyperurikämie"],
+        "medication": ["Keine Dauermedikation"],
+        "allergies": ["Keine bekannt"],
+        "social": "Trinkt wenig (ca. 1 l/Tag), viel Fleisch. Nichtraucher. Verheiratet.",
+        "family": "Vater hatte Nierensteine."
+      },
+      "exam": "Unruhiger Patient, Nierenlager rechts klopfschmerzhaft. Abdomen weich, kein Peritonismus.",
+      "labs": { "Urinstatus": "Erythrozyten +++, Leukozyten negativ, Nitrit negativ", "Kreatinin": "1,0 mg/dl", "CRP": "6 mg/l", "Harnsäure": "7,8 mg/dl (erhöht)" }
+    }
+  },
+  {
+    "slug": "akute-pyelonephritis",
+    "title": "Akute Pyelonephritis",
+    "difficulty": "B1",
+    "target_role": "doctor",
+    "specialty": "Urologie",
+    "patient_demographics": { "name": "Frau Anna Kowalski", "age": 31, "gender": "W", "occupation": "Physiotherapeutin" },
+    "chief_complaint": "Erst hat's nur beim Wasserlassen gebrannt, aber seit gestern hab ich Schüttelfrost und Fieber, und links im Rücken tut's richtig weh.",
+    "clinical_facts": {
+      "diagnosis": "Akute unkomplizierte Pyelonephritis links (E. coli)",
+      "differentials": ["Nierenkolik mit Harnstau", "Adnexitis", "Lumbago", "Divertikulitis", "Extrauteringravidität"],
+      "vitals": { "rr": "115/70", "hf": 108, "af": 18, "temp": 39.4, "spo2": 98 },
+      "history": {
+        "current": "Seit 4 Tagen Dysurie, Pollakisurie und Harndrang, seit 1 Tag Fieber bis 39,5 °C mit Schüttelfrost, Flankenschmerzen links, Übelkeit.",
+        "previous": ["Rezidivierende Zystitiden (3x im letzten Jahr)"],
+        "medication": ["Kein Dauermedikament"],
+        "allergies": ["Cotrimoxazol (Exanthem)"],
+        "social": "Nichtraucherin, sexuell aktiv, feste Partnerschaft. Letzte Regelblutung vor 10 Tagen.",
+        "family": "Unauffällig."
+      },
+      "exam": "Nierenlager links deutlich klopfschmerzhaft. Suprapubischer Druckschmerz. Abdomen sonst weich.",
+      "labs": { "Leukozyten": "15,8 /nl (erhöht)", "CRP": "128 mg/l (erhöht)", "Urinstatus": "Leukozyten +++, Nitrit positiv, Erythrozyten +", "β-HCG": "negativ", "Kreatinin": "0,8 mg/dl" }
+    }
+  },
+  {
+    "slug": "urosepsis-delir",
+    "title": "Urosepsis mit Delir bei geriatrischer Patientin",
+    "difficulty": "C1",
+    "target_role": "doctor",
+    "specialty": "Geriatrie",
+    "patient_demographics": { "name": "Frau Erna Schwab", "age": 88, "gender": "W", "occupation": "Rentnerin" },
+    "chief_complaint": "Fremdanamnese durch den Sohn: Meine Mutter ist seit gestern ganz verwirrt, erkennt mich manchmal nicht und will nicht mehr trinken. Das kennen wir so gar nicht von ihr.",
+    "clinical_facts": {
+      "diagnosis": "Urosepsis bei Harnwegsinfekt mit hyperaktivem Delir (qSOFA 2)",
+      "differentials": ["Apoplex", "Pneumonie", "Hyponatriämie", "Medikamentennebenwirkung (Anticholinergika)", "Fortschreiten einer Demenz"],
+      "speaker": "Sohn (Fremdanamnese)",
+      "vitals": { "rr": "90/55", "hf": 112, "af": 24, "temp": 38.7, "spo2": 94 },
+      "history": {
+        "current": "Seit ca. 24 Stunden akute Verwirrtheit, Unruhe, nächtliches Umherlaufen, verminderte Trinkmenge, übelriechender Urin. Vorher kognitiv leicht eingeschränkt, aber im Alltag mit Hilfe selbstständig.",
+        "previous": ["Leichte kognitive Störung", "Harninkontinenz (Dranginkontinenz)", "Arterielle Hypertonie", "Osteoporose mit Z. n. Wirbelkörperfraktur"],
+        "medication": ["Oxybutynin 5 mg 1-0-1", "Amlodipin 5 mg 1-0-0", "Alendronsäure 70 mg 1x wöchentlich", "Colecalciferol 1.000 IE 1-0-0"],
+        "allergies": ["Penicillin (Atemnot)"],
+        "social": "Lebt allein, Pflegedienst 2x täglich, Sohn wohnt in der Nähe. Pflegegrad 2. Patientenverfügung vorhanden.",
+        "family": "Nicht relevant."
+      },
+      "exam": "Desorientiert zu Zeit und Ort, Aufmerksamkeitsstörung (CAM positiv). Trockene Schleimhäute. Suprapubischer Druckschmerz. Kein Meningismus, keine fokalen Defizite.",
+      "labs": { "Leukozyten": "18,4 /nl (erhöht)", "CRP": "168 mg/l (erhöht)", "Laktat": "2,9 mmol/l (erhöht)", "Natrium": "131 mmol/l (erniedrigt)", "Kreatinin": "1,7 mg/dl (erhöht)", "Urinstatus": "Leukozyten +++, Nitrit positiv" },
+      "teaching_note": "Oxybutynin ist auf der PRISCUS-Liste (anticholinerg, delirfördernd). Penicillin-Allergie bei der Antibiotikawahl beachten."
+    }
+  },
+  {
+    "slug": "schenkelhalsfraktur",
+    "title": "Mediale Schenkelhalsfraktur nach Sturz",
+    "difficulty": "B2",
+    "target_role": "doctor",
+    "specialty": "Unfallchirurgie",
+    "patient_demographics": { "name": "Frau Margarete Lorenz", "age": 83, "gender": "W", "occupation": "Rentnerin" },
+    "chief_complaint": "Ich bin nachts auf dem Weg zum Klo über den Teppich gestolpert und auf die linke Hüfte gefallen. Jetzt kann ich gar nicht mehr auftreten, das tut so weh.",
+    "clinical_facts": {
+      "diagnosis": "Dislozierte mediale Schenkelhalsfraktur links (Garden IV)",
+      "differentials": ["Pertrochantäre Femurfraktur", "Beckenringfraktur", "Hüftprellung", "Periprothetische Fraktur", "Pathologische Fraktur bei Metastase"],
+      "vitals": { "rr": "150/80", "hf": 88, "af": 16, "temp": 36.5, "spo2": 96 },
+      "history": {
+        "current": "Heute Nacht gegen 3 Uhr Sturz auf die linke Hüfte beim Gang zur Toilette (Stolpern, kein Schwindel, kein Bewusstseinsverlust). Seitdem Schmerzen in der linken Leiste, Gehunfähigkeit. Lag ca. 4 Stunden am Boden, bis die Nachbarin kam.",
+        "previous": ["Osteoporose", "Vorhofflimmern", "Arterielle Hypertonie", "Katarakt beidseits"],
+        "medication": ["Rivaroxaban 15 mg 0-0-1 (letzte Einnahme gestern 18 Uhr)", "Bisoprolol 2,5 mg 1-0-0", "Ramipril 5 mg 1-0-0", "Zopiclon 7,5 mg 0-0-1"],
+        "allergies": ["Keine bekannt"],
+        "social": "Lebt allein in einer Wohnung im 2. Stock ohne Aufzug. Bisher mit Gehstock mobil.",
+        "family": "Nicht relevant."
+      },
+      "exam": "Linkes Bein verkürzt und außenrotiert. Leistendruckschmerz, Stauchungsschmerz, schmerzhafte Bewegungseinschränkung der Hüfte. pDMS intakt.",
+      "labs": { "Hb": "11,8 g/dl", "CK": "1.450 U/l (erhöht, Liegetrauma)", "Kreatinin": "1,2 mg/dl", "INR": "1,4" },
+      "teaching_note": "Zopiclon als Sturzrisiko. Zeitpunkt der letzten DOAK-Einnahme ist entscheidend für die OP-Planung."
+    }
+  },
+  {
+    "slug": "distale-radiusfraktur",
+    "title": "Distale Radiusfraktur (Colles-Fraktur)",
+    "difficulty": "B1",
+    "target_role": "doctor",
+    "specialty": "Unfallchirurgie",
+    "patient_demographics": { "name": "Frau Christa Busch", "age": 67, "gender": "W", "occupation": "Rentnerin" },
+    "chief_complaint": "Ich bin auf dem glatten Gehweg ausgerutscht und hab mich mit der rechten Hand abgefangen. Jetzt ist das Handgelenk ganz schief und dick.",
+    "clinical_facts": {
+      "diagnosis": "Distale Radiusextensionsfraktur rechts (Colles-Fraktur, AO 23-A2)",
+      "differentials": ["Skaphoidfraktur", "Distorsion des Handgelenks", "Smith-Fraktur", "Perilunäre Luxation", "Ulnafraktur"],
+      "vitals": { "rr": "140/85", "hf": 86, "af": 16, "temp": 36.7, "spo2": 98 },
+      "history": {
+        "current": "Vor ca. 1 Stunde Sturz auf die ausgestreckte rechte Hand bei Glätte. Seitdem starke Schmerzen, Schwellung und Fehlstellung des rechten Handgelenks. Kein Kopfanprall. Kribbeln in den Fingern.",
+        "previous": ["Postmenopausale Osteoporose (unbehandelt)", "Hypothyreose"],
+        "medication": ["L-Thyroxin 100 µg 1-0-0"],
+        "allergies": ["Keine bekannt"],
+        "social": "Rechtshänderin. Lebt mit Ehemann. Nichtraucherin.",
+        "family": "Mutter hatte Schenkelhalsfraktur."
+      },
+      "exam": "Fourchette-(Bajonett-)Fehlstellung des rechten Handgelenks, Schwellung, Druckschmerz über dem distalen Radius. Tabatière nicht druckschmerzhaft. pDMS: Sensibilität N. medianus leicht vermindert.",
+      "labs": { "Kalzium": "2,3 mmol/l", "25-OH-Vitamin D": "14 ng/ml (erniedrigt)" }
+    }
+  },
+  {
+    "slug": "akuter-gichtanfall",
+    "title": "Akuter Gichtanfall (Podagra)",
+    "difficulty": "B1",
+    "target_role": "doctor",
+    "specialty": "Rheumatologie",
+    "patient_demographics": { "name": "Herr Uwe Krämer", "age": 52, "gender": "M", "occupation": "Metzgermeister" },
+    "chief_complaint": "Heute Nacht bin ich aufgewacht, weil mein großer Zeh so höllisch wehgetan hat. Nicht mal die Bettdecke konnte ich drauf ertragen. Der ist knallrot und dick.",
+    "clinical_facts": {
+      "diagnosis": "Akute Gichtarthritis des Großzehengrundgelenks rechts (Podagra)",
+      "differentials": ["Septische Arthritis", "Aktivierte Arthrose (Hallux rigidus)", "Pseudogicht (CPPD)", "Erysipel", "Trauma"],
+      "vitals": { "rr": "150/95", "hf": 84, "af": 14, "temp": 37.6, "spo2": 98 },
+      "history": {
+        "current": "Seit heute Nacht akut einsetzende, stärkste Schmerzen im rechten Großzehengrundgelenk mit Rötung, Schwellung und Überwärmung. Am Vorabend Grillfeier mit viel Fleisch und Bier.",
+        "previous": ["Arterielle Hypertonie", "Adipositas (BMI 33)", "Hyperurikämie (bisher unbehandelt)"],
+        "medication": ["Hydrochlorothiazid 25 mg 1-0-0"],
+        "allergies": ["Keine bekannt"],
+        "social": "Alkohol ca. 3 Bier/Tag. Nichtraucher. Verheiratet.",
+        "family": "Vater hatte Gicht."
+      },
+      "exam": "Großzehengrundgelenk rechts gerötet, geschwollen, überwärmt, extrem berührungsempfindlich. Keine Wunde.",
+      "labs": { "Harnsäure": "9,6 mg/dl (erhöht)", "CRP": "34 mg/l (erhöht)", "Leukozyten": "10,8 /nl", "Kreatinin": "1,2 mg/dl" },
+      "teaching_note": "Thiaziddiuretika erhöhen die Harnsäure. Harnsäure kann im akuten Anfall auch normal sein."
+    }
+  },
+  {
+    "slug": "erysipel",
+    "title": "Erysipel des Unterschenkels",
+    "difficulty": "B1",
+    "target_role": "doctor",
+    "specialty": "Dermatologie",
+    "patient_demographics": { "name": "Frau Ursula Peters", "age": 71, "gender": "W", "occupation": "Rentnerin" },
+    "chief_complaint": "Mein linkes Bein ist seit gestern ganz rot, heiß und dick, und die Rötung wird immer größer. Heute Nacht hatte ich Schüttelfrost.",
+    "clinical_facts": {
+      "diagnosis": "Erysipel des linken Unterschenkels, Eintrittspforte Interdigitalmykose",
+      "differentials": ["Tiefe Beinvenenthrombose", "Phlegmone", "Nekrotisierende Fasziitis", "Stauungsdermatitis", "Kontaktdermatitis"],
+      "vitals": { "rr": "135/80", "hf": 100, "af": 18, "temp": 38.9, "spo2": 97 },
+      "history": {
+        "current": "Seit ca. 36 Stunden scharf begrenzte, zungenförmig ausgreifende Rötung am linken Unterschenkel mit Überwärmung, Schwellung und Spannungsschmerz. Fieber mit Schüttelfrost seit der Nacht. Fußpilz zwischen den Zehen seit Monaten.",
+        "previous": ["Diabetes mellitus Typ 2", "Chronisch-venöse Insuffizienz", "Z. n. Erysipel rechts 2021"],
+        "medication": ["Metformin 1000 mg 1-0-1", "Sitagliptin 100 mg 1-0-0"],
+        "allergies": ["Keine bekannt"],
+        "social": "Lebt mit Ehemann. Nichtraucherin. Adipositas.",
+        "family": "Unauffällig."
+      },
+      "exam": "Scharf begrenztes, flammenförmiges Erythem am linken Unterschenkel (Markierung der Grenzen erfolgt), überwärmt, druckschmerzhaft. Mazeration interdigital 4/5 links. Leistenlymphknoten links vergrößert.",
+      "labs": { "Leukozyten": "14,6 /nl (erhöht)", "CRP": "152 mg/l (erhöht)", "Blutzucker": "238 mg/dl (erhöht)", "Kreatinin": "0,9 mg/dl" }
+    }
+  },
+  {
+    "slug": "anaphylaxie",
+    "title": "Anaphylaxie nach Wespenstich",
+    "difficulty": "B2",
+    "target_role": "doctor",
+    "specialty": "Notfallmedizin",
+    "patient_demographics": { "name": "Herr Markus Engel", "age": 36, "gender": "M", "occupation": "Gärtner" },
+    "chief_complaint": "Mich hat beim Heckenschneiden eine Wespe in den Hals gestochen. Danach hat's überall gejuckt, ich hab Quaddeln gekriegt, und jetzt wird mein Hals so eng.",
+    "clinical_facts": {
+      "diagnosis": "Anaphylaxie Grad III nach Ring und Messmer bei Wespengiftallergie",
+      "differentials": ["Hereditäres Angioödem", "Lokale Stichreaktion", "Asthmaanfall", "Vasovagale Reaktion", "Panikattacke"],
+      "vitals": { "rr": "80/50", "hf": 128, "af": 26, "temp": 36.8, "spo2": 91 },
+      "history": {
+        "current": "Vor ca. 20 Minuten Wespenstich am Hals. Innerhalb von Minuten generalisierter Juckreiz, Urtikaria, Schwellung der Lippen, Engegefühl im Hals, Heiserkeit, Atemnot, Schwindel.",
+        "previous": ["Im letzten Sommer ausgeprägte Lokalreaktion nach Wespenstich"],
+        "medication": ["Metoprolol 47,5 mg 1-0-0 (wegen Extrasystolen)"],
+        "allergies": ["Wespengift (vermutet, nie getestet)"],
+        "social": "Nichtraucher. Verheiratet. Arbeitet im Freien.",
+        "family": "Unauffällig."
+      },
+      "exam": "Generalisierte Urtikaria, Lippen- und Lidödem, inspiratorischer Stridor, exspiratorisches Giemen. Haut kalt, Rekapillarisierung verlängert.",
+      "labs": { "Tryptase": "28 µg/l (erhöht, Abnahme 1 h nach Ereignis)" },
+      "teaching_note": "Betablocker können die Wirkung von Adrenalin abschwächen. Nach Entlassung: Notfallset mit Adrenalin-Autoinjektor, allergologische Abklärung und Hyposensibilisierung."
+    }
+  },
+  {
+    "slug": "extrauteringraviditaet",
+    "title": "Extrauteringravidität (Tubargravidität)",
+    "difficulty": "C1",
+    "target_role": "doctor",
+    "specialty": "Gynäkologie",
+    "patient_demographics": { "name": "Frau Sarah Wolff", "age": 29, "gender": "W", "occupation": "Bankkauffrau" },
+    "chief_complaint": "Ich hab seit heute Morgen starke Schmerzen links im Unterbauch und ein bisschen Schmierblutung. Meine Periode ist eigentlich zwei Wochen überfällig.",
+    "clinical_facts": {
+      "diagnosis": "Tubargravidität links (7. SSW) mit beginnender intraabdominaler Blutung",
+      "differentials": ["Drohender Abort", "Ovarialtorsion", "Rupturierte Ovarialzyste", "Akute Appendizitis", "Adnexitis"],
+      "vitals": { "rr": "100/60", "hf": 110, "af": 18, "temp": 36.9, "spo2": 98 },
+      "history": {
+        "current": "Seit ca. 6 Stunden zunehmende, einseitige Unterbauchschmerzen links, vaginale Schmierblutung, Schwindel, Schulterschmerz rechts beim Liegen. Letzte Regelblutung vor 6 Wochen, sonst regelmäßiger Zyklus.",
+        "previous": ["Z. n. Chlamydien-Infektion mit Adnexitis 2019", "Kinderwunsch"],
+        "medication": ["Folsäure 0,4 mg 1-0-0"],
+        "allergies": ["Keine bekannt"],
+        "social": "Nichtraucherin. Verheiratet. Gravida 1, Para 0.",
+        "family": "Unauffällig."
+      },
+      "exam": "Abdomen: Druckschmerz im linken Unterbauch mit Abwehrspannung. Portioschiebeschmerz. Vaginalsonografie: leeres Cavum uteri, freie Flüssigkeit im Douglas-Raum.",
+      "labs": { "β-HCG": "2.400 IU/l (positiv)", "Hb": "10,4 g/dl (erniedrigt)", "Blutgruppe": "A Rh negativ" },
+      "teaching_note": "Rh-negative Patientin: Anti-D-Prophylaxe nicht vergessen."
+    }
+  }
+]

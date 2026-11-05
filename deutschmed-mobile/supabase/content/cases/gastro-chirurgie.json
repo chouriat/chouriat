@@ -1,0 +1,242 @@
+[
+  {
+    "slug": "akute-cholezystitis",
+    "title": "Akute Cholezystitis bei Cholezystolithiasis",
+    "difficulty": "B2",
+    "target_role": "doctor",
+    "specialty": "Chirurgie",
+    "patient_demographics": { "name": "Frau Petra Fischer", "age": 47, "gender": "W", "occupation": "Friseurin" },
+    "chief_complaint": "Nach dem Schweinebraten gestern hab ich so einen krampfartigen Schmerz rechts oben unterm Rippenbogen gekriegt, der bis in die Schulter zieht. Jetzt hab ich auch noch Fieber.",
+    "clinical_facts": {
+      "diagnosis": "Akute kalkulöse Cholezystitis",
+      "differentials": ["Choledocholithiasis mit Cholangitis", "Akute Pankreatitis", "Ulcus duodeni", "Rechtsseitige Pyelonephritis", "Hinterwandinfarkt"],
+      "vitals": { "rr": "130/85", "hf": 98, "af": 18, "temp": 38.6, "spo2": 98 },
+      "history": {
+        "current": "Seit ca. 20 Stunden zunehmende Schmerzen im rechten Oberbauch nach fettreicher Mahlzeit, initial kolikartig, jetzt Dauerschmerz mit Ausstrahlung in die rechte Schulter. Übelkeit, zweimaliges Erbrechen. Stuhl und Urin farblich unauffällig.",
+        "previous": ["Bekannte Cholezystolithiasis (Sonografie 2023)", "Adipositas (BMI 31)"],
+        "medication": ["Keine Dauermedikation"],
+        "allergies": ["Metamizol (Agranulozytose in der Vorgeschichte)"],
+        "social": "Nichtraucherin, Alkohol selten. Verheiratet, drei Kinder.",
+        "family": "Mutter Z. n. Cholezystektomie."
+      },
+      "exam": "Abdomen: Druckschmerz im rechten Oberbauch, Murphy-Zeichen positiv, lokale Abwehrspannung. Kein Ikterus.",
+      "labs": { "Leukozyten": "15,1 /nl (erhöht)", "CRP": "112 mg/l (erhöht)", "Bilirubin gesamt": "1,1 mg/dl", "Lipase": "45 U/l", "AP": "110 U/l" }
+    }
+  },
+  {
+    "slug": "akute-pankreatitis",
+    "title": "Akute Pankreatitis (äthyltoxisch)",
+    "difficulty": "B2",
+    "target_role": "doctor",
+    "specialty": "Gastroenterologie",
+    "patient_demographics": { "name": "Herr Thomas Keller", "age": 45, "gender": "M", "occupation": "Gastronom" },
+    "chief_complaint": "Ich hab so einen Schmerz im Oberbauch, der wie ein Gürtel bis in den Rücken geht. Ich muss dauernd brechen, und es wird immer schlimmer.",
+    "clinical_facts": {
+      "diagnosis": "Akute äthyltoxische Pankreatitis",
+      "differentials": ["Perforiertes Ulcus ventriculi/duodeni", "Akute Cholezystitis", "Mesenterialischämie", "Hinterwandinfarkt", "Rupturiertes Aortenaneurysma"],
+      "vitals": { "rr": "110/70", "hf": 112, "af": 22, "temp": 38.1, "spo2": 95 },
+      "history": {
+        "current": "Seit ca. 12 Stunden heftigste Oberbauchschmerzen mit gürtelförmiger Ausstrahlung in den Rücken, Besserung im Sitzen nach vorn gebeugt. Rezidivierendes Erbrechen. Am Wochenende Feier mit erheblichem Alkoholkonsum.",
+        "previous": ["Alkoholbedingte Fettleber", "Z. n. Pankreatitis 2021"],
+        "medication": ["Pantoprazol 20 mg bei Bedarf"],
+        "allergies": ["Keine bekannt"],
+        "social": "Alkohol ca. 4–5 Bier und 2–3 Schnäpse täglich. Raucher, 20 pack years. Geschieden.",
+        "family": "Unauffällig."
+      },
+      "exam": "Abdomen: elastische Bauchdeckenspannung (\"Gummibauch\"), diffuser Druckschmerz im Oberbauch, spärliche Darmgeräusche.",
+      "labs": { "Lipase": "2.450 U/l (deutlich erhöht)", "CRP": "95 mg/l", "Leukozyten": "14,0 /nl", "γ-GT": "380 U/l (erhöht)", "Kalzium": "2,0 mmol/l (erniedrigt)", "Triglyzeride": "210 mg/dl" }
+    }
+  },
+  {
+    "slug": "obere-gi-blutung",
+    "title": "Obere gastrointestinale Blutung bei Ulcus duodeni",
+    "difficulty": "C1",
+    "target_role": "doctor",
+    "specialty": "Gastroenterologie",
+    "patient_demographics": { "name": "Herr Günter Hartmann", "age": 69, "gender": "M", "occupation": "Rentner, ehem. Elektriker" },
+    "chief_complaint": "Mein Stuhlgang ist seit gestern pechschwarz und klebrig, und heute Morgen hab ich so was wie Kaffeesatz erbrochen. Mir ist ganz schwach und schwindelig.",
+    "clinical_facts": {
+      "diagnosis": "Obere GI-Blutung bei Ulcus duodeni (Forrest IIa) unter NSAR und ASS",
+      "differentials": ["Ulcus ventriculi", "Ösophagusvarizenblutung", "Mallory-Weiss-Läsion", "Erosive Gastritis", "Magenkarzinom"],
+      "vitals": { "rr": "100/60", "hf": 116, "af": 20, "temp": 36.6, "spo2": 96 },
+      "history": {
+        "current": "Seit gestern Teerstuhl (2x), heute einmalig kaffeesatzartiges Erbrechen. Schwindel beim Aufstehen, Schwäche. Seit 3 Wochen wegen Knieschmerzen Diclofenac 75 mg 1-0-1 ohne Magenschutz.",
+        "previous": ["KHK, Z. n. Stent 2020", "Gonarthrose rechts", "Arterielle Hypertonie"],
+        "medication": ["ASS 100 mg 1-0-0", "Diclofenac 75 mg 1-0-1 (seit 3 Wochen)", "Ramipril 5 mg 1-0-0", "Atorvastatin 40 mg 0-0-1"],
+        "allergies": ["Keine bekannt"],
+        "social": "Ex-Raucher. Alkohol gelegentlich. Verheiratet.",
+        "family": "Unauffällig."
+      },
+      "exam": "Blass, kaltschweißig. Abdomen: leichter epigastrischer Druckschmerz. Rektal-digitale Untersuchung: Teerstuhl am Fingerling.",
+      "labs": { "Hb": "7,8 g/dl (deutlich erniedrigt)", "Harnstoff": "88 mg/dl (erhöht)", "Kreatinin": "1,1 mg/dl", "INR": "1,1", "Thrombozyten": "210 /nl" }
+    }
+  },
+  {
+    "slug": "sigmadivertikulitis",
+    "title": "Akute Sigmadivertikulitis",
+    "difficulty": "B2",
+    "target_role": "doctor",
+    "specialty": "Chirurgie",
+    "patient_demographics": { "name": "Frau Renate Schröder", "age": 63, "gender": "W", "occupation": "Lehrerin" },
+    "chief_complaint": "Ich hab seit zwei Tagen Bauchweh links unten, so ein dumpfer Dauerschmerz. Gestern hatte ich abends Fieber, und mit dem Stuhlgang klappt's auch nicht richtig.",
+    "clinical_facts": {
+      "diagnosis": "Akute unkomplizierte Sigmadivertikulitis (CDD Typ 1b)",
+      "differentials": ["Kolonkarzinom", "Ischämische Kolitis", "Chronisch-entzündliche Darmerkrankung", "Harnwegsinfekt/Pyelonephritis links", "Ovarialpathologie"],
+      "vitals": { "rr": "140/85", "hf": 94, "af": 16, "temp": 38.3, "spo2": 98 },
+      "history": {
+        "current": "Seit 48 Stunden zunehmende Schmerzen im linken Unterbauch, Fieber bis 38,5 °C, Obstipation seit 2 Tagen, leichte Übelkeit. Kein Blut im Stuhl.",
+        "previous": ["Divertikulose (Koloskopie 2022)", "Arterielle Hypertonie", "Z. n. Hysterektomie 2010"],
+        "medication": ["Valsartan 80 mg 1-0-0"],
+        "allergies": ["Keine bekannt"],
+        "social": "Nichtraucherin. Ballaststoffarme Ernährung. Verheiratet.",
+        "family": "Vater hatte Darmkrebs mit 70 Jahren."
+      },
+      "exam": "Abdomen: Druckschmerz und walzenförmige Resistenz im linken Unterbauch (\"Linksappendizitis\"), keine Abwehrspannung, Darmgeräusche regelrecht.",
+      "labs": { "Leukozyten": "13,4 /nl (erhöht)", "CRP": "78 mg/l (erhöht)", "Urinstatus": "unauffällig" }
+    }
+  },
+  {
+    "slug": "mechanischer-ileus",
+    "title": "Mechanischer Dünndarmileus (Bridenileus)",
+    "difficulty": "C1",
+    "target_role": "doctor",
+    "specialty": "Chirurgie",
+    "patient_demographics": { "name": "Herr Karl-Heinz Wolf", "age": 76, "gender": "M", "occupation": "Rentner" },
+    "chief_complaint": "Mein Bauch ist so aufgebläht wie ein Ballon und ich hab Krämpfe, die kommen und gehen. Seit zwei Tagen kein Stuhlgang, keine Winde, und jetzt muss ich auch noch brechen.",
+    "clinical_facts": {
+      "diagnosis": "Mechanischer Dünndarmileus bei Briden nach Voroperation",
+      "differentials": ["Kolonkarzinom mit Obstruktion", "Inkarzerierte Hernie", "Paralytischer Ileus", "Mesenterialischämie", "Volvulus"],
+      "vitals": { "rr": "125/80", "hf": 108, "af": 20, "temp": 37.5, "spo2": 96 },
+      "history": {
+        "current": "Seit 48 Stunden kolikartige Bauchschmerzen, zunehmende Distension, Stuhl- und Windverhalt, seit heute Erbrechen (zuletzt übelriechend, bräunlich).",
+        "previous": ["Z. n. Hemikolektomie rechts 2019 bei Kolonkarzinom", "Z. n. Appendektomie", "Benigne Prostatahyperplasie"],
+        "medication": ["Tamsulosin 0,4 mg 0-0-1", "Macrogol bei Bedarf"],
+        "allergies": ["Keine bekannt"],
+        "social": "Ex-Raucher. Lebt mit Ehefrau. Alkohol selten.",
+        "family": "Unauffällig."
+      },
+      "exam": "Abdomen: meteoristisch gebläht, reizlose Narben, hochgestellte, klingende Darmgeräusche, diffuser Druckschmerz, keine Bruchpforten tastbar. Rektale Ampulle leer.",
+      "labs": { "Leukozyten": "12,8 /nl", "CRP": "34 mg/l", "Kalium": "3,2 mmol/l (erniedrigt)", "Laktat": "1,6 mmol/l", "Kreatinin": "1,5 mg/dl (erhöht)" }
+    }
+  },
+  {
+    "slug": "inkarzerierte-leistenhernie",
+    "title": "Inkarzerierte Leistenhernie",
+    "difficulty": "B1",
+    "target_role": "doctor",
+    "specialty": "Chirurgie",
+    "patient_demographics": { "name": "Herr Mehmet Yılmaz", "age": 58, "gender": "M", "occupation": "Lagerarbeiter" },
+    "chief_complaint": "Ich hab schon lange so eine Beule in der rechten Leiste, die ging immer wieder weg. Aber seit heute Morgen ist sie hart, tut höllisch weh und geht nicht mehr rein.",
+    "clinical_facts": {
+      "diagnosis": "Inkarzerierte indirekte Leistenhernie rechts",
+      "differentials": ["Femoralhernie", "Lymphadenitis inguinalis", "Hodentorsion", "Leistenabszess", "Aneurysma der A. femoralis"],
+      "vitals": { "rr": "145/90", "hf": 100, "af": 18, "temp": 37.3, "spo2": 98 },
+      "history": {
+        "current": "Seit ca. 6 Stunden schmerzhafte, nicht reponible Schwellung in der rechten Leiste nach schwerem Heben bei der Arbeit. Übelkeit, einmal Erbrechen. Seit 2 Jahren bekannte reponible Vorwölbung.",
+        "previous": ["Arterielle Hypertonie", "Chronischer Husten bei Nikotinabusus"],
+        "medication": ["Amlodipin 5 mg 1-0-0"],
+        "allergies": ["Keine bekannt"],
+        "social": "Raucher, 30 pack years. Verheiratet, vier Kinder. Körperlich schwere Arbeit.",
+        "family": "Unauffällig."
+      },
+      "exam": "Rechte Leiste: prall-elastische, gerötete, stark druckschmerzhafte, nicht reponible Schwellung (5 x 4 cm). Abdomen leicht gebläht.",
+      "labs": { "Leukozyten": "11,6 /nl", "CRP": "18 mg/l", "Laktat": "1,4 mmol/l" }
+    }
+  },
+  {
+    "slug": "kolorektales-karzinom",
+    "title": "Kolorektales Karzinom (Erstdiagnose)",
+    "difficulty": "C1",
+    "target_role": "doctor",
+    "specialty": "Gastroenterologie",
+    "patient_demographics": { "name": "Herr Bernd Schmitt", "age": 67, "gender": "M", "occupation": "Rentner, ehem. Bankkaufmann" },
+    "chief_complaint": "Mein Stuhlgang hat sich verändert, mal Durchfall, mal Verstopfung. Manchmal ist auch Blut dabei. Und ich bin ständig müde.",
+    "clinical_facts": {
+      "diagnosis": "V. a. Sigmakarzinom mit Eisenmangelanämie (Histologie ausstehend)",
+      "differentials": ["Hämorrhoidalblutung", "Divertikelblutung", "Colitis ulcerosa", "Kolonpolypen", "Reizdarmsyndrom"],
+      "vitals": { "rr": "125/75", "hf": 92, "af": 16, "temp": 36.8, "spo2": 97 },
+      "history": {
+        "current": "Seit ca. 4 Monaten Wechsel von Diarrhö und Obstipation, intermittierend Blutauflagerungen auf dem Stuhl, Bleistiftstühle. Ungewollter Gewichtsverlust von 6 kg, Abgeschlagenheit, Belastungsdyspnoe. Vorsorgekoloskopie bisher abgelehnt.",
+        "previous": ["Diabetes mellitus Typ 2", "Arterielle Hypertonie"],
+        "medication": ["Metformin 1000 mg 1-0-1", "Enalapril 10 mg 1-0-0"],
+        "allergies": ["Keine bekannt"],
+        "social": "Raucher, 30 pack years. Viel rotes Fleisch, wenig Bewegung. Verheiratet.",
+        "family": "Mutter mit 72 Jahren an Darmkrebs erkrankt."
+      },
+      "exam": "Blasses Hautkolorit. Abdomen: weich, tastbare Resistenz im linken Unterbauch. Rektal: Blut am Fingerling, kein Tumor tastbar.",
+      "labs": { "Hb": "9,4 g/dl (erniedrigt)", "MCV": "74 fl (erniedrigt)", "Ferritin": "8 µg/l (erniedrigt)", "CEA": "12,4 ng/ml (erhöht)" }
+    }
+  },
+  {
+    "slug": "dekompensierte-leberzirrhose",
+    "title": "Dekompensierte Leberzirrhose mit Aszites",
+    "difficulty": "C1",
+    "target_role": "doctor",
+    "specialty": "Gastroenterologie",
+    "patient_demographics": { "name": "Herr Rainer Becker", "age": 59, "gender": "M", "occupation": "Taxifahrer" },
+    "chief_complaint": "Mein Bauch wird immer dicker, obwohl ich kaum was esse. Meine Frau sagt, meine Augen sind ganz gelb, und ich bin in letzter Zeit so durcheinander.",
+    "clinical_facts": {
+      "diagnosis": "Dekompensierte äthyltoxische Leberzirrhose (Child-Pugh C) mit Aszites und hepatischer Enzephalopathie Grad I–II",
+      "differentials": ["Spontan bakterielle Peritonitis", "Hepatozelluläres Karzinom", "Pfortaderthrombose", "Herzinsuffizienz mit Aszites", "Peritonealkarzinose"],
+      "vitals": { "rr": "100/60", "hf": 96, "af": 18, "temp": 37.6, "spo2": 96 },
+      "history": {
+        "current": "Seit ca. 4 Wochen zunehmender Bauchumfang, Gelbfärbung der Skleren, seit 1 Woche Verwirrtheit und Tag-Nacht-Umkehr (Fremdanamnese Ehefrau). Dunkler Urin, heller Stuhl.",
+        "previous": ["Alkoholabhängigkeit", "Bekannte Leberzirrhose seit 2022", "Ösophagusvarizen Grad II (Ligatur 2023)"],
+        "medication": ["Propranolol 40 mg 1-0-1", "Spironolacton 100 mg 1-0-0", "Lactulose 15 ml 1-1-1 (unregelmäßig)"],
+        "allergies": ["Keine bekannt"],
+        "social": "Alkohol trotz Empfehlung weiter ca. 1 Flasche Wein/Tag. Raucher. Verheiratet.",
+        "family": "Unauffällig."
+      },
+      "exam": "Sklerenikterus, Spider naevi, Palmarerythem, Gynäkomastie. Abdomen: ausladend, Undulationsphänomen positiv. Flapping Tremor (Asterixis).",
+      "labs": { "Bilirubin gesamt": "4,8 mg/dl (erhöht)", "Albumin": "2,4 g/dl (erniedrigt)", "INR": "1,9 (erhöht)", "Thrombozyten": "68 /nl (erniedrigt)", "Ammoniak": "110 µmol/l (erhöht)", "Natrium": "129 mmol/l" }
+    }
+  },
+  {
+    "slug": "gastroenteritis-exsikkose",
+    "title": "Akute Gastroenteritis mit Exsikkose",
+    "difficulty": "B1",
+    "target_role": "doctor",
+    "specialty": "Innere Medizin",
+    "patient_demographics": { "name": "Frau Hildegard Meyer", "age": 84, "gender": "W", "occupation": "Rentnerin, lebt im Pflegeheim" },
+    "chief_complaint": "Ich hab seit drei Tagen Durchfall, immer wieder ganz wässrig, und spucken musste ich auch. Ich kann gar nichts bei mir behalten und bin so wackelig auf den Beinen.",
+    "clinical_facts": {
+      "diagnosis": "Akute Gastroenteritis (V. a. Norovirus, Ausbruch im Pflegeheim) mit Exsikkose und prärenalem Nierenversagen",
+      "differentials": ["Clostridioides-difficile-Infektion", "Ischämische Kolitis", "Medikamentös bedingte Diarrhö", "Divertikulitis", "Harnwegsinfekt mit Sepsis"],
+      "vitals": { "rr": "95/55", "hf": 108, "af": 18, "temp": 37.8, "spo2": 96 },
+      "history": {
+        "current": "Seit 3 Tagen wässrige Diarrhöen (8–10x/Tag), initial Erbrechen, verminderte Trinkmenge, Schwindel. Mehrere Mitbewohner mit ähnlichen Beschwerden. Keine Antibiotika in den letzten Wochen.",
+        "previous": ["Arterielle Hypertonie", "Leichte Demenz vom Alzheimer-Typ", "Herzinsuffizienz (EF 50 %)"],
+        "medication": ["Ramipril 2,5 mg 1-0-0", "Torasemid 10 mg 1-0-0", "Donepezil 5 mg 0-0-1"],
+        "allergies": ["Keine bekannt"],
+        "social": "Pflegeheim, Pflegegrad 3, Rollator. Nichtraucherin.",
+        "family": "Nicht erhebbar."
+      },
+      "exam": "Trockene Schleimhäute, stehende Hautfalten, verlangsamte Rekapillarisierung. Abdomen: weich, diffuser leichter Druckschmerz, lebhafte Darmgeräusche.",
+      "labs": { "Kreatinin": "2,1 mg/dl (erhöht, Ausgangswert 1,0)", "Harnstoff": "96 mg/dl (erhöht)", "Natrium": "148 mmol/l (erhöht)", "Kalium": "3,1 mmol/l (erniedrigt)", "CRP": "22 mg/l" }
+    }
+  },
+  {
+    "slug": "akute-mesenterialischaemie",
+    "title": "Akute Mesenterialischämie",
+    "difficulty": "C1",
+    "target_role": "doctor",
+    "specialty": "Chirurgie",
+    "patient_demographics": { "name": "Frau Irmgard Schulze", "age": 82, "gender": "W", "occupation": "Rentnerin" },
+    "chief_complaint": "Ich hab so schlimme Bauchschmerzen, so was hatte ich noch nie. Aber wenn Sie draufdrücken, ist es gar nicht so schlimm.",
+    "clinical_facts": {
+      "diagnosis": "Akute arterielle Mesenterialischämie bei Embolie der A. mesenterica superior (Vorhofflimmern ohne Antikoagulation)",
+      "differentials": ["Mechanischer Ileus", "Perforiertes Hohlorgan", "Akute Pankreatitis", "Rupturiertes Aortenaneurysma", "Divertikulitis"],
+      "vitals": { "rr": "110/65", "hf": 124, "af": 22, "temp": 37.2, "spo2": 94 },
+      "history": {
+        "current": "Seit ca. 5 Stunden plötzlich aufgetretene, stärkste periumbilikale Bauchschmerzen, initial Diarrhö, einmal blutiger Stuhl. Missverhältnis zwischen starkem Schmerz und geringem Untersuchungsbefund.",
+        "previous": ["Vorhofflimmern (Antikoagulation wegen Sturzneigung abgesetzt)", "Herzinsuffizienz", "Arterielle Hypertonie"],
+        "medication": ["Metoprololsuccinat 95 mg 1-0-0", "Torasemid 10 mg 1-0-0"],
+        "allergies": ["Keine bekannt"],
+        "social": "Lebt im betreuten Wohnen. Nichtraucherin.",
+        "family": "Unauffällig."
+      },
+      "exam": "Arrhythmischer Puls. Abdomen: weich, kaum Druckschmerz, Darmgeräusche spärlich.",
+      "labs": { "Laktat": "5,8 mmol/l (deutlich erhöht)", "Leukozyten": "19,2 /nl (erhöht)", "D-Dimere": "6,2 mg/l FEU (erhöht)", "CRP": "38 mg/l" }
+    }
+  }
+]

@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { MEDICAL_CASES } from '@/lib/medical-cases';
 import { useProgressStore } from '@/lib/store';
+import { CaseSelector } from '@/components/case-selector';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 
 export default function UebergabePage() {
   const [selectedCaseId, setSelectedCaseId] = useState(MEDICAL_CASES[0].id);
@@ -25,34 +25,26 @@ export default function UebergabePage() {
 
   return (
     <main className="max-w-5xl mx-auto p-6 space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <Link href="/" className="text-sm text-blue-600 hover:underline">
-            ← Zurück zum Dashboard
-          </Link>
-          <h1 className="text-2xl font-bold text-slate-900 mt-1">
-            FSP Teil 3: Klinische Übergabe (ISBAR-Standard)
-          </h1>
-          <p className="text-sm text-slate-600">
-            Strukturierte Patientenvorstellung im Arzt-Arzt-Gespräch
-          </p>
-        </div>
-
-        <div className="flex gap-2">
-          {MEDICAL_CASES.map((c) => (
-            <Button
-              key={c.id}
-              variant={c.id === selectedCaseId ? 'default' : 'outline'}
-              onClick={() => {
-                setSelectedCaseId(c.id);
-                setRevealedSteps([]);
-              }}
-            >
-              {c.patient.name}
-            </Button>
-          ))}
-        </div>
+      <div>
+        <Link href="/" className="text-sm text-blue-600 hover:underline">
+          ← Zurück zum Dashboard
+        </Link>
+        <h1 className="text-2xl font-bold text-slate-900 mt-1">
+          FSP Teil 3: Klinische Übergabe (ISBAR-Standard)
+        </h1>
+        <p className="text-sm text-slate-600">
+          Strukturierte Patientenvorstellung im Arzt-Arzt-Gespräch
+        </p>
       </div>
+
+      <CaseSelector
+        selectedCaseId={selectedCaseId}
+        onSelectCase={(id) => {
+          setSelectedCaseId(id);
+          setRevealedSteps([]);
+        }}
+        completedIds={progress.completedUebergabeCases}
+      />
 
       <div className="space-y-4">
         {currentCase.isbarSteps.map((item) => {

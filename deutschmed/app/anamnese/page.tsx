@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { MEDICAL_CASES } from '@/lib/medical-cases';
 import { useProgressStore } from '@/lib/store';
+import { CaseSelector } from '@/components/case-selector';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -18,11 +19,9 @@ export default function AnamnesePage() {
   const [selectedCaseId, setSelectedCaseId] = useState(MEDICAL_CASES[0].id);
   const [mode, setMode] = useState<'guided' | 'ai'>('ai');
 
-  // State für Geführtes Training
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(null);
 
-  // State für KI-Sprachsimulator
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -51,9 +50,8 @@ export default function AnamnesePage() {
     setInputText('');
     setIsLoading(true);
 
-    // Lokales C1-Feedback & realistische Patienten-Antwort
     const usesJargon =
-      /dyspnoe|retrosternal|emesis|vomitus|nausea|pyrexie|appendizitis|cepahlgie|vertigo|inappetenz/i.test(
+      /dyspnoe|retrosternal|emesis|vomitus|nausea|pyrexie|appendizitis|cephalgie|vertigo|inappetenz|cholezystitis|pankreatitis/i.test(
         doctorQuestion
       );
 
@@ -61,37 +59,33 @@ export default function AnamnesePage() {
       ? '⚠️ FSP-Hinweis: Sie haben medizinische Fachbegriffe im Patientengespräch verwendet. Nutzen Sie gegenüber Patienten bitte verständliche Alltagssprache!'
       : '✓ Gute C1-Arzt-Patienten-Kommunikation: Klare und verständliche Fragestellung.';
 
-    let patientReply = `Ich verstehe Ihre Frage. Also zu meinen Beschwerden: ${currentCase.patient.chiefComplaint}`;
+    let patientReply = `Zu meinen aktuellen Beschwerden: ${currentCase.patient.chiefComplaint}`;
 
     const lowerQ = doctorQuestion.toLowerCase();
-    if (lowerQ.includes('name') || lowerQ.includes('heißen') || lowerQ.includes('wer sind')) {
-      patientReply = `Mein Name ist ${currentCase.patient.name}, ich bin ${currentCase.patient.age} Jahre alt und arbeite als ${currentCase.patient.occupation}.`;
+    if (lowerQ.includes('name') || lowerQ.includes('heißen') || lowerQ.includes('alt') || lowerQ.includes('beruf')) {
+      patientReply = `Ich heiße ${currentCase.patient.name}, bin ${currentCase.patient.age} Jahre alt und arbeite als ${currentCase.patient.occupation}.`;
     } else if (
       lowerQ.includes('schmerz') ||
       lowerQ.includes('beschwerde') ||
       lowerQ.includes('was führt') ||
-      lowerQ.includes('problem')
+      lowerQ.includes('problem') ||
+      lowerQ.includes('passiert')
     ) {
-      patientReply =
-        questions[0]?.patientResponse || currentCase.patient.chiefComplaint;
+      patientReply = questions[0]?.patientResponse || currentCase.patient.chiefComplaint;
     } else if (
-      lowerQ.includes('übel') ||
-      lowerQ.includes('erbrech') ||
-      lowerQ.includes('fieber') ||
-      lowerQ.includes('luft') ||
-      lowerQ.includes('schwitz') ||
-      lowerQ.includes('begleit')
-    ) {
-      patientReply =
-        questions[1]?.patientResponse || currentCase.patient.historyDetails;
-    } else if (
-      lowerQ.includes('medikament') ||
       lowerQ.includes('vorerkrank') ||
-      lowerQ.includes('allergi') ||
-      lowerQ.includes('rauch')
+      lowerQ.includes('medikament') ||
+      lowerQ.includes('tablette') ||
+      lowerQ.includes('operation')
     ) {
-      patientReply =
-        questions[2]?.patientResponse || currentCase.patient.historyDetails;
+      patientReply = questions[1]?.patientResponse || currentCase.patient.historyDetails;
+    } else if (
+      lowerQ.includes('allergi') ||
+      lowerQ.includes('rauch') ||
+      lowerQ.includes('alkohol') ||
+      lowerQ.includes('familie')
+    ) {
+      patientReply = questions[2]?.patientResponse || currentCase.patient.historyDetails;
     }
 
     setTimeout(() => {
@@ -101,40 +95,31 @@ export default function AnamnesePage() {
         { role: 'patient', text: patientReply },
       ]);
       setIsLoading(false);
-    }, 400);
+    }, 350);
   };
 
   return (
     <main className="max-w-5xl mx-auto p-6 space-y-6">
-      {/* Header & Fallauswahl */}
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <Link href="/" className="text-sm text-blue-600 hover:underline">
-            ← Zurück zum Dashboard
-          </Link>
-          <h1 className="text-2xl font-bold text-slate-900 mt-1">
-            FSP Teil 1: Arzt-Patienten-Gespräch (Anamnese)
-          </h1>
-          <p className="text-sm text-slate-600">
-            Strukturierte Anamneseerhebung in empathischer, verständlicher Patientensprache
-          </p>
-        </div>
-
-        <div className="flex flex-wrap gap-2">
-          {MEDICAL_CASES.map((c) => (
-            <Button
-              key={c.id}
-              variant={c.id === selectedCaseId ? 'default' : 'outline'}
-              onClick={() => handleCaseChange(c.id)}
-            >
-              {c.patient.name}
-            </Button>
-          ))}
-        </div>
+      <div>
+        <Link href="/" className="text-sm text-blue-600 hover:underline">
+          ← Zurück zum Dashboard
+        </Link>
+        <h1 className="text-2xl font-bold text-slate-900 mt-1">
+          FSP Teil 1: Arzt-Patienten-Gespräch (Anamnese)
+        </h1>
+        <p className="text-sm text-slate-600">
+          Strukturierte Anamneseerhebung in empathischer, verständlicher Patientensprache
+        </p>
       </div>
 
-      {/* Modus-Umschalter */}
-      <div className="flex items-center justify-between bg-slate-100 p-2 rounded-xl">
+      {/* Neuer kompakter Fall-Wähler mit Fachgebiets-Filter & Suche */}
+      <CaseSelector
+        selectedCaseId={selectedCaseId}
+        onSelectCase={handleCaseChange}
+        completedIds={progress.completedAnamneseCases}
+      />
+
+      <div className="flex flex-wrap items-center justify-between gap-2 bg-slate-100 p-2 rounded-xl">
         <div className="flex gap-2">
           <Button
             size="sm"
@@ -162,10 +147,12 @@ export default function AnamnesePage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Linke Spalte: Patientenakte */}
         <Card className="md:col-span-1">
           <CardHeader>
-            <Badge className="w-fit">{currentCase.specialty}</Badge>
+            <div className="flex items-center justify-between">
+              <Badge>{currentCase.specialty}</Badge>
+              <Badge variant="outline">{currentCase.difficulty}</Badge>
+            </div>
             <CardTitle className="text-lg mt-2">{currentCase.title}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3 text-sm text-slate-700">
@@ -174,7 +161,7 @@ export default function AnamnesePage() {
               {currentCase.patient.occupation})
             </p>
             <p>
-              <strong>Leitsymptom:</strong> {currentCase.patient.chiefComplaint}
+              <strong>Leitsymptom:</strong> „{currentCase.patient.chiefComplaint}“
             </p>
             <div className="bg-slate-50 p-3 rounded-lg border text-xs space-y-1">
               <div className="font-semibold text-slate-900">Vitalparameter bei Aufnahme:</div>
@@ -186,7 +173,6 @@ export default function AnamnesePage() {
           </CardContent>
         </Card>
 
-        {/* Rechte Spalte: Simulator oder Geführtes Training */}
         <Card className="md:col-span-2">
           {mode === 'ai' ? (
             <>
@@ -195,7 +181,7 @@ export default function AnamnesePage() {
                   Gespräch mit {currentCase.patient.name}
                 </CardTitle>
                 <p className="text-xs text-slate-500">
-                  Stellen Sie Ihre Anamnesefragen auf Deutsch (z.B. nach Schmerzcharakter, Begleitsymptomen, Vorerkrankungen, Medikamenten oder Allergien).
+                  Stellen Sie Ihre Anamnesefragen auf Deutsch (aktuelle Beschwerden, Vorerkrankungen, Medikamente, Allergien, Sozial- & Familienanamnese).
                 </p>
               </CardHeader>
               <CardContent className="space-y-4">

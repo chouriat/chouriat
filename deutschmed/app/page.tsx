@@ -1,7 +1,6 @@
-// deutschmed/app/page.tsx
 'use client';
 
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { TRAINING_MODULES } from '@/lib/modules';
 import { MEDICAL_CASES, VOCABULARY_LIST } from '@/lib/medical-cases';
@@ -12,6 +11,9 @@ import { Badge } from '@/components/ui/badge';
 
 export default function DashboardPage() {
   const { progress, isLoaded } = useProgressStore();
+  const [selectedSpecialty, setSelectedSpecialty] = useState<string>('Alle');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [showAllCases, setShowAllCases] = useState<boolean>(false);
 
   const totalCases = MEDICAL_CASES.length;
   const totalVocab = VOCABULARY_LIST?.length || 0;
@@ -25,6 +27,33 @@ export default function DashboardPage() {
 
   const overallPercentage =
     totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+
+  const specialties = useMemo(() => {
+    const set = new Set<string>();
+    MEDICAL_CASES.forEach((c) => {
+      if (c.specialty) set.add(c.specialty);
+    });
+    return ['Alle', ...Array.from(set).sort()];
+  }, []);
+
+  const filteredCases = useMemo(() => {
+    return MEDICAL_CASES.filter((c: any) => {
+      const matchesSpec =
+        selectedSpecialty === 'Alle' || c.specialty === selectedSpecialty;
+      const q = searchQuery.trim().toLowerCase();
+      const pName = c.patient?.name || c.patientName || '';
+      const complaint = c.patient?.chiefComplaint || c.chiefComplaint || '';
+      const matchesSearch =
+        !q ||
+        c.title.toLowerCase().includes(q) ||
+        pName.toLowerCase().includes(q) ||
+        (c.specialty || '').toLowerCase().includes(q) ||
+        complaint.toLowerCase().includes(q);
+      return matchesSpec && matchesSearch;
+    });
+  }, [selectedSpecialty, searchQuery]);
+
+  const displayedCases = showAllCases ? filteredCases : filteredCases.slice(0, 8);
 
   const getModuleProgress = (id: string) => {
     switch (id) {
@@ -54,7 +83,7 @@ export default function DashboardPage() {
               Medizinisches C1-Kommunikations- & Dokumentationstraining
             </h1>
             <p className="text-slate-300 text-sm sm:text-base">
-              Trainieren Sie alle drei Teile der ärztlichen Fachsprachprüfung praxisnah an realen klinischen Notfall- und Stationsfällen.
+              Trainieren Sie alle drei Teile der ärztlichen Fachsprachprüfung praxisnah an {totalCases} klinischen Fällen und {totalVocab} Fachbegriffen.
             </p>
           </div>
 
@@ -115,11 +144,46 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      {/* Klinische Fallübersicht */}
+      {/* Klinische Fallübersicht mit Fachgebiets-Filter & Suche */}
       <section className="space-y-4">
-        <h2 className="text-xl font-bold text-slate-900">Verfügbare klinische Prüfungsfälle</h2>
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 className="text-xl font-bold text-slate-900">
+              Verfügbare klinische Prüfungsfälle ({filteredCases.length})
+            </h2>
+            <p className="text-xs text-slate-500">
+              Filtern Sie nach Fachgebiet oder suchen Sie gezielt nach Diagnosen und Symptomen
+            </p>
+          </div>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="🔍 Fall oder Diagnose suchen..."
+            className="w-full sm:w-72 rounded-lg border border-slate-300 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+          />
+        </div>
+
+        {/* Specialty Filter Pills */}
+        <div className="flex flex-wrap gap-1.5">
+          {specialties.map((spec) => (
+            <button
+              key={spec}
+              type="button"
+              onClick={() => setSelectedSpecialty(spec)}
+              className={`px-3 py-1 rounded-lg text-xs font-medium transition ${
+                selectedSpecialty === spec
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+              }`}
+            >
+              {spec}
+            </button>
+          ))}
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {MEDICAL_CASES.map((medCase: any) => {
+          {displayedCases.map((medCase: any) => {
             const anamneseDone = progress.completedAnamneseCases.includes(medCase.id);
             const arztbriefDone = progress.completedArztbriefCases.includes(medCase.id);
             const uebergabeDone = progress.completedUebergabeCases.includes(medCase.id);
@@ -129,23 +193,21 @@ export default function DashboardPage() {
             const complaint =
               medCase.patient?.chiefComplaint ||
               medCase.chiefComplaint ||
-              medCase.presentingComplaint ||
-              medCase.description ||
               '';
 
             return (
               <Card key={medCase.id}>
                 <CardHeader className="pb-2">
                   <div className="flex items-center justify-between">
-                    <Badge>{medCase.specialty || medCase.category || 'Klinik'}</Badge>
+                    <Badge>{medCase.specialty || 'Klinik'}</Badge>
                     <Badge variant="outline">{medCase.difficulty || 'FSP C1'}</Badge>
                   </div>
                   <CardTitle className="text-base mt-2">{medCase.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3 text-sm text-slate-600">
-                  <p>
+                  <p className="line-clamp-2">
                     <strong>Patient:</strong> {patientName} ({patientAge} J.)
-                    {complaint ? ` – ${complaint}` : ''}
+                    {complaint ? ` – „${complaint}“` : ''}
                   </p>
                   <div className="flex flex-wrap gap-2 pt-1">
                     <Badge
@@ -172,6 +234,16 @@ export default function DashboardPage() {
             );
           })}
         </div>
+
+        {filteredCases.length > 8 && (
+          <div className="flex justify-center pt-2">
+            <Button variant="outline" onClick={() => setShowAllCases(!showAllCases)}>
+              {showAllCases
+                ? 'Weniger Fälle anzeigen'
+                : `Alle ${filteredCases.length} Fälle anzeigen`}
+            </Button>
+          </div>
+        )}
       </section>
     </main>
   );

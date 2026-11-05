@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { MEDICAL_CASES } from '@/lib/medical-cases';
 import { useProgressStore } from '@/lib/store';
+import { CaseSelector } from '@/components/case-selector';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -25,35 +26,27 @@ export default function ArztbriefPage() {
 
   return (
     <main className="max-w-5xl mx-auto p-6 space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <Link href="/" className="text-sm text-blue-600 hover:underline">
-            ← Zurück zum Dashboard
-          </Link>
-          <h1 className="text-2xl font-bold text-slate-900 mt-1">
-            FSP Teil 2: Arztbrief & Dokumentation
-          </h1>
-          <p className="text-sm text-slate-600">
-            Schriftliche Fallzusammenfassung im medizinischen Fachstil (Konjunktiv I)
-          </p>
-        </div>
-
-        <div className="flex gap-2">
-          {MEDICAL_CASES.map((c) => (
-            <Button
-              key={c.id}
-              variant={c.id === selectedCaseId ? 'default' : 'outline'}
-              onClick={() => {
-                setSelectedCaseId(c.id);
-                setDraft('');
-                setShowSolution(false);
-              }}
-            >
-              {c.patient.name}
-            </Button>
-          ))}
-        </div>
+      <div>
+        <Link href="/" className="text-sm text-blue-600 hover:underline">
+          ← Zurück zum Dashboard
+        </Link>
+        <h1 className="text-2xl font-bold text-slate-900 mt-1">
+          FSP Teil 2: Arztbrief & Dokumentation
+        </h1>
+        <p className="text-sm text-slate-600">
+          Schriftliche Fallzusammenfassung im medizinischen Fachstil (Konjunktiv I)
+        </p>
       </div>
+
+      <CaseSelector
+        selectedCaseId={selectedCaseId}
+        onSelectCase={(id) => {
+          setSelectedCaseId(id);
+          setDraft('');
+          setShowSolution(false);
+        }}
+        completedIds={progress.completedArztbriefCases}
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="md:col-span-1">
@@ -67,7 +60,7 @@ export default function ArztbriefPage() {
               {currentCase.patient.occupation})
             </p>
             <p>
-              <strong>Vorstellungsgrund:</strong> {currentCase.patient.chiefComplaint}
+              <strong>Vorstellungsgrund:</strong> „{currentCase.patient.chiefComplaint}“
             </p>
             <div className="bg-slate-50 p-3 rounded-lg border text-xs space-y-1">
               <div className="font-semibold text-slate-900">Vitalparameter:</div>
@@ -77,7 +70,7 @@ export default function ArztbriefPage() {
               <div>SpO₂: {currentCase.patient.vitalSigns.spo2}</div>
             </div>
             <p className="text-xs leading-relaxed text-slate-600">
-              <strong>Anamnese-Notizen:</strong> {currentCase.patient.historyDetails}
+              <strong>Klinische Angaben:</strong> {currentCase.patient.historyDetails}
             </p>
           </CardContent>
         </Card>
@@ -121,7 +114,7 @@ export default function ArztbriefPage() {
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
               rows={8}
-              placeholder="Schreiben Sie hier Ihren Arztbrief-Abschnitt (z.B. Herr Müller stellte sich mit seit zwei Stunden bestehenden retrosternalen Thoraxschmerzen vor...)"
+              placeholder="Schreiben Sie hier Ihren Arztbrief-Abschnitt..."
               className="w-full rounded-xl border border-slate-300 p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
 

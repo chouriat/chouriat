@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { TRAINING_MODULES } from '@/lib/modules';
-import { MEDICAL_CASES, VOCABULARY_LIST } from '@/lib/medical-cases';
+import { MEDICAL_CASES, VOCABULARY_LIST, MedicalCase } from '@/lib/medical-cases';
 import { useProgressStore } from '@/lib/store';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -37,7 +37,7 @@ export default function DashboardPage() {
   }, []);
 
   const filteredCases = useMemo(() => {
-    return MEDICAL_CASES.filter((c: any) => {
+    return MEDICAL_CASES.filter((c: MedicalCase) => {
       const matchesSpec =
         selectedSpecialty === 'Alle' || c.specialty === selectedSpecialty;
       const q = searchQuery.trim().toLowerCase();
@@ -183,7 +183,7 @@ export default function DashboardPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {displayedCases.map((medCase: any) => {
+          {displayedCases.map((medCase: MedicalCase) => {
             const anamneseDone = progress.completedAnamneseCases.includes(medCase.id);
             const arztbriefDone = progress.completedArztbriefCases.includes(medCase.id);
             const uebergabeDone = progress.completedUebergabeCases.includes(medCase.id);

@@ -14,7 +14,7 @@ export default function DashboardPage() {
   const { progress, isLoaded } = useProgressStore();
 
   const totalCases = MEDICAL_CASES.length;
-  const totalVocab = VOCABULARY_LIST.length;
+  const totalVocab = VOCABULARY_LIST?.length || 0;
 
   const totalTasks = totalCases * 3 + totalVocab;
   const completedTasks =
@@ -119,24 +119,33 @@ export default function DashboardPage() {
       <section className="space-y-4">
         <h2 className="text-xl font-bold text-slate-900">Verfügbare klinische Prüfungsfälle</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {MEDICAL_CASES.map((medCase) => {
+          {MEDICAL_CASES.map((medCase: any) => {
             const anamneseDone = progress.completedAnamneseCases.includes(medCase.id);
             const arztbriefDone = progress.completedArztbriefCases.includes(medCase.id);
             const uebergabeDone = progress.completedUebergabeCases.includes(medCase.id);
+
+            const patientName = medCase.patient?.name || medCase.patientName || 'Patient/in';
+            const patientAge = medCase.patient?.age || medCase.patientAge || '–';
+            const complaint =
+              medCase.patient?.chiefComplaint ||
+              medCase.chiefComplaint ||
+              medCase.presentingComplaint ||
+              medCase.description ||
+              '';
 
             return (
               <Card key={medCase.id}>
                 <CardHeader className="pb-2">
                   <div className="flex items-center justify-between">
-                    <Badge>{medCase.specialty}</Badge>
-                    <Badge variant="outline">{medCase.difficulty}</Badge>
+                    <Badge>{medCase.specialty || medCase.category || 'Klinik'}</Badge>
+                    <Badge variant="outline">{medCase.difficulty || 'FSP C1'}</Badge>
                   </div>
                   <CardTitle className="text-base mt-2">{medCase.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3 text-sm text-slate-600">
                   <p>
-                    <strong>Patient:</strong> {medCase.patient.name} ({medCase.patient.age} J.) –{' '}
-                    {medCase.patient.chiefComplaint}
+                    <strong>Patient:</strong> {patientName} ({patientAge} J.)
+                    {complaint ? ` – ${complaint}` : ''}
                   </p>
                   <div className="flex flex-wrap gap-2 pt-1">
                     <Badge

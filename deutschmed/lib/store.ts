@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { supabase } from '@/lib/supabase';
+import { isSupabaseConfigured } from '@/lib/supabase';
 
 export interface UserProgress {
   completedAnamneseCases: string[];
@@ -41,14 +41,15 @@ export function useProgressStore() {
       }
 
       try {
-        if (supabase) {
-          const { data: authData } = await supabase.auth.getUser();
-          if (authData?.user && isMounted) {
-            setIsCloudSynced(true);
-          }
+        const configured =
+          typeof isSupabaseConfigured === 'function'
+            ? isSupabaseConfigured()
+            : Boolean(isSupabaseConfigured);
+        if (configured && isMounted) {
+          setIsCloudSynced(true);
         }
       } catch {
-        // Fallback silently to localStorage if Supabase env vars are not configured
+        // Fallback silently to localStorage
       } finally {
         if (isMounted) setIsLoaded(true);
       }

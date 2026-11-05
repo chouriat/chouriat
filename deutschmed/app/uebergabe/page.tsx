@@ -1,22 +1,95 @@
-import type { Metadata } from "next";
+'use client';
 
-import { ModulePlaceholder } from "@/components/module-placeholder";
-import { TRAINING_MODULES } from "@/lib/modules";
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { MEDICAL_CASES } from '@/lib/medical-cases';
+import { useProgressStore } from '@/lib/store';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
-const trainingModule = TRAINING_MODULES.find((m) => m.href === "/uebergabe")!;
+export default function UebergabePage() {
+  const [selectedCaseId, setSelectedCaseId] = useState(MEDICAL_CASES[0].id);
+  const [revealedSteps, setRevealedSteps] = useState<string[]>([]);
+  const { progress, markUebergabeCompleted } = useProgressStore();
 
-export const metadata: Metadata = { title: trainingModule.shortTitle };
+  const currentCase =
+    MEDICAL_CASES.find((c) => c.id === selectedCaseId) || MEDICAL_CASES[0];
+  const isCompleted = progress.completedUebergabeCases.includes(currentCase.id);
 
-export default function Page() {
+  const toggleStep = (step: string) => {
+    setRevealedSteps((prev) =>
+      prev.includes(step) ? prev.filter((s) => s !== step) : [...prev, step]
+    );
+  };
+
   return (
-    <ModulePlaceholder
-      icon={trainingModule.icon}
-      title={trainingModule.title}
-      description={trainingModule.description}
-      plannedFeatures={[
-        "Audio einer realistischen Stationsübergabe",
-        "Lückentext und Multiple Choice zu Laborwerten und Dosierungen"
-      ]}
-    />
+    <main className="max-w-5xl mx-auto p-6 space-y-6">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <Link href="/" className="text-sm text-blue-600 hover:underline">
+            ← Zurück zum Dashboard
+          </Link>
+          <h1 className="text-2xl font-bold text-slate-900 mt-1">
+            FSP Teil 3: Klinische Übergabe (ISBAR-Standard)
+          </h1>
+          <p className="text-sm text-slate-600">
+            Strukturierte Patientenvorstellung im Arzt-Arzt-Gespräch
+          </p>
+        </div>
+
+        <div className="flex gap-2">
+          {MEDICAL_CASES.map((c) => (
+            <Button
+              key={c.id}
+              variant={c.id === selectedCaseId ? 'default' : 'outline'}
+              onClick={() => {
+                setSelectedCaseId(c.id);
+                setRevealedSteps([]);
+              }}
+            >
+              {c.patient.name}
+            </Button>
+          ))}
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        {currentCase.isbarSteps.map((item) => {
+          const isOpen = revealedSteps.includes(item.step);
+          return (
+            <Card key={item.step}>
+              <CardHeader className="pb-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white font-bold">
+                      {item.step}
+                    </span>
+                    <CardTitle className="text-base">{item.label}</CardTitle>
+                  </div>
+                  <Button variant="outline" size="sm" onClick={() => toggleStep(item.step)}>
+                    {isOpen ? 'Musterformulierung verbergen' : 'C1-Formulierung zeigen'}
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-3 text-sm">
+                <p className="text-slate-600">{item.guidance}</p>
+                {isOpen && (
+                  <div className="rounded-lg bg-emerald-50 border border-emerald-200 p-3 text-slate-800">
+                    <strong>Muster-Übergabe:</strong> „{item.sampleSpeech}“
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+
+      <div className="flex justify-end">
+        <Button onClick={() => markUebergabeCompleted(currentCase.id)}>
+          {isCompleted ? '✓ Übergabe abgeschlossen (+50 XP)' : 'Übergabe als trainiert markieren (+50 XP)'}
+        </Button>
+      </div>
+    </main>
   );
 }

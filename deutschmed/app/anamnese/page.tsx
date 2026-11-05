@@ -180,7 +180,9 @@ export default function AnamnesePage() {
                   </CardTitle>
                   {aiProvider && (
                     <Badge variant="outline" className="text-[11px]">
-                      {aiProvider === 'openai'
+                      {aiProvider === 'gemini'
+                        ? '⚡ Gemini AI aktiv'
+                        : aiProvider === 'openai'
                         ? '⚡ OpenAI aktiv'
                         : aiProvider === 'anthropic'
                         ? '⚡ Claude AI aktiv'

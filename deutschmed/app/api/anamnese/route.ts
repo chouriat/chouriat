@@ -35,10 +35,75 @@ Antworte AUSSCHLIESSLICH im folgenden JSON-Format:
   "feedback": "Kurzes FSP-Prüfer-Feedback zur Frage des Arztes"
 }`;
 
-    const openAiKey = process.env.OPENAI_API_KEY;
-    const anthropicKey = process.env.ANTHROPIC_API_KEY;
+    // Auto-detect Gemini key even if stored under GEMINI_API_KEY, GOOGLE_API_KEY, or OPENAI_API_KEY
+    const rawGeminiKey =
+      process.env.GEMINI_API_KEY ||
+      process.env.GOOGLE_API_KEY ||
+      process.env.NEXT_PUBLIC_GEMINI_API_KEY ||
+      (process.env.OPENAI_API_KEY?.startsWith('AIza')
+        ? process.env.OPENAI_API_KEY
+        : undefined) ||
+      (process.env.ANTHROPIC_API_KEY?.startsWith('AIza')
+        ? process.env.ANTHROPIC_API_KEY
+        : undefined);
 
-    // Option A: OpenAI API (gpt-4o-mini)
+    const openAiKey =
+      process.env.OPENAI_API_KEY && !process.env.OPENAI_API_KEY.startsWith('AIza')
+        ? process.env.OPENAI_API_KEY
+        : undefined;
+
+    const anthropicKey =
+      process.env.ANTHROPIC_API_KEY && !process.env.ANTHROPIC_API_KEY.startsWith('AIza')
+        ? process.env.ANTHROPIC_API_KEY
+        : undefined;
+
+    // Option A: Google Gemini API (gemini-2.5-flash)
+    if (rawGeminiKey) {
+      const geminiContents = [
+        ...history.map((m) => ({
+          role: m.role === 'doctor' ? 'user' : 'model',
+          parts: [{ text: m.text }],
+        })),
+        {
+          role: 'user',
+          parts: [{ text: message }],
+        },
+      ];
+
+      const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${rawGeminiKey}`;
+
+      const res = await fetch(geminiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          systemInstruction: {
+            parts: [{ text: systemPrompt }],
+          },
+          contents: geminiContents,
+          generationConfig: {
+            temperature: 0.5,
+            responseMimeType: 'application/json',
+          },
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        const rawText =
+          data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          const parsed = JSON.parse(jsonMatch[0]);
+          return NextResponse.json({
+            patientReply: parsed.patientReply,
+            feedback: parsed.feedback,
+            provider: 'gemini',
+          });
+        }
+      }
+    }
+
+    // Option B: OpenAI API (gpt-4o-mini)
     if (openAiKey) {
       const openAiMessages = [
         { role: 'system', content: systemPrompt },
@@ -77,7 +142,7 @@ Antworte AUSSCHLIESSLICH im folgenden JSON-Format:
       }
     }
 
-    // Option B: Anthropic Claude API
+    // Option C: Anthropic Claude API
     if (anthropicKey) {
       const claudeMessages = [
         ...history.map((m) => ({
@@ -120,7 +185,7 @@ Antworte AUSSCHLIESSLICH im folgenden JSON-Format:
       }
     }
 
-    // Option C: Smart Clinical Fallback (if no API key is configured yet)
+    // Option D: Smart Clinical Fallback (if no API key is configured yet)
     const usesJargon =
       /dyspnoe|retrosternal|emesis|vomitus|nausea|pyrexie|appendizitis|cephalgie|vertigo|inappetenz|cholezystitis|pankreatitis|komorbidit|noxen|miktion|defäkation|synkope|expektoration|hämoptyse/i.test(
         message

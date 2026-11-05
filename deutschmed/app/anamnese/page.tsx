@@ -25,6 +25,7 @@ export default function AnamnesePage() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [aiProvider, setAiProvider] = useState<string | null>(null);
 
   const { progress, markAnamneseCompleted } = useProgressStore();
 
@@ -50,52 +51,49 @@ export default function AnamnesePage() {
     setInputText('');
     setIsLoading(true);
 
-    const usesJargon =
-      /dyspnoe|retrosternal|emesis|vomitus|nausea|pyrexie|appendizitis|cephalgie|vertigo|inappetenz|cholezystitis|pankreatitis/i.test(
-        doctorQuestion
-      );
+    try {
+      const response = await fetch('/api/anamnese', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          caseId: currentCase.id,
+          message: doctorQuestion,
+          history: messages.map((m) => ({ role: m.role, text: m.text })),
+        }),
+      });
 
-    const feedback = usesJargon
-      ? '⚠️ FSP-Hinweis: Sie haben medizinische Fachbegriffe im Patientengespräch verwendet. Nutzen Sie gegenüber Patienten bitte verständliche Alltagssprache!'
-      : '✓ Gute C1-Arzt-Patienten-Kommunikation: Klare und verständliche Fragestellung.';
+      const data = await response.json();
 
-    let patientReply = `Zu meinen aktuellen Beschwerden: ${currentCase.patient.chiefComplaint}`;
+      if (data.provider) {
+        setAiProvider(data.provider);
+      }
 
-    const lowerQ = doctorQuestion.toLowerCase();
-    if (lowerQ.includes('name') || lowerQ.includes('heißen') || lowerQ.includes('alt') || lowerQ.includes('beruf')) {
-      patientReply = `Ich heiße ${currentCase.patient.name}, bin ${currentCase.patient.age} Jahre alt und arbeite als ${currentCase.patient.occupation}.`;
-    } else if (
-      lowerQ.includes('schmerz') ||
-      lowerQ.includes('beschwerde') ||
-      lowerQ.includes('was führt') ||
-      lowerQ.includes('problem') ||
-      lowerQ.includes('passiert')
-    ) {
-      patientReply = questions[0]?.patientResponse || currentCase.patient.chiefComplaint;
-    } else if (
-      lowerQ.includes('vorerkrank') ||
-      lowerQ.includes('medikament') ||
-      lowerQ.includes('tablette') ||
-      lowerQ.includes('operation')
-    ) {
-      patientReply = questions[1]?.patientResponse || currentCase.patient.historyDetails;
-    } else if (
-      lowerQ.includes('allergi') ||
-      lowerQ.includes('rauch') ||
-      lowerQ.includes('alkohol') ||
-      lowerQ.includes('familie')
-    ) {
-      patientReply = questions[2]?.patientResponse || currentCase.patient.historyDetails;
-    }
-
-    setTimeout(() => {
       setMessages((prev) => [
         ...prev,
-        { role: 'doctor', text: doctorQuestion, feedback },
-        { role: 'patient', text: patientReply },
+        {
+          role: 'doctor',
+          text: doctorQuestion,
+          feedback: data.feedback,
+        },
+        {
+          role: 'patient',
+          text:
+            data.patientReply ||
+            currentCase.patient.chiefComplaint,
+        },
       ]);
+    } catch {
+      setMessages((prev) => [
+        ...prev,
+        { role: 'doctor', text: doctorQuestion },
+        {
+          role: 'patient',
+          text: currentCase.patient.chiefComplaint,
+        },
+      ]);
+    } finally {
       setIsLoading(false);
-    }, 350);
+    }
   };
 
   return (
@@ -112,7 +110,6 @@ export default function AnamnesePage() {
         </p>
       </div>
 
-      {/* Neuer kompakter Fall-Wähler mit Fachgebiets-Filter & Suche */}
       <CaseSelector
         selectedCaseId={selectedCaseId}
         onSelectCase={handleCaseChange}
@@ -126,7 +123,7 @@ export default function AnamnesePage() {
             variant={mode === 'ai' ? 'default' : 'outline'}
             onClick={() => setMode('ai')}
           >
-            💬 Freier Anamnese-Simulator (Chat)
+            💬 Freier KI-Anamnese-Simulator (Chat)
           </Button>
           <Button
             size="sm"
@@ -177,9 +174,20 @@ export default function AnamnesePage() {
           {mode === 'ai' ? (
             <>
               <CardHeader>
-                <CardTitle className="text-lg">
-                  Gespräch mit {currentCase.patient.name}
-                </CardTitle>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-lg">
+                    Gespräch mit {currentCase.patient.name}
+                  </CardTitle>
+                  {aiProvider && (
+                    <Badge variant="outline" className="text-[11px]">
+                      {aiProvider === 'openai'
+                        ? '⚡ OpenAI aktiv'
+                        : aiProvider === 'anthropic'
+                        ? '⚡ Claude AI aktiv'
+                        : '💡 Lokaler Simulator (API-Key optional)'}
+                    </Badge>
+                  )}
+                </div>
                 <p className="text-xs text-slate-500">
                   Stellen Sie Ihre Anamnesefragen auf Deutsch (aktuelle Beschwerden, Vorerkrankungen, Medikamente, Allergien, Sozial- & Familienanamnese).
                 </p>
@@ -229,7 +237,7 @@ export default function AnamnesePage() {
                     className="flex-1 rounded-xl border border-slate-300 px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
                   />
                   <Button type="submit" disabled={isLoading}>
-                    {isLoading ? 'Sendet...' : 'Frage stellen'}
+                    {isLoading ? 'Patient antwortet...' : 'Frage stellen'}
                   </Button>
                 </form>
               </CardContent>

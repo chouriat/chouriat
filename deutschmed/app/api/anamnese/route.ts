@@ -6,6 +6,17 @@ interface ChatTurn {
   text: string;
 }
 
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+export async function OPTIONS() {
+  return NextResponse.json({}, { headers: corsHeaders });
+}
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -98,7 +109,7 @@ Antworte AUSSCHLIESSLICH im folgenden JSON-Format:
             patientReply: parsed.patientReply,
             feedback: parsed.feedback,
             provider: 'gemini',
-          });
+          }, { headers: corsHeaders });
         }
       }
     }
@@ -137,7 +148,7 @@ Antworte AUSSCHLIESSLICH im folgenden JSON-Format:
             patientReply: parsed.patientReply,
             feedback: parsed.feedback,
             provider: 'openai',
-          });
+          }, { headers: corsHeaders });
         }
       }
     }
@@ -180,7 +191,7 @@ Antworte AUSSCHLIESSLICH im folgenden JSON-Format:
             patientReply: parsed.patientReply,
             feedback: parsed.feedback,
             provider: 'anthropic',
-          });
+          }, { headers: corsHeaders });
         }
       }
     }
@@ -245,7 +256,7 @@ Antworte AUSSCHLIESSLICH im folgenden JSON-Format:
       patientReply,
       feedback,
       provider: 'fallback',
-    });
+    }, { headers: corsHeaders });
   } catch (error) {
     console.error('Anamnese API Error:', error);
     return NextResponse.json(

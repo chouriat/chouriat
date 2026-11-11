@@ -1,6 +1,8 @@
 # viddown
 
-Free, ad-supported website for saving public videos from **TikTok, Instagram, Facebook and X** without a watermark, as HD/SD MP4 or MP3.
+Free, ad-supported website for saving public videos from **TikTok, Instagram, Facebook and X** (plus Pinterest, Reddit, Snapchat, LinkedIn, Dailymotion, Twitch clips, Bluesky and Tumblr) as HD/SD MP4 or MP3, without the TikTok watermark.
+
+To add a network, add it to `lib/platforms.js` (link detection for server and browser), give it a mark in `scripts/build.js` and a page entry in `src/content/pages.js`.
 
 - **Frontend**: fast static pages (no framework), original brand, light/dark theme, mobile first, SEO landing page per network, FAQ rich results, sitemap, PWA manifest.
 - **Backend**: Node.js + Express. Links are resolved with [yt-dlp](https://github.com/yt-dlp/yt-dlp); ffmpeg merges streams and converts audio to MP3.
@@ -85,4 +87,4 @@ Things to know in production:
 
 The Terms, Privacy and Copyright pages in `src/content/pages.js` are sensible starting templates, not legal advice. Review them (company name, contact email, log retention period) before launch. Downloading other people's content can breach copyright and the networks' terms of service; the site tells users to download only what they own or have permission to use, and `blocklist.txt` lets you honour takedown requests.
 
-viddown is not affiliated with TikTok, Instagram, Facebook, Meta or X Corp.
+viddown is not affiliated with any of the networks it supports.

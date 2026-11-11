@@ -29,6 +29,34 @@ test('detects supported platforms only', () => {
   assert.strictEqual(id('https://localhost/x'), undefined);
 });
 
+test('detects the additional networks', () => {
+  const id = (u) => (detectPlatform(u) || {}).id;
+  assert.strictEqual(id('https://pin.it/abc'), 'pinterest');
+  assert.strictEqual(id('https://www.pinterest.de/pin/123/'), 'pinterest');
+  assert.strictEqual(id('https://www.pinterest.co.uk/pin/123/'), 'pinterest');
+  assert.strictEqual(id('https://pinterest.evil.example.com/pin/1'), undefined);
+  assert.strictEqual(id('https://www.reddit.com/r/a/comments/1/x/'), 'reddit');
+  assert.strictEqual(id('https://v.redd.it/abc'), 'reddit');
+  assert.strictEqual(id('https://www.snapchat.com/spotlight/abc'), 'snapchat');
+  assert.strictEqual(id('https://www.linkedin.com/posts/a_b-1'), 'linkedin');
+  assert.strictEqual(id('https://dai.ly/x1'), 'dailymotion');
+  assert.strictEqual(id('https://clips.twitch.tv/Abc'), 'twitch');
+  assert.strictEqual(id('https://bsky.app/profile/a/post/1'), 'bluesky');
+  assert.strictEqual(id('https://www.tumblr.com/a/1'), 'tumblr');
+  // Deliberately unsupported
+  assert.strictEqual(id('https://www.youtube.com/watch?v=abc'), undefined);
+  assert.strictEqual(id('https://youtu.be/abc'), undefined);
+});
+
+test('every network has a landing page and a mark', () => {
+  const { PLATFORMS } = require('../lib/platforms');
+  const { platformPath, tools } = require('../src/content/pages');
+  for (const p of PLATFORMS) {
+    assert.ok(platformPath[p.id], `no path for ${p.id}`);
+    assert.ok(tools.some((t) => t.path === platformPath[p.id]), `no page for ${p.id}`);
+  }
+});
+
 test('TikTok selectors skip the watermarked rendition', () => {
   assert.ok(formatSelectors('tiktok').hd.includes('[format_note!*=watermark]'));
   assert.ok(!formatSelectors('x').hd.includes('watermark'));

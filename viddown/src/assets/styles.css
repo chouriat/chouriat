@@ -216,7 +216,7 @@ section { padding: 72px 0; }
 
 /* ---------- Footer ---------- */
 .site-footer { border-top: 1px solid var(--line); padding: 48px 0 32px; font-size: 0.93rem; color: var(--muted); }
-.foot-grid { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 28px; }
+.foot-grid { display: grid; grid-template-columns: 1.4fr repeat(4, 1fr); gap: 28px; }
 .site-footer h4 { color: var(--ink); font: 700 0.95rem var(--font-body); margin: 0 0 12px; }
 .site-footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
 .site-footer a { text-decoration: none; }
@@ -230,3 +230,9 @@ section { padding: 72px 0; }
   .hero h1 em { white-space: normal; }
   .hero { padding-top: 36px; }
 }
+
+/* Letter marks for secondary networks */
+.mono { font: 800 0.95rem/1 var(--font-display); letter-spacing: -0.02em; }
+.tab .mono { font-size: 0.8rem; width: 16px; text-align: center; }
+.tab-more { border-style: dashed; color: var(--muted); }
+#networks { scroll-margin-top: 80px; }

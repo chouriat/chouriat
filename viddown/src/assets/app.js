@@ -36,17 +36,16 @@
   const tabs = document.querySelectorAll('.tab[data-platform]');
   const resultAd = $('#result-ad');
 
-  const PATTERNS = {
-    tiktok: /(^|\.)tiktok\.com$/,
-    instagram: /(^|\.)(instagram\.com|instagr\.am)$/,
-    facebook: /(^|\.)(facebook\.com|fb\.watch|fb\.com)$/,
-    x: /(^|\.)(x\.com|twitter\.com)$/,
-  };
+  // The network list is injected by the build step from lib/platforms.js.
+  const PLATFORMS = window.VD_PLATFORMS || [];
   function detect(value) {
     const m = String(value).match(/https?:\/\/[^\s]+/i);
     try {
       const host = new URL(m ? m[0] : `https://${value.trim()}`).hostname.toLowerCase();
-      return Object.keys(PATTERNS).find((k) => PATTERNS[k].test(host)) || null;
+      const hit = PLATFORMS.find(
+        (p) => p.hosts.some((h) => host === h || host.endsWith(`.${h}`)) || (p.pattern && new RegExp(p.pattern).test(host))
+      );
+      return hit ? hit.id : null;
     } catch { return null; }
   }
   function highlight() {
@@ -134,7 +133,7 @@
     const url = input.value.trim();
     if (!url) { input.focus(); return; }
     if (!detect(url)) {
-      showError('Paste a link from TikTok, Instagram, Facebook or X. Tip: use the Share button in the app and choose "Copy link".');
+      showError('That link is not from a network we support yet. Tip: open the post, use its Share button and choose "Copy link".');
       return;
     }
     setBusy(true);

@@ -8,6 +8,7 @@ require('dotenv').config({ quiet: true });
 const fs = require('fs');
 const path = require('path');
 const content = require('../src/content/pages');
+const { PLATFORMS } = require('../lib/platforms');
 
 const ROOT = path.join(__dirname, '..');
 const OUT = path.join(ROOT, 'public');
@@ -50,8 +51,20 @@ const P = {
   tiktok: { name: 'TikTok', color: '#111', glyph: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 3c.5 2.8 2.3 4.5 5 4.8"/></svg>' },
   instagram: { name: 'Instagram', color: '#d62976', glyph: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="0.6" fill="currentColor"/></svg>' },
   facebook: { name: 'Facebook', color: '#1877f2', glyph: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 3h-2.5A3.5 3.5 0 0 0 9 6.5V21M6 11h8"/></svg>' },
-  x: { name: 'X / Twitter', color: '#111', glyph: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 4l16 16M20 4 4 20"/></svg>' },
+  x: { name: 'X / Twitter', color: '#111', glyph: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 4l16 16M20 4 4 20"/></svg>' },  // Secondary networks use a plain letter mark.
+  pinterest: { name: 'Pinterest', color: '#bd081c', glyph: mono('P') },
+  reddit: { name: 'Reddit', color: '#ff4500', glyph: mono('R') },
+  snapchat: { name: 'Snapchat', color: '#c9a600', glyph: mono('S') },
+  linkedin: { name: 'LinkedIn', color: '#0a66c2', glyph: mono('in') },
+  dailymotion: { name: 'Dailymotion', color: '#0d2c54', glyph: mono('D') },
+  twitch: { name: 'Twitch', color: '#7a3fd1', glyph: mono('T') },
+  bluesky: { name: 'Bluesky', color: '#0f73d9', glyph: mono('B') },
+  tumblr: { name: 'Tumblr', color: '#35465c', glyph: mono('t') },
 };
+const PRIMARY = ['tiktok', 'instagram', 'facebook', 'x'];
+function mono(letter) {
+  return `<span class="mono" aria-hidden="true">${letter}</span>`;
+}
 
 // ---------------------------------------------------------------------------
 // Partials
@@ -135,15 +148,17 @@ ${ad('footer')}
         <p style="margin-top:12px;max-width:320px">Save clips from your favourite networks in a couple of taps. Free, fast and with no sign-up.</p>
       </div>
       <div><h4>Downloaders</h4><ul>${NAV.map(([h, l]) => `<li><a href="${h}">${l}</a></li>`).join('')}</ul></div>
+      <div><h4>More networks</h4><ul>${content.tools.filter((t) => t.platform && !PRIMARY.includes(t.platform)).map((t) => `<li><a href="${t.path}">${P[t.platform].name}</a></li>`).join('')}</ul></div>
       <div><h4>viddown</h4><ul><li><a href="/about">About</a></li><li><a href="/faq">FAQ</a></li><li><a href="/contact">Contact</a></li></ul></div>
       <div><h4>Legal</h4><ul><li><a href="/terms">Terms of use</a></li><li><a href="/privacy">Privacy &amp; cookies</a></li><li><a href="/copyright">Copyright / DMCA</a></li></ul></div>
     </div>
     <div class="disclaimer">
-      <span>© ${YEAR} viddown. Not affiliated with TikTok, Instagram, Facebook, Meta or X Corp.</span>
+      <span>© ${YEAR} viddown. Not affiliated with any of the networks named on this site.</span>
       <span>Download only content you own or have permission to use.</span>
     </div>
   </div>
 </footer>
+<script>window.VD_PLATFORMS=${JSON.stringify(PLATFORMS.map(({ id, hosts, pattern }) => ({ id, hosts, pattern })))};</script>
 <script src="/assets/app.js?v=${BUILD_ID}" defer></script>
 </body>
 </html>
@@ -152,9 +167,11 @@ ${ad('footer')}
 
 function downloader(tool) {
   const active = tool.platform;
-  const tabs = Object.entries(P)
-    .map(([k, p]) => `<a class="tab${k === active ? ' active' : ''}" data-platform="${k}" href="${content.platformPath[k]}">${p.glyph}${p.name}</a>`)
-    .join('');
+  const shown = PRIMARY.includes(active) || !active ? PRIMARY : [...PRIMARY, active];
+  const tabs =
+    shown
+      .map((k) => `<a class="tab${k === active ? ' active' : ''}" data-platform="${k}" href="${content.platformPath[k]}">${P[k].glyph}${P[k].name}</a>`)
+      .join('') + `<a class="tab tab-more" href="#networks">+ ${Object.keys(P).length - shown.length} more</a>`;
   return `<section class="hero">
   <div class="wrap hero-grid">
     <div>
@@ -206,8 +223,8 @@ function platformCards(exclude) {
       (t) => `<a class="pcard" href="${t.path}"><span class="logo" style="background:${P[t.platform].color}">${P[t.platform].glyph}</span><h3>${esc(t.card.title)}</h3><p>${esc(t.card.text)}</p><span class="go">Open downloader →</span></a>`
     )
     .join('');
-  return `<section><div class="wrap">
-  <div class="section-head"><span class="kicker">One tool, four networks</span><h2>Pick where your clip lives</h2></div>
+  return `<section id="networks"><div class="wrap">
+  <div class="section-head"><span class="kicker">One tool, ${Object.keys(P).length} networks</span><h2>Pick where your clip lives</h2></div>
   <div class="platforms">${cards}</div>
 </div></section>`;
 }

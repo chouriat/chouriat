@@ -15,7 +15,7 @@ const helmet = require('helmet');
 const compression = require('compression');
 const rateLimit = require('express-rate-limit');
 
-const { detectPlatform, normalizeUrl } = require('./lib/platforms');
+const { detectPlatform, normalizeUrl, platformNames } = require('./lib/platforms');
 const { resolveMedia } = require('./lib/extractor');
 
 const PORT = Number(process.env.PORT || 3000);
@@ -125,7 +125,7 @@ app.post('/api/resolve', apiLimiter, async (req, res) => {
   if (!url) return res.status(400).json({ error: 'Please paste a valid link.' });
   const platform = detectPlatform(url);
   if (!platform) {
-    return res.status(400).json({ error: 'That link is not supported yet. Try TikTok, Instagram, Facebook or X.' });
+    return res.status(400).json({ error: `That link is not supported yet. Try ${platformNames()}.` });
   }
   if (isBlocked(url)) return res.status(451).json({ error: 'This content is unavailable at the request of the rights holder.' });
   try {

@@ -6,6 +6,14 @@ const platformPath = {
   instagram: '/instagram-downloader',
   facebook: '/facebook-downloader',
   x: '/twitter-video-downloader',
+  pinterest: '/pinterest-video-downloader',
+  reddit: '/reddit-video-downloader',
+  snapchat: '/snapchat-video-downloader',
+  linkedin: '/linkedin-video-downloader',
+  dailymotion: '/dailymotion-downloader',
+  twitch: '/twitch-clip-downloader',
+  bluesky: '/bluesky-video-downloader',
+  tumblr: '/tumblr-video-downloader',
 };
 
 const sharedFeatures = [
@@ -31,11 +39,11 @@ const tools = [
     tool: true,
     path: '/',
     platform: null,
-    title: 'viddown — Free Video Downloader for TikTok, Instagram, Facebook & X',
-    description: 'Save videos from TikTok, Instagram, Facebook and X without a watermark. Free HD MP4 and MP3 downloads in your browser, no sign-up needed.',
+    title: 'viddown — Free Video Downloader for TikTok, Instagram, Facebook, X & More',
+    description: 'Save videos from TikTok, Instagram, Facebook, X, Pinterest, Reddit and more without a watermark. Free HD MP4 and MP3 downloads in your browser, no sign-up needed.',
     eyebrow: 'Free · No sign-up · No watermark',
     h1: 'Save any clip, <em>minus the watermark</em>',
-    lede: 'Drop in a link from TikTok, Instagram, Facebook or X and keep the video in clean HD. Free forever, straight from your browser.',
+    lede: 'Drop in a link from TikTok, Instagram, Facebook, X and eight more networks and keep the video in clean HD. Free forever, straight from your browser.',
     placeholder: 'Paste a video link here…',
     stepsTitle: 'Three taps from feed to camera roll',
     stepsLede: 'No app to install and nothing to learn. If you can copy a link, you can use viddown.',
@@ -187,6 +195,134 @@ const tools = [
   },
 ];
 
+/**
+ * Secondary networks. Each entry becomes a full landing page; only the parts
+ * that differ per network are written out here.
+ */
+const more = [
+  {
+    platform: 'pinterest', name: 'Pinterest', noun: 'Pin',
+    h1: 'Pinterest videos, <em>saved to your device</em>',
+    lede: 'Keep the recipe, the craft idea or the workout from any public video Pin, ready to watch offline.',
+    example: 'https://pin.it/…',
+    copy: 'Open the Pin, tap the share arrow and choose Copy link.',
+    card: 'Video Pins and Idea Pins from any public board.',
+    faq: [
+      ['Do short pin.it links work?', 'Yes. Both pin.it short links and full pinterest.com links are supported, including country sites such as pinterest.de or pinterest.co.uk.'],
+      ['Can I download image Pins?', 'Not yet. viddown saves video Pins. Pins that contain only a picture are not supported.'],
+    ],
+  },
+  {
+    platform: 'reddit', name: 'Reddit', noun: 'post',
+    h1: 'Reddit videos, <em>with the sound on</em>',
+    lede: 'Reddit stores picture and audio separately. viddown joins them, so the clip you save actually has sound.',
+    example: 'https://www.reddit.com/r/…/comments/…',
+    copy: 'Tap Share under the post and choose Copy link.',
+    card: 'Videos hosted on Reddit, saved with their audio track.',
+    faq: [
+      ['Why do other tools give me a Reddit video with no sound?', 'Reddit serves video and audio as two separate streams. viddown downloads both and merges them into one MP4.'],
+      ['Does it work for videos in private communities?', 'No. Only posts in public communities can be fetched.'],
+    ],
+  },
+  {
+    platform: 'snapchat', name: 'Snapchat', noun: 'Snap',
+    h1: 'Snapchat Spotlight, <em>saved as MP4</em>',
+    lede: 'Save public Spotlight videos and public Stories to watch again whenever you like.',
+    example: 'https://www.snapchat.com/spotlight/…',
+    copy: 'Tap the share arrow on the Spotlight video and choose Copy link.',
+    card: 'Public Spotlight videos and public Stories.',
+    faq: [
+      ['Can I save private Snaps or chats?', 'No. Only content that is public on snapchat.com, such as Spotlight videos, can be downloaded. Private Snaps, chats and friends-only Stories are never accessible.'],
+      ['Will the creator know I saved it?', 'viddown does not use your Snapchat account, so no notification is sent from it.'],
+    ],
+  },
+  {
+    platform: 'linkedin', name: 'LinkedIn', noun: 'post',
+    h1: 'LinkedIn videos, <em>kept for later</em>',
+    lede: 'Hold on to the talk, the product demo or the lesson from a public LinkedIn post.',
+    example: 'https://www.linkedin.com/posts/…',
+    copy: 'Click the three dots on the post and choose Copy link to post.',
+    card: 'Videos from public LinkedIn posts.',
+    faq: [
+      ['Which LinkedIn videos can I download?', 'Videos in posts that are visible to anyone on or off LinkedIn. Posts limited to connections or to a group cannot be fetched.'],
+      ['Do I need to sign in to LinkedIn?', 'No. viddown never asks for your LinkedIn login.'],
+    ],
+  },
+  {
+    platform: 'dailymotion', name: 'Dailymotion', noun: 'video',
+    h1: 'Dailymotion videos, <em>in a couple of taps</em>',
+    lede: 'Save public Dailymotion videos as MP4, or keep just the audio as an MP3.',
+    example: 'https://www.dailymotion.com/video/…',
+    copy: 'Click Share under the player and copy the link, or copy the address from your browser.',
+    card: 'Public Dailymotion videos in HD or SD.',
+    faq: [
+      ['Is there a length limit?', 'Very long videos can exceed the file size limit of the service. Short and medium-length videos work best.'],
+      ['Do dai.ly short links work?', 'Yes. Both dai.ly and dailymotion.com links are supported.'],
+    ],
+  },
+  {
+    platform: 'twitch', name: 'Twitch', noun: 'clip',
+    h1: 'Twitch clips, <em>saved as MP4</em>',
+    lede: 'Keep the play of the night. Paste a Twitch clip link and save it in the quality it was streamed in.',
+    example: 'https://clips.twitch.tv/…',
+    copy: 'Open the clip, click Share and copy the clip link.',
+    card: 'Clips from any public Twitch channel.',
+    faq: [
+      ['Can I download whole streams or VODs?', 'viddown is built for clips. Full broadcasts are usually far larger than the file size limit of the service and will fail.'],
+      ['Does it work with subscriber-only content?', 'No. Only clips that anyone can watch without logging in can be fetched.'],
+    ],
+  },
+  {
+    platform: 'bluesky', name: 'Bluesky', noun: 'post',
+    h1: 'Bluesky videos, <em>saved as MP4</em>',
+    lede: 'Grab the video from any public Bluesky post in the best quality available.',
+    example: 'https://bsky.app/profile/…/post/…',
+    copy: 'Click the share icon under the post and choose Copy link to post.',
+    card: 'Videos from public Bluesky posts.',
+    faq: [
+      ['Which Bluesky posts are supported?', 'Public posts on bsky.app that contain a video. Posts from accounts that hide their content from logged-out visitors cannot be fetched.'],
+      ['Can I save GIFs from Bluesky?', 'Animated clips that Bluesky stores as video are saved as MP4 files.'],
+    ],
+  },
+  {
+    platform: 'tumblr', name: 'Tumblr', noun: 'post',
+    h1: 'Tumblr videos, <em>kept on your device</em>',
+    lede: 'Save the video from a public Tumblr post before it disappears from your dashboard.',
+    example: 'https://www.tumblr.com/…',
+    copy: 'Click the share arrow on the post and choose Copy link.',
+    card: 'Videos uploaded to public Tumblr blogs.',
+    faq: [
+      ['Does it work with videos embedded from other sites?', 'viddown downloads videos uploaded to Tumblr itself. If a post embeds a video from another supported network, paste the link of the original post instead.'],
+      ['Can I download from blogs that require a login?', 'No. Blogs hidden from logged-out visitors cannot be fetched.'],
+    ],
+  },
+];
+
+for (const m of more) {
+  tools.push({
+    tool: true,
+    path: platformPath[m.platform],
+    platform: m.platform,
+    title: `${m.name} Video Downloader — Free MP4 & MP3 | viddown`,
+    description: `Download ${m.name} videos for free in MP4 or MP3. Paste the link and save the ${m.noun === 'video' ? 'file' : `video from any public ${m.noun}`} on phone or desktop, no sign-up.`,
+    eyebrow: `${m.name} video saver`,
+    h1: m.h1,
+    lede: m.lede,
+    placeholder: `Paste a ${m.name} link, e.g. ${m.example}`,
+    stepsTitle: `How to download a ${m.name} video`,
+    stepsLede: `Works with any public ${m.name} ${m.noun} that contains a video.`,
+    steps: [
+      ['Copy the link', m.copy],
+      ['Paste it above', 'Tap Paste, or drop the link in the box, then press Get video.'],
+      ['Choose a format', 'Pick MP4 HD, a lighter SD file or MP3 audio and the download starts.'],
+    ],
+    featuresTitle: `${m.name} videos without the hassle`,
+    features: sharedFeatures,
+    card: { title: m.name, text: m.card },
+    faq: [...m.faq, ...generalFaq.slice(0, 2), generalFaq[4]],
+  });
+}
+
 const allFaq = [
   ...generalFaq,
   tools[1].faq[0],
@@ -207,9 +343,9 @@ const docs = [
   {
     path: '/about',
     title: 'About viddown',
-    description: 'viddown is a free, browser-based tool for saving public videos from TikTok, Instagram, Facebook and X.',
+    description: 'viddown is a free, browser-based tool for saving public videos from TikTok, Instagram, Facebook, X and other social networks.',
     html: `<h1>About viddown</h1>
-<p>viddown is a small, independent tool with one job: letting you keep a copy of a public video from TikTok, Instagram, Facebook or X without fuss. Paste a link, pick a format, done.</p>
+<p>viddown is a small, independent tool with one job: letting you keep a copy of a public video from TikTok, Instagram, Facebook, X or another supported network without fuss. Paste a link, pick a format, done.</p>
 <h2>Why it is free</h2>
 <p>Running the service costs money for servers and bandwidth. Instead of charging you or limiting downloads, we show a small number of adverts served by Google AdSense. That is the whole business model.</p>
 <h2>What we believe</h2>
@@ -219,7 +355,7 @@ const docs = [
 <li><strong>Respect creators.</strong> viddown is for saving your own work and for personal, permitted use. Please credit creators and never re-upload work that is not yours.</li>
 </ul>
 <h2>Independence</h2>
-<p>viddown is not affiliated with, endorsed by or sponsored by TikTok, ByteDance, Instagram, Facebook, Meta or X Corp. All trademarks belong to their owners.</p>
+<p>viddown is not affiliated with, endorsed by or sponsored by TikTok, ByteDance, Instagram, Facebook, Meta, X Corp. or any other network named on this site. All trademarks belong to their owners.</p>
 <p>Questions or ideas? <a href="/contact">Contact us</a>.</p>`,
   },
   {
@@ -292,7 +428,7 @@ const docs = [
 <h2>3. Your responsibility</h2>
 <p>You are solely responsible for the content you download and what you do with it, including compliance with the terms of the platform it came from.</p>
 <h2>4. Intellectual property</h2>
-<p>All videos, sounds and trademarks remain the property of their respective owners. viddown is not affiliated with TikTok, Instagram, Facebook, Meta or X Corp. The viddown name, logo and site design belong to us.</p>
+<p>All videos, sounds and trademarks remain the property of their respective owners. viddown is not affiliated with TikTok, Instagram, Facebook, Meta, X Corp. or any other network named on this site. The viddown name, logo and site design belong to us.</p>
 <h2>5. No warranty</h2>
 <p>The service is provided "as is" and "as available". We do not guarantee that it will be uninterrupted, error-free or able to fetch any particular video.</p>
 <h2>6. Limitation of liability</h2>

@@ -162,6 +162,7 @@ app.get('/api/download', downloadLimiter, async (req, res) => {
   if (data.kind === 'audio') args.push('-x', '--audio-format', 'mp3', '--audio-quality', '192K');
   else args.push('--merge-output-format', 'mp4', '--remux-video', 'mp4');
   if (process.env.YTDLP_COOKIES) args.push('--cookies', process.env.YTDLP_COOKIES);
+  if (process.env.YTDLP_PROXY) args.push('--proxy', process.env.YTDLP_PROXY);
   args.push('--', data.src);
 
   const child = spawn(YTDLP, args, { stdio: ['ignore', 'ignore', 'pipe'] });

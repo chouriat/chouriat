@@ -21,6 +21,7 @@ function formatSelectors(platformId) {
 function runJson(url) {
   const args = ['-J', '--no-warnings', '--socket-timeout', '15', '--playlist-end', '20'];
   if (process.env.YTDLP_COOKIES) args.push('--cookies', process.env.YTDLP_COOKIES);
+  if (process.env.YTDLP_PROXY) args.push('--proxy', process.env.YTDLP_PROXY);
   args.push('--', url);
   return new Promise((resolve, reject) => {
     execFile(YTDLP, args, { timeout: TIMEOUT_MS, maxBuffer: 64 * 1024 * 1024 }, (err, stdout, stderr) => {

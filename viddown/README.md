@@ -11,6 +11,15 @@ Free, ad-supported website for saving public videos from **TikTok, Instagram, Fa
 Requirements: Node 20+, `yt-dlp` and `ffmpeg` on your PATH.
 
 ```bash
+# macOS (Homebrew)
+brew install yt-dlp ffmpeg
+# Debian / Ubuntu
+sudo apt install ffmpeg pipx && pipx install yt-dlp
+```
+
+The server checks for both tools when it starts and prints `MISSING TOOL` if one is absent. Without yt-dlp every link fails.
+
+```bash
 cp .env.example .env      # then edit the values
 npm install
 npm start                 # builds public/ and serves http://localhost:3000

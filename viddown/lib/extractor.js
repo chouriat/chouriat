@@ -27,6 +27,16 @@ function runJson(url) {
     execFile(YTDLP, args, { timeout: TIMEOUT_MS, maxBuffer: 64 * 1024 * 1024 }, (err, stdout, stderr) => {
       if (err) {
         const e = new Error((stderr || err.message).trim().split('\n').pop());
+        if (err.code === 'ENOENT') {
+          e.message = `yt-dlp was not found (looked for "${YTDLP}"). Install it or set YTDLP_PATH.`;
+          e.userMessage = 'The server is not set up yet: its video tool (yt-dlp) is missing. Please contact the site owner.';
+          return reject(e);
+        }
+        if (err.killed) {
+          e.message = `yt-dlp timed out after ${TIMEOUT_MS} ms`;
+          e.userMessage = 'This is taking too long. Please try again in a moment.';
+          return reject(e);
+        }
         if (/private|login|log in|cookies|authenticat/i.test(stderr)) {
           e.userMessage = 'This post is private or requires a login, so it cannot be downloaded.';
         } else if (/unsupported url/i.test(stderr)) {

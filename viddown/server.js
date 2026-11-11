@@ -9,7 +9,7 @@ const path = require('path');
 const crypto = require('crypto');
 const fs = require('fs');
 const os = require('os');
-const { spawn } = require('child_process');
+const { spawn, spawnSync } = require('child_process');
 const express = require('express');
 const helmet = require('helmet');
 const compression = require('compression');
@@ -168,6 +168,13 @@ app.get('/api/download', downloadLimiter, async (req, res) => {
   const child = spawn(YTDLP, args, { stdio: ['ignore', 'ignore', 'pipe'] });
   let stderr = '';
   child.stderr.on('data', (d) => (stderr = (stderr + d).slice(-4000)));
+  child.on('error', (err) => {
+    console.error('[download] could not start yt-dlp:', err.message);
+    aborted = true;
+    clearTimeout(timer);
+    cleanup();
+    if (!res.headersSent) res.status(503).send('The server is not set up yet: its video tool (yt-dlp) is missing.');
+  });
   const timer = setTimeout(() => child.kill('SIGKILL'), Number(process.env.DOWNLOAD_TIMEOUT_MS || 180000));
   let aborted = false;
   req.on('close', () => {
@@ -228,7 +235,24 @@ app.use(
 );
 app.use((req, res) => res.status(404).sendFile(path.join(__dirname, 'public', '404.html')));
 
+// Fail loudly at startup if the tools the downloader depends on are missing.
+function checkTools() {
+  const tools = [
+    [YTDLP, ['--version'], 'yt-dlp', 'macOS: brew install yt-dlp · Linux: pipx install yt-dlp · or set YTDLP_PATH'],
+    ['ffmpeg', ['-version'], 'ffmpeg', 'macOS: brew install ffmpeg · Debian/Ubuntu: apt install ffmpeg'],
+  ];
+  for (const [bin, args, name, hint] of tools) {
+    const r = spawnSync(bin, args, { encoding: 'utf8', timeout: 15000 });
+    if (r.error) {
+      console.error(`\n[viddown] MISSING TOOL: ${name} was not found ("${bin}"). Downloads will fail until it is installed.\n          ${hint}\n`);
+    } else {
+      console.log(`[viddown] ${name} ${String(r.stdout).split('\n')[0].replace(/^ffmpeg version /, '').split(' ')[0]} found`);
+    }
+  }
+}
+
 if (require.main === module) {
+  checkTools();
   app.listen(PORT, () => console.log(`[viddown] listening on http://localhost:${PORT}`));
 }
 module.exports = app;

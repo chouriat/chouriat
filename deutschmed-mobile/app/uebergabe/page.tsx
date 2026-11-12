@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { MEDICAL_CASES } from '@/lib/medical-cases';
 import { useProgressStore } from '@/lib/store';
+import { onExerciseCompleted } from '@/lib/ads';
 import { CaseSelector } from '@/components/case-selector';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -78,7 +79,10 @@ export default function UebergabePage() {
       </div>
 
       <div className="flex justify-end">
-        <Button onClick={() => markUebergabeCompleted(currentCase.id)}>
+        <Button onClick={() => {
+          if (!isCompleted) void onExerciseCompleted();
+          markUebergabeCompleted(currentCase.id);
+        }}>
           {isCompleted ? '✓ Übergabe abgeschlossen (+50 XP)' : 'Übergabe als trainiert markieren (+50 XP)'}
         </Button>
       </div>

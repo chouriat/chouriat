@@ -60,3 +60,14 @@ lib/modules.ts        training module list (dashboard + sidebar)
 lib/store.ts          Zustand preferences store
 supabase/             migrations and seed data
 ```
+
+## Ads (Google AdSense)
+
+The site earns money with AdSense **Auto ads**: Google picks where ads go. Ads stay off until the publisher ID is set.
+
+1. Sign up at [adsense.google.com](https://adsense.google.com) and add your site's domain.
+2. Set `NEXT_PUBLIC_ADSENSE_CLIENT_ID=ca-pub-…` (AdSense > Account > Account information) in `.env.local` and in your hosting provider's environment variables, then redeploy.
+   This adds the AdSense script, the `google-adsense-account` verification tag and `/ads.txt`.
+3. In AdSense, click **Verify** for the site and wait for approval (often a few days).
+4. **GDPR (required for visitors in the EU/Germany):** AdSense > Privacy & messaging > European regulations: create and publish a consent message. It is served through the same script, so no code change is needed.
+5. Turn on Auto ads for the site under AdSense > Ads.

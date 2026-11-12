@@ -8,6 +8,7 @@ import { useProgressStore } from '@/lib/store';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { AdPrivacyOptionsLink } from '@/components/ads';
 
 export default function DashboardPage() {
   const { progress, isLoaded } = useProgressStore();
@@ -245,6 +246,10 @@ export default function DashboardPage() {
           </div>
         )}
       </section>
+
+      <footer className="flex justify-center pt-4">
+        <AdPrivacyOptionsLink />
+      </footer>
     </main>
   );
 }

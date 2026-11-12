@@ -60,3 +60,25 @@ lib/modules.ts        training module list (dashboard + sidebar)
 lib/store.ts          Zustand preferences store
 supabase/             migrations and seed data
 ```
+
+## Ads (Google AdMob)
+
+The iOS and Android apps show an adaptive banner at the bottom and, after every third finished exercise (at most once every 3 minutes), a full-screen ad. Before any ad loads, Google's consent form asks EU users for GDPR consent; the dashboard shows a "Datenschutz-Einstellungen für Werbung" link so users can change it later. In the browser (`npm run dev`) ads are off.
+
+Code: `lib/ads.ts` (logic and limits), `components/ads.tsx`, and the native setup script `scripts/setup-admob-native.mjs`.
+
+Until you add real IDs, the app shows Google's **test ads**, which never pay out. To go live:
+
+1. In [AdMob](https://admob.google.com), add the iOS app and the Android app (bundle ID `de.deutschmed.fsp`). Each gets an **app ID** (`ca-app-pub-…~…`).
+2. For each app, create a **Banner** and an **Interstitial** ad unit (`ca-app-pub-…/…`).
+3. Put the ad unit IDs in `.env.local` (see `.env.example`) and rebuild: `npm run build`.
+4. Put the app IDs into the native projects, then sync:
+   ```bash
+   ADMOB_ANDROID_APP_ID=ca-app-pub-…~… ADMOB_IOS_APP_ID=ca-app-pub-…~… node scripts/setup-admob-native.mjs
+   npx cap sync
+   ```
+   Run the script again after recreating `android/` or `ios/` with `npx cap add`.
+5. **GDPR:** AdMob > Privacy & messaging: create and publish a European regulations (GDPR) message for both apps. Optionally add an IDFA explainer message for iOS.
+6. Add an `app-ads.txt` file to the root of the website listed in the store entries, with the line AdMob shows you.
+
+Never tap your own live ads; test on a device with the test IDs, or register it as a test device in AdMob.

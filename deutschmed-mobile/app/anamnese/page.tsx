@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { MEDICAL_CASES } from '@/lib/medical-cases';
 import { useProgressStore } from '@/lib/store';
+import { onExerciseCompleted } from '@/lib/ads';
 import { CaseSelector } from '@/components/case-selector';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -137,7 +138,10 @@ export default function AnamnesePage() {
         <Button
           size="sm"
           variant={isCompleted ? 'outline' : 'default'}
-          onClick={() => markAnamneseCompleted(currentCase.id)}
+          onClick={() => {
+            if (!isCompleted) void onExerciseCompleted();
+            markAnamneseCompleted(currentCase.id);
+          }}
         >
           {isCompleted ? '✓ Fall abgeschlossen (+50 XP)' : 'Anamnese abschließen (+50 XP)'}
         </Button>

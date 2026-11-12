@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { MEDICAL_CASES } from '@/lib/medical-cases';
 import { useProgressStore } from '@/lib/store';
+import { localFeedback, localPatientReply } from '@/lib/local-patient';
 import { CaseSelector } from '@/components/case-selector';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -105,6 +106,23 @@ export default function AnamnesePage() {
         return [...next, { role: 'patient', text: data.patientReply }];
       });
     } catch {
+      if (!aiKey) {
+        // No AI key and no connection (e.g. mobile offline): answer locally
+        // from the case's written patient dialogue.
+        setAiProvider('fallback');
+        setMessages((prev) => {
+          const next = [...prev];
+          const last = next[next.length - 1];
+          if (last && last.role === 'doctor' && last.text === doctorQuestion) {
+            next[next.length - 1] = { ...last, feedback: localFeedback(doctorQuestion) };
+          }
+          return [
+            ...next,
+            { role: 'patient', text: localPatientReply(currentCase, doctorQuestion, history.length === 0) },
+          ];
+        });
+        return;
+      }
       setMessages((prev) => [
         ...prev,
         {
@@ -179,6 +197,11 @@ export default function AnamnesePage() {
               <strong>Patient:</strong> {currentCase.patient.name} ({currentCase.patient.age} J.,{' '}
               {currentCase.patient.occupation})
             </p>
+            {currentCase.speaker && (
+              <p>
+                <strong>Gesprächspartner:</strong> {currentCase.speaker}
+              </p>
+            )}
             <p>
               <strong>Leitsymptom:</strong> „{currentCase.patient.chiefComplaint}“
             </p>
@@ -255,6 +278,8 @@ export default function AnamnesePage() {
                               ? '⚠️ Hinweis'
                               : msg.role === 'doctor'
                               ? 'Sie (Arzt/Ärztin)'
+                              : currentCase.speaker
+                              ? currentCase.speaker.replace(/\s*\(Fremdanamnese\)/, '')
                               : currentCase.patient.name}
                           </div>
                           {msg.text}

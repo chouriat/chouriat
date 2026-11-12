@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { MEDICAL_CASES } from '@/lib/medical-cases';
+import { localFeedback, localPatientReply } from '@/lib/local-patient';
 
 interface ChatTurn {
   role: 'doctor' | 'patient';
@@ -207,7 +208,7 @@ export async function POST(req: Request) {
    - Dein Leitsymptom (in eigenen Worten): "${currentCase.patient.chiefComplaint}"
    - Deine vollständige Krankenakte & Hintergrund: "${currentCase.patient.historyDetails}"
    - Vitalparameter: RR ${currentCase.patient.vitalSigns.bp}, HF ${currentCase.patient.vitalSigns.hr}, Temp ${currentCase.patient.vitalSigns.temp}, SpO2 ${currentCase.patient.vitalSigns.spo2}.
-   - WICHTIG: Antworte als Patient natürlich, authentisch und in Alltagssprache (keine medizinischen Fachbegriffe verwenden, außer der Arzt erklärt sie dir). Verrate nicht sofort alle Details auf einmal, sondern antworte gezielt auf das, wonach der Arzt / die Ärztin gerade gefragt hat.
+${currentCase.speaker ? `   - Fremdanamnese: Du antwortest als ${currentCase.speaker}, nicht als Patient selbst.\n` : ''}${currentCase.patientDialogue ? `   - So spricht die Person (Beispielantworten, nutze Inhalt und Ton): ${JSON.stringify(currentCase.patientDialogue)}\n` : ''}   - WICHTIG: Antworte als Patient natürlich, authentisch und in Alltagssprache (keine medizinischen Fachbegriffe verwenden, außer der Arzt erklärt sie dir). Verrate nicht sofort alle Details auf einmal, sondern antworte gezielt auf das, wonach der Arzt / die Ärztin gerade gefragt hat.
 
 2. ROLLE FSP-PRÜFER (Feedback): Bewerte kurz (1-2 Sätze) die letzte Frage des Arztes / der Ärztin:
    - Lob ("✓ ..."), wenn die Frage empathisch, offen/strukturiert und in verständlicher Patientensprache formuliert wurde.
@@ -251,61 +252,10 @@ Antworte AUSSCHLIESSLICH im folgenden JSON-Format:
       );
     }
 
-    // Offline fallback: no user key, so answer from the static case data
-    const usesJargon =
-      /dyspnoe|retrosternal|emesis|vomitus|nausea|pyrexie|appendizitis|cephalgie|vertigo|inappetenz|cholezystitis|pankreatitis|komorbidit|noxen|miktion|defäkation|synkope|expektoration|hämoptyse/i.test(
-        message
-      );
-
-    const feedback = usesJargon
-      ? '⚠️ FSP-Hinweis: Sie haben medizinische Fachbegriffe im Patientengespräch verwendet. Nutzen Sie gegenüber Patienten bitte verständliche Alltagssprache!'
-      : '✓ Gute C1-Arzt-Patienten-Kommunikation: Klare und verständliche Fragestellung.';
-
-    const lowerQ = message.toLowerCase();
-    const questions = currentCase.anamneseQuestions || [];
-    let patientReply = `Zu meinen aktuellen Beschwerden: ${currentCase.patient.chiefComplaint}`;
-
-    if (
-      lowerQ.includes('name') ||
-      lowerQ.includes('heißen') ||
-      lowerQ.includes('alt') ||
-      lowerQ.includes('geburt') ||
-      lowerQ.includes('beruf') ||
-      lowerQ.includes('arbeit')
-    ) {
-      patientReply = `Ich heiße ${currentCase.patient.name}, bin ${currentCase.patient.age} Jahre alt und arbeite als ${currentCase.patient.occupation}.`;
-    } else if (
-      lowerQ.includes('vorerkrank') ||
-      lowerQ.includes('krankheit') ||
-      lowerQ.includes('medikament') ||
-      lowerQ.includes('tablette') ||
-      lowerQ.includes('operation') ||
-      lowerQ.includes('früher')
-    ) {
-      patientReply =
-        questions[1]?.patientResponse || currentCase.patient.historyDetails;
-    } else if (
-      lowerQ.includes('allergi') ||
-      lowerQ.includes('unverträglich') ||
-      lowerQ.includes('rauch') ||
-      lowerQ.includes('zigarett') ||
-      lowerQ.includes('alkohol') ||
-      lowerQ.includes('familie') ||
-      lowerQ.includes('eltern')
-    ) {
-      patientReply =
-        questions[2]?.patientResponse || currentCase.patient.historyDetails;
-    } else if (
-      lowerQ.includes('schmerz') ||
-      lowerQ.includes('beschwerde') ||
-      lowerQ.includes('was führt') ||
-      lowerQ.includes('seit wann') ||
-      lowerQ.includes('wo tut') ||
-      lowerQ.includes('ausstrahl')
-    ) {
-      patientReply =
-        questions[0]?.patientResponse || currentCase.patient.chiefComplaint;
-    }
+    // Offline fallback: no user key, so answer from the case's written
+    // patient dialogue (lib/local-patient.ts).
+    const patientReply = localPatientReply(currentCase, message, history.length === 0);
+    const feedback = localFeedback(message);
 
     return NextResponse.json({
       patientReply,

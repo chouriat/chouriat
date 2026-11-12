@@ -7,10 +7,11 @@
 
 | Folder | Contents |
 | --- | --- |
-| `cases/*.json` | 45 FSP/KP patient cases (40 doctor, 5 nurse), grouped by specialty |
-| `vocabulary/*.csv` | 653 terms, one file per category, `;`-separated (opens directly in German Excel / LibreOffice) |
+| `cases/*.json` | 59 FSP/KP patient cases (53 doctor, 6 nurse), grouped by specialty |
+| `dialogues/*.json` | Natural patient answers per Anamnese topic, keyed by case slug (17 cases so far) |
+| `vocabulary/*.csv` | 652 terms, one file per category, `;`-separated (opens directly in German Excel / LibreOffice) |
 
-None of these repeat the 5 cases or 17 words in `supabase/seed.sql`; the build script refuses duplicates.
+None of these repeat the 3 cases or 17 words in `supabase/seed.sql`; the build script refuses duplicates.
 
 ## How the content gets into the database
 
@@ -22,6 +23,34 @@ python3 scripts/build_draft_content.py --check  # CI-style check that the SQL ma
 The script validates every case (levels, roles, required vitals and history fields) and every
 vocabulary row, then writes one migration. All rows go in with `content_status = 'draft'`.
 Existing rows with the same title or Fachbegriff are skipped, so the migration is safe to re-run.
+
+## How the content gets into the app
+
+The app reads its cases from `lib/medical-cases.ts`, not from Supabase. After editing a case
+or a dialogue, regenerate that file (it also updates `../deutschmed-mobile/lib/medical-cases.ts`):
+
+```bash
+python3 scripts/build_app_cases.py          # rewrites the MEDICAL_CASES array
+python3 scripts/build_app_cases.py --check  # fails if the TS file is out of date
+```
+
+It includes the seed cases from `supabase/seed.sql` (ACS, Appendizitis, Apoplex) first.
+
+## Dialogue format
+
+`dialogues/*.json` maps a case slug to `{ "speaker"?: "...", "answers": { topic: "answer" } }`.
+The answers are what the patient (or relative, for Fremdanamnese) says in their own words.
+They drive the offline chat simulator (no AI key needed) and the multiple-choice training,
+and are passed to the AI as examples of tone. `beschwerden` is required; every other topic
+is optional. Topics:
+
+`beschwerden`, `beginn`, `lokalisation`, `charakter`, `intensitaet`, `ausstrahlung`, `verlauf`,
+`ausloeser`, `begleitsymptome`, `fieber`, `appetit_gewicht`, `verdauung`, `wasserlassen`, `schlaf`,
+`vorerkrankungen`, `operationen`, `medikamente`, `allergien`, `rauchen`, `alkohol`, `drogen`,
+`beruf`, `wohnen`, `familie`, `gyn`, `impfungen`, `reisen`, `sorgen`
+
+The keywords that map a question to a topic live in `lib/local-patient.ts`.
+Keep the answers consistent with the case's `clinical_facts`.
 
 ## Case format
 

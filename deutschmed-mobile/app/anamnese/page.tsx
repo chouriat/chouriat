@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { MEDICAL_CASES } from '@/lib/medical-cases';
 import { useProgressStore } from '@/lib/store';
+import { localFeedback, localPatientReply } from '@/lib/local-patient';
 import { CaseSelector } from '@/components/case-selector';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -79,16 +80,18 @@ export default function AnamnesePage() {
           role: 'patient',
           text:
             data.patientReply ||
-            currentCase.patient.chiefComplaint,
+            localPatientReply(currentCase, doctorQuestion, messages.length === 0),
         },
       ]);
     } catch {
+      // No connection to the API (e.g. mobile offline): answer locally.
+      setAiProvider('fallback');
       setMessages((prev) => [
         ...prev,
-        { role: 'doctor', text: doctorQuestion },
+        { role: 'doctor', text: doctorQuestion, feedback: localFeedback(doctorQuestion) },
         {
           role: 'patient',
-          text: currentCase.patient.chiefComplaint,
+          text: localPatientReply(currentCase, doctorQuestion, messages.length === 0),
         },
       ]);
     } finally {
@@ -157,6 +160,11 @@ export default function AnamnesePage() {
               <strong>Patient:</strong> {currentCase.patient.name} ({currentCase.patient.age} J.,{' '}
               {currentCase.patient.occupation})
             </p>
+            {currentCase.speaker && (
+              <p>
+                <strong>Gesprächspartner:</strong> {currentCase.speaker}
+              </p>
+            )}
             <p>
               <strong>Leitsymptom:</strong> „{currentCase.patient.chiefComplaint}“
             </p>
@@ -186,7 +194,7 @@ export default function AnamnesePage() {
                         ? '⚡ OpenAI aktiv'
                         : aiProvider === 'anthropic'
                         ? '⚡ Claude AI aktiv'
-                        : '💡 Lokaler Simulator (API-Key optional)'}
+                        : '💡 Offline-Simulator (ohne KI)'}
                     </Badge>
                   )}
                 </div>
@@ -216,7 +224,11 @@ export default function AnamnesePage() {
                           }`}
                         >
                           <div className="text-[10px] font-semibold opacity-75 mb-1">
-                            {msg.role === 'doctor' ? 'Sie (Arzt/Ärztin)' : currentCase.patient.name}
+                            {msg.role === 'doctor'
+                              ? 'Sie (Arzt/Ärztin)'
+                              : currentCase.speaker
+                              ? currentCase.speaker.replace(/\s*\(Fremdanamnese\)/, '')
+                              : currentCase.patient.name}
                           </div>
                           {msg.text}
                         </div>

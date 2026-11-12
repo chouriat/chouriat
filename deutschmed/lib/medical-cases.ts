@@ -1,4 +1,4 @@
-// Auto-generiert aus supabase/content (45 klinische Fälle & 653 Fachbegriffe)
+// Auto-generiert aus supabase/content (62 klinische Fälle & 653 Fachbegriffe)
 
 export interface AnamneseQuestion {
   id: string;
@@ -10,6 +10,14 @@ export interface AnamneseQuestion {
   }[];
   patientResponse: string;
 }
+
+export type PatientTopic =
+  | 'beschwerden' | 'beginn' | 'lokalisation' | 'charakter' | 'intensitaet'
+  | 'ausstrahlung' | 'verlauf' | 'ausloeser' | 'begleitsymptome' | 'fieber'
+  | 'appetit_gewicht' | 'verdauung' | 'wasserlassen' | 'schlaf'
+  | 'vorerkrankungen' | 'operationen' | 'medikamente' | 'allergien'
+  | 'rauchen' | 'alkohol' | 'drogen' | 'beruf' | 'wohnen' | 'familie'
+  | 'gyn' | 'impfungen' | 'reisen' | 'sorgen';
 
 export interface MedicalCase {
   id: string;
@@ -34,6 +42,10 @@ export interface MedicalCase {
     };
     historyDetails: string;
   };
+  /** Who answers in the Anamnese, when it is not the patient (Fremdanamnese). */
+  speaker?: string;
+  /** The patient's own words per Anamnese topic, used by the offline simulator. */
+  patientDialogue?: Partial<Record<PatientTopic, string>>;
   anamneseQuestions: AnamneseQuestion[];
   arztbriefTemplate: {
     prompt: string;
@@ -57,6 +69,646 @@ export interface VocabularyItem {
 }
 
 export const MEDICAL_CASES: MedicalCase[] = [
+  {
+    "id": "akutes-koronarsyndrom",
+    "title": "Akutes Koronarsyndrom (ACS)",
+    "specialty": "Kardiologie",
+    "category": "Kardiologie",
+    "difficulty": "B2",
+    "patientName": "Herr Klaus Schmidt",
+    "patientAge": 62,
+    "chiefComplaint": "Herr Doktor, mir drückt's seit heute Morgen so auf der Brust, als ob ein Elefant drauf sitzt. Und es zieht bis in den linken Arm.",
+    "patient": {
+      "name": "Herr Klaus Schmidt",
+      "age": 62,
+      "gender": "m",
+      "occupation": "Busfahrer",
+      "chiefComplaint": "Herr Doktor, mir drückt's seit heute Morgen so auf der Brust, als ob ein Elefant drauf sitzt. Und es zieht bis in den linken Arm.",
+      "vitalSigns": {
+        "bp": "160/95 mmHg",
+        "hr": "98 /min",
+        "temp": "36,8 °C",
+        "spo2": "95 % (Raumluft)"
+      },
+      "historyDetails": "Seit ca. 3 Stunden retrosternaler Druckschmerz mit Ausstrahlung in den linken Arm, Kaltschweißigkeit und Übelkeit. Schmerz in Ruhe aufgetreten. Vorerkrankungen: Arterielle Hypertonie, Diabetes mellitus Typ 2, Hypercholesterinämie. Medikation: Ramipril 5 mg 1-0-0, Metformin 1000 mg 1-0-1, Simvastatin 20 mg 0-0-1. Allergien: Penicillin (Exanthem). Sozialanamnese: Raucher, 30 pack years. Alkohol gelegentlich. Verheiratet, zwei Kinder. Familienanamnese: Vater mit 58 Jahren an Herzinfarkt verstorben. Labor: hs-Troponin T: 84 ng/l (erhöht), CK-MB: leicht erhöht, Kalium: 4,1 mmol/l."
+    },
+    "patientDialogue": {
+      "beschwerden": "Herr Doktor, mir drückt's seit heute Morgen so auf der Brust, als ob ein Elefant drauf sitzt. Und es zieht bis in den linken Arm.",
+      "beginn": "Das fing so gegen sieben an, vor ungefähr drei Stunden. Ich saß beim Frühstück, hab gar nichts Anstrengendes gemacht.",
+      "lokalisation": "Hier, mitten auf der Brust, hinter dem Brustbein. Ich kann's gar nicht mit einem Finger zeigen, das ist eher so flächig.",
+      "charakter": "Das ist so ein Druck, ein Engegefühl. Nicht stechend, eher als ob mir einer die Brust zuschnürt.",
+      "intensitaet": "Auf der Skala würde ich sagen acht von zehn. So was hatte ich noch nie.",
+      "ausstrahlung": "Ja, in den linken Arm runter bis in die Finger, und manchmal auch so in den Unterkiefer.",
+      "verlauf": "Es ist die ganze Zeit da, nicht weggegangen. Eher ein bisschen schlimmer geworden.",
+      "ausloeser": "Nein, das kam einfach so, in Ruhe. Hinlegen oder Atmen ändert gar nichts. Die letzten Wochen war ich beim Treppensteigen schon manchmal so kurzatmig, aber das ging immer wieder weg.",
+      "begleitsymptome": "Mir ist übel, und ich bin ganz nass geschwitzt, kalter Schweiß. Und ich hab Angst, ehrlich gesagt.",
+      "fieber": "Fieber hab ich nicht, nein.",
+      "appetit_gewicht": "Frühstück hab ich stehen lassen. Gewicht ist gleich, eher ein paar Kilo zu viel.",
+      "verdauung": "Stuhlgang ist normal.",
+      "wasserlassen": "Wasserlassen ist normal.",
+      "vorerkrankungen": "Ich hab hohen Blutdruck, Zucker, also Diabetes Typ 2, und das Cholesterin ist zu hoch.",
+      "operationen": "Operiert wurde ich noch nie.",
+      "medikamente": "Ramipril 5 Milligramm morgens, Metformin 1000 morgens und abends, und abends Simvastatin 20. Blutverdünner nehme ich keinen.",
+      "allergien": "Ja, gegen Penicillin. Da hab ich mal so einen Ausschlag am ganzen Körper gekriegt.",
+      "rauchen": "Ja, ich rauche. Eine Schachtel am Tag, seit ich 17 bin. Das sind wohl so 30 Packungsjahre.",
+      "alkohol": "Mal ein Bier am Wochenende, nicht viel.",
+      "drogen": "Nein, nie.",
+      "beruf": "Ich bin Busfahrer bei den Stadtwerken, Schichtdienst.",
+      "wohnen": "Ich wohne mit meiner Frau im Reihenhaus. Zwei Kinder, die sind schon aus dem Haus.",
+      "familie": "Mein Vater ist mit 58 an einem Herzinfarkt gestorben. Deswegen hab ich ja so Angst.",
+      "sorgen": "Ist das jetzt ein Herzinfarkt, Herr Doktor? Mein Vater ist genau so gestorben."
+    },
+    "anamneseQuestions": [
+      {
+        "id": "akutes-koronarsyndrom-q1",
+        "phase": "Gesprächseinstieg & Leitsymptom",
+        "doctorOptions": [
+          {
+            "text": "Guten Tag, mein Name ist … , ich bin hier die Ärztin / der Arzt. Was führt Sie heute zu uns?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorstellung mit Namen und Funktion, dann eine offene Einstiegsfrage."
+          },
+          {
+            "text": "Liegt bei Ihnen die typische Symptomatik für NSTEMI vor?",
+            "isOptimal": false,
+            "feedback": "FSP-Fehler: Keine geschlossene Diagnose-Frage zu Beginn. Lassen Sie den Patienten zuerst frei erzählen."
+          }
+        ],
+        "patientResponse": "Herr Doktor, mir drückt's seit heute Morgen so auf der Brust, als ob ein Elefant drauf sitzt. Und es zieht bis in den linken Arm."
+      },
+      {
+        "id": "akutes-koronarsyndrom-q2",
+        "phase": "Beginn, Ort & Art der Beschwerden",
+        "doctorOptions": [
+          {
+            "text": "Seit wann haben Sie die Beschwerden genau, wo spüren Sie sie und wie fühlen sie sich an? Strahlen sie irgendwohin aus?",
+            "isOptimal": true,
+            "feedback": "Gut strukturiert: Beginn, Lokalisation, Qualität und Ausstrahlung in verständlichen Worten erfragt."
+          },
+          {
+            "text": "Beschreiben Sie Onset, Lokalisation, Qualität und Irradiation der Symptomatik.",
+            "isOptimal": false,
+            "feedback": "Zu viel Fachjargon. „Ausstrahlen“ statt „Irradiation“, „Seit wann?“ statt „Onset“."
+          }
+        ],
+        "patientResponse": "Das fing so gegen sieben an, vor ungefähr drei Stunden. Ich saß beim Frühstück, hab gar nichts Anstrengendes gemacht. Hier, mitten auf der Brust, hinter dem Brustbein. Ich kann's gar nicht mit einem Finger zeigen, das ist eher so flächig. Das ist so ein Druck, ein Engegefühl. Nicht stechend, eher als ob mir einer die Brust zuschnürt. Ja, in den linken Arm runter bis in die Finger, und manchmal auch so in den Unterkiefer."
+      },
+      {
+        "id": "akutes-koronarsyndrom-q3",
+        "phase": "Intensität, Verlauf & Auslöser",
+        "doctorOptions": [
+          {
+            "text": "Wie stark sind die Beschwerden auf einer Skala von 0 bis 10? Sind sie besser oder schlimmer geworden, und gibt es etwas, das sie auslöst oder lindert?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Schmerzskala 0–10 ist im deutschen Klinikalltag Standard."
+          },
+          {
+            "text": "Ist es sehr schlimm?",
+            "isOptimal": false,
+            "feedback": "Zu unpräzise. Fragen Sie nach der Stärke auf einer Skala von 0 bis 10 und nach dem Verlauf."
+          }
+        ],
+        "patientResponse": "Auf der Skala würde ich sagen acht von zehn. So was hatte ich noch nie. Es ist die ganze Zeit da, nicht weggegangen. Eher ein bisschen schlimmer geworden. Nein, das kam einfach so, in Ruhe. Hinlegen oder Atmen ändert gar nichts. Die letzten Wochen war ich beim Treppensteigen schon manchmal so kurzatmig, aber das ging immer wieder weg."
+      },
+      {
+        "id": "akutes-koronarsyndrom-q4",
+        "phase": "Begleitsymptome & vegetative Anamnese",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie noch andere Beschwerden bemerkt, zum Beispiel Fieber, Übelkeit, Gewichtsverlust oder Probleme beim Stuhlgang oder Wasserlassen?",
+            "isOptimal": true,
+            "feedback": "Exzellent! Begleitsymptome und vegetative Anamnese in Patientensprache abgefragt."
+          },
+          {
+            "text": "Bestehen B-Symptomatik, Nausea, Emesis oder Miktionsbeschwerden?",
+            "isOptimal": false,
+            "feedback": "Fachjargon! Sagen Sie „Fieber, Nachtschweiß, Gewichtsverlust“, „Übelkeit“, „Erbrechen“ und „Probleme beim Wasserlassen“."
+          }
+        ],
+        "patientResponse": "Mir ist übel, und ich bin ganz nass geschwitzt, kalter Schweiß. Und ich hab Angst, ehrlich gesagt. Fieber hab ich nicht, nein. Frühstück hab ich stehen lassen. Gewicht ist gleich, eher ein paar Kilo zu viel. Stuhlgang ist normal. Wasserlassen ist normal."
+      },
+      {
+        "id": "akutes-koronarsyndrom-q5",
+        "phase": "Vorerkrankungen, Operationen & Medikamente",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie Vorerkrankungen oder wurden Sie schon einmal operiert? Welche Medikamente nehmen Sie regelmäßig ein, und haben Sie Allergien?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorerkrankungen, Operationen, Medikation und Allergien vollständig erfragt."
+          },
+          {
+            "text": "Welche Komorbiditäten, Voroperationen und Dauermedikation bestehen? Gibt es Unverträglichkeiten?",
+            "isOptimal": false,
+            "feedback": "„Komorbiditäten“ versteht kaum ein Patient. Sagen Sie „andere Erkrankungen“."
+          }
+        ],
+        "patientResponse": "Ich hab hohen Blutdruck, Zucker, also Diabetes Typ 2, und das Cholesterin ist zu hoch. Operiert wurde ich noch nie. Ramipril 5 Milligramm morgens, Metformin 1000 morgens und abends, und abends Simvastatin 20. Blutverdünner nehme ich keinen. Ja, gegen Penicillin. Da hab ich mal so einen Ausschlag am ganzen Körper gekriegt."
+      },
+      {
+        "id": "akutes-koronarsyndrom-q6",
+        "phase": "Sozial- & Familienanamnese",
+        "doctorOptions": [
+          {
+            "text": "Darf ich Sie noch etwas Persönliches fragen: Rauchen Sie, trinken Sie Alkohol, was machen Sie beruflich, wie wohnen Sie, und gibt es Krankheiten in Ihrer Familie?",
+            "isOptimal": true,
+            "feedback": "Sehr empathisch! Sie kündigen die persönlichen Fragen an und decken Noxen, Beruf, Wohnsituation und Familie ab."
+          },
+          {
+            "text": "Wie ist Ihr Noxenabusus und gibt es eine familiäre Belastung?",
+            "isOptimal": false,
+            "feedback": "Vermeiden Sie „Noxenabusus“. Fragen Sie direkt nach Rauchen, Alkohol und Drogen."
+          }
+        ],
+        "patientResponse": "Ja, ich rauche. Eine Schachtel am Tag, seit ich 17 bin. Das sind wohl so 30 Packungsjahre. Mal ein Bier am Wochenende, nicht viel. Nein, nie. Ich bin Busfahrer bei den Stadtwerken, Schichtdienst. Ich wohne mit meiner Frau im Reihenhaus. Zwei Kinder, die sind schon aus dem Haus. Mein Vater ist mit 58 an einem Herzinfarkt gestorben. Deswegen hab ich ja so Angst."
+      },
+      {
+        "id": "akutes-koronarsyndrom-q7",
+        "phase": "Sorgen des Patienten & Gesprächsabschluss",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie selbst eine Vermutung oder machen Sie sich über etwas besonders Sorgen? Haben Sie noch Fragen an mich?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Sorgen des Patienten zu erfragen gehört zu einem patientenzentrierten FSP-Gespräch."
+          },
+          {
+            "text": "Gut, das war's. Sie hören dann von uns.",
+            "isOptimal": false,
+            "feedback": "Zu abrupt. Fragen Sie nach Sorgen und offenen Fragen und erklären Sie das weitere Vorgehen."
+          }
+        ],
+        "patientResponse": "Ist das jetzt ein Herzinfarkt, Herr Doktor? Mein Vater ist genau so gestorben."
+      }
+    ],
+    "arztbriefTemplate": {
+      "prompt": "Verfassen Sie die Anamnese und Epikrise für Herr Klaus Schmidt (62 J.) mit Verdacht auf NSTEMI im C1-Fachstil.",
+      "requiredTerms": [
+        "NSTEMI",
+        "Arterielle",
+        "Lungenarterienembolie",
+        "Anamnese",
+        "Vitalparameter"
+      ],
+      "sampleSolution": "Herr Klaus Schmidt (62 J., Busfahrer) stellte sich mit folgender aktueller Anamnese vor: Seit ca. 3 Stunden retrosternaler Druckschmerz mit Ausstrahlung in den linken Arm, Kaltschweißigkeit und Übelkeit. Schmerz in Ruhe aufgetreten. An Vorerkrankungen seien bekannt: Arterielle Hypertonie, Diabetes mellitus Typ 2, Hypercholesterinämie. Die Dauermedikation umfasse: Ramipril 5 mg 1-0-0, Metformin 1000 mg 1-0-1, Simvastatin 20 mg 0-0-1. Allergien: Penicillin (Exanthem). Sozial- und Familienanamnese: Raucher, 30 pack years. Alkohol gelegentlich. Verheiratet, zwei Kinder. Vater mit 58 Jahren an Herzinfarkt verstorben. Zusammenfassend ergibt sich der dringende Verdacht auf: NSTEMI (Differenzialdiagnosen: Lungenarterienembolie, Aortendissektion, Perikarditis)."
+    },
+    "isbarSteps": [
+      {
+        "step": "I",
+        "label": "Identify (Identifikation)",
+        "guidance": "Nennen Sie Name, Alter und aktuellen Bereich des Patienten / der Patientin.",
+        "sampleSpeech": "Ich übergebe Herr Klaus Schmidt, 62 Jahre alt, aktuell in der Aufnahme (Kardiologie)."
+      },
+      {
+        "step": "S",
+        "label": "Situation (Aktuelle Situation)",
+        "guidance": "Benennen Sie Leitsymptom und Hauptverdachtsdiagnose.",
+        "sampleSpeech": "Vorstellungsgrund: Seit ca. 3 Stunden retrosternaler Druckschmerz mit Ausstrahlung in den linken Arm, Kaltschweißigkeit und Übelkeit. Schmerz in Ruhe aufgetreten. Es besteht der dringende Verdacht auf NSTEMI."
+      },
+      {
+        "step": "B",
+        "label": "Background (Klinischer Hintergrund)",
+        "guidance": "Fassen Sie Vorerkrankungen, Dauermedikation und Allergien zusammen.",
+        "sampleSpeech": "Anamnestisch bekannt sind: Arterielle Hypertonie, Diabetes mellitus Typ 2, Hypercholesterinämie. Medikation: Ramipril 5 mg 1-0-0, Metformin 1000 mg 1-0-1, Simvastatin 20 mg 0-0-1. Allergien: Penicillin (Exanthem)."
+      },
+      {
+        "step": "A",
+        "label": "Assessment (Aktuelle Einschätzung & Vitalparameter)",
+        "guidance": "Berichten Sie über Vitalparameter, Untersuchungsbefund und Labor.",
+        "sampleSpeech": "Vitalparameter: RR 160/95 mmHg, HF 98 /min, Temp 36,8 °C, SpO₂ 95 % (Raumluft). Labor: hs-Troponin T: 84 ng/l (erhöht), CK-MB: leicht erhöht, Kalium: 4,1 mmol/l"
+      },
+      {
+        "step": "R",
+        "label": "Recommendation (Empfehlung & weiteres Vorgehen)",
+        "guidance": "Schlagen Sie die weitere Diagnostik und Therapie unter Berücksichtigung der Differenzialdiagnosen vor.",
+        "sampleSpeech": "Ich empfehle die zielgerichtete Weiterbehandlung bezüglich NSTEMI sowie den Ausschluss der wichtigsten Differenzialdiagnosen (Lungenarterienembolie, Aortendissektion, Perikarditis)."
+      }
+    ]
+  },
+  {
+    "id": "akute-appendizitis",
+    "title": "Akute Appendizitis",
+    "specialty": "Chirurgie",
+    "category": "Chirurgie",
+    "difficulty": "B2",
+    "patientName": "Frau Lena Weber",
+    "patientAge": 24,
+    "chiefComplaint": "Gestern Abend hat's erst so um den Bauchnabel rum wehgetan, und jetzt sticht es richtig doll unten rechts. Mir ist auch total übel.",
+    "patient": {
+      "name": "Frau Lena Weber",
+      "age": 24,
+      "gender": "w",
+      "occupation": "Studentin",
+      "chiefComplaint": "Gestern Abend hat's erst so um den Bauchnabel rum wehgetan, und jetzt sticht es richtig doll unten rechts. Mir ist auch total übel.",
+      "vitalSigns": {
+        "bp": "120/75 mmHg",
+        "hr": "104 /min",
+        "temp": "38,4 °C",
+        "spo2": "98 % (Raumluft)"
+      },
+      "historyDetails": "Seit ca. 18 Stunden Bauchschmerzen, initial periumbilikal, jetzt im rechten Unterbauch lokalisiert. Übelkeit, einmaliges Erbrechen, Appetitlosigkeit. Vorerkrankungen: Keine. Medikation: Orale Kontrazeption. Allergien: Keine bekannt. Sozialanamnese: Nichtraucherin, Alkohol am Wochenende. Letzte Regelblutung vor 2 Wochen. Familienanamnese: Unauffällig. Labor: Leukozyten: 14,2 /nl (erhöht), CRP: 48 mg/l (erhöht), β-HCG: negativ."
+    },
+    "patientDialogue": {
+      "beschwerden": "Gestern Abend hat's erst so um den Bauchnabel rum wehgetan, und jetzt sticht es richtig doll unten rechts. Mir ist auch total übel.",
+      "beginn": "Gestern Abend so gegen acht, nach dem Abendessen. Also vor ungefähr 18 Stunden.",
+      "lokalisation": "Zuerst war's um den Nabel herum, so diffus. Heute Morgen ist es dann nach rechts unten gewandert, hier.",
+      "charakter": "Jetzt ist es ein dauerhafter, stechender Schmerz. Am Anfang war es eher so dumpf.",
+      "intensitaet": "Ungefähr sieben von zehn. Wenn ich huste oder auftrete, ist es noch schlimmer.",
+      "ausstrahlung": "Nein, eigentlich bleibt es da unten rechts.",
+      "verlauf": "Es wird immer schlimmer. Im Auto über die Bodenwellen war es ganz furchtbar.",
+      "ausloeser": "Bewegung, Husten, Hüpfen geht gar nicht. Am besten ist es, wenn ich ganz still liege und das rechte Bein anziehe.",
+      "begleitsymptome": "Mir ist übel, ich hab heute Morgen einmal gebrochen. Hunger hab ich überhaupt keinen.",
+      "fieber": "Ich fühl mich warm, gemessen hab ich nicht. Schüttelfrost hatte ich nicht.",
+      "appetit_gewicht": "Ich hab seit gestern Abend nichts mehr gegessen, ich krieg nichts runter.",
+      "verdauung": "Durchfall hab ich nicht. Der letzte Stuhlgang war gestern Morgen, ganz normal.",
+      "wasserlassen": "Wasserlassen ist normal, kein Brennen.",
+      "gyn": "Meine letzte Periode war vor zwei Wochen, ganz normal. Ich nehme die Pille, schwanger kann ich eigentlich nicht sein. Ausfluss hab ich keinen.",
+      "vorerkrankungen": "Nein, ich bin eigentlich kerngesund.",
+      "operationen": "Ich wurde noch nie operiert. Der Blinddarm ist noch drin.",
+      "medikamente": "Nur die Pille, sonst nichts.",
+      "allergien": "Allergien hab ich keine.",
+      "rauchen": "Ich rauche nicht.",
+      "alkohol": "Am Wochenende mal ein, zwei Gläser, wenn ich mit Freunden weggehe.",
+      "drogen": "Nein.",
+      "beruf": "Ich studiere Lehramt, Deutsch und Sport, im vierten Semester.",
+      "wohnen": "Ich wohne in einer WG mit zwei Freundinnen.",
+      "familie": "In der Familie ist nichts Besonderes bekannt.",
+      "sorgen": "Ist das der Blinddarm? Muss ich jetzt operiert werden? Ich hab nächste Woche Prüfungen."
+    },
+    "anamneseQuestions": [
+      {
+        "id": "akute-appendizitis-q1",
+        "phase": "Gesprächseinstieg & Leitsymptom",
+        "doctorOptions": [
+          {
+            "text": "Guten Tag, mein Name ist … , ich bin hier die Ärztin / der Arzt. Was führt Sie heute zu uns?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorstellung mit Namen und Funktion, dann eine offene Einstiegsfrage."
+          },
+          {
+            "text": "Liegt bei Ihnen die typische Symptomatik für Akute Appendizitis vor?",
+            "isOptimal": false,
+            "feedback": "FSP-Fehler: Keine geschlossene Diagnose-Frage zu Beginn. Lassen Sie den Patienten zuerst frei erzählen."
+          }
+        ],
+        "patientResponse": "Gestern Abend hat's erst so um den Bauchnabel rum wehgetan, und jetzt sticht es richtig doll unten rechts. Mir ist auch total übel."
+      },
+      {
+        "id": "akute-appendizitis-q2",
+        "phase": "Beginn, Ort & Art der Beschwerden",
+        "doctorOptions": [
+          {
+            "text": "Seit wann haben Sie die Beschwerden genau, wo spüren Sie sie und wie fühlen sie sich an? Strahlen sie irgendwohin aus?",
+            "isOptimal": true,
+            "feedback": "Gut strukturiert: Beginn, Lokalisation, Qualität und Ausstrahlung in verständlichen Worten erfragt."
+          },
+          {
+            "text": "Beschreiben Sie Onset, Lokalisation, Qualität und Irradiation der Symptomatik.",
+            "isOptimal": false,
+            "feedback": "Zu viel Fachjargon. „Ausstrahlen“ statt „Irradiation“, „Seit wann?“ statt „Onset“."
+          }
+        ],
+        "patientResponse": "Gestern Abend so gegen acht, nach dem Abendessen. Also vor ungefähr 18 Stunden. Zuerst war's um den Nabel herum, so diffus. Heute Morgen ist es dann nach rechts unten gewandert, hier. Jetzt ist es ein dauerhafter, stechender Schmerz. Am Anfang war es eher so dumpf. Nein, eigentlich bleibt es da unten rechts."
+      },
+      {
+        "id": "akute-appendizitis-q3",
+        "phase": "Intensität, Verlauf & Auslöser",
+        "doctorOptions": [
+          {
+            "text": "Wie stark sind die Beschwerden auf einer Skala von 0 bis 10? Sind sie besser oder schlimmer geworden, und gibt es etwas, das sie auslöst oder lindert?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Schmerzskala 0–10 ist im deutschen Klinikalltag Standard."
+          },
+          {
+            "text": "Ist es sehr schlimm?",
+            "isOptimal": false,
+            "feedback": "Zu unpräzise. Fragen Sie nach der Stärke auf einer Skala von 0 bis 10 und nach dem Verlauf."
+          }
+        ],
+        "patientResponse": "Ungefähr sieben von zehn. Wenn ich huste oder auftrete, ist es noch schlimmer. Es wird immer schlimmer. Im Auto über die Bodenwellen war es ganz furchtbar. Bewegung, Husten, Hüpfen geht gar nicht. Am besten ist es, wenn ich ganz still liege und das rechte Bein anziehe."
+      },
+      {
+        "id": "akute-appendizitis-q4",
+        "phase": "Begleitsymptome & vegetative Anamnese",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie noch andere Beschwerden bemerkt, zum Beispiel Fieber, Übelkeit, Gewichtsverlust oder Probleme beim Stuhlgang oder Wasserlassen?",
+            "isOptimal": true,
+            "feedback": "Exzellent! Begleitsymptome und vegetative Anamnese in Patientensprache abgefragt."
+          },
+          {
+            "text": "Bestehen B-Symptomatik, Nausea, Emesis oder Miktionsbeschwerden?",
+            "isOptimal": false,
+            "feedback": "Fachjargon! Sagen Sie „Fieber, Nachtschweiß, Gewichtsverlust“, „Übelkeit“, „Erbrechen“ und „Probleme beim Wasserlassen“."
+          }
+        ],
+        "patientResponse": "Mir ist übel, ich hab heute Morgen einmal gebrochen. Hunger hab ich überhaupt keinen. Ich fühl mich warm, gemessen hab ich nicht. Schüttelfrost hatte ich nicht. Ich hab seit gestern Abend nichts mehr gegessen, ich krieg nichts runter. Durchfall hab ich nicht. Der letzte Stuhlgang war gestern Morgen, ganz normal. Wasserlassen ist normal, kein Brennen."
+      },
+      {
+        "id": "akute-appendizitis-q5",
+        "phase": "Vorerkrankungen, Operationen & Medikamente",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie Vorerkrankungen oder wurden Sie schon einmal operiert? Welche Medikamente nehmen Sie regelmäßig ein, und haben Sie Allergien?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorerkrankungen, Operationen, Medikation und Allergien vollständig erfragt."
+          },
+          {
+            "text": "Welche Komorbiditäten, Voroperationen und Dauermedikation bestehen? Gibt es Unverträglichkeiten?",
+            "isOptimal": false,
+            "feedback": "„Komorbiditäten“ versteht kaum ein Patient. Sagen Sie „andere Erkrankungen“."
+          }
+        ],
+        "patientResponse": "Nein, ich bin eigentlich kerngesund. Ich wurde noch nie operiert. Der Blinddarm ist noch drin. Nur die Pille, sonst nichts. Allergien hab ich keine."
+      },
+      {
+        "id": "akute-appendizitis-q6",
+        "phase": "Sozial- & Familienanamnese",
+        "doctorOptions": [
+          {
+            "text": "Darf ich Sie noch etwas Persönliches fragen: Rauchen Sie, trinken Sie Alkohol, was machen Sie beruflich, wie wohnen Sie, und gibt es Krankheiten in Ihrer Familie?",
+            "isOptimal": true,
+            "feedback": "Sehr empathisch! Sie kündigen die persönlichen Fragen an und decken Noxen, Beruf, Wohnsituation und Familie ab."
+          },
+          {
+            "text": "Wie ist Ihr Noxenabusus und gibt es eine familiäre Belastung?",
+            "isOptimal": false,
+            "feedback": "Vermeiden Sie „Noxenabusus“. Fragen Sie direkt nach Rauchen, Alkohol und Drogen."
+          }
+        ],
+        "patientResponse": "Ich rauche nicht. Am Wochenende mal ein, zwei Gläser, wenn ich mit Freunden weggehe. Nein. Ich studiere Lehramt, Deutsch und Sport, im vierten Semester. Ich wohne in einer WG mit zwei Freundinnen. In der Familie ist nichts Besonderes bekannt. Meine letzte Periode war vor zwei Wochen, ganz normal. Ich nehme die Pille, schwanger kann ich eigentlich nicht sein. Ausfluss hab ich keinen."
+      },
+      {
+        "id": "akute-appendizitis-q7",
+        "phase": "Sorgen des Patienten & Gesprächsabschluss",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie selbst eine Vermutung oder machen Sie sich über etwas besonders Sorgen? Haben Sie noch Fragen an mich?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Sorgen des Patienten zu erfragen gehört zu einem patientenzentrierten FSP-Gespräch."
+          },
+          {
+            "text": "Gut, das war's. Sie hören dann von uns.",
+            "isOptimal": false,
+            "feedback": "Zu abrupt. Fragen Sie nach Sorgen und offenen Fragen und erklären Sie das weitere Vorgehen."
+          }
+        ],
+        "patientResponse": "Ist das der Blinddarm? Muss ich jetzt operiert werden? Ich hab nächste Woche Prüfungen."
+      }
+    ],
+    "arztbriefTemplate": {
+      "prompt": "Verfassen Sie die Anamnese und Epikrise für Frau Lena Weber (24 J.) mit Verdacht auf Akute Appendizitis im C1-Fachstil.",
+      "requiredTerms": [
+        "Akute Appendizitis",
+        "Keine",
+        "Extrauteringravidität",
+        "Anamnese",
+        "Vitalparameter"
+      ],
+      "sampleSolution": "Frau Lena Weber (24 J., Studentin) stellte sich mit folgender aktueller Anamnese vor: Seit ca. 18 Stunden Bauchschmerzen, initial periumbilikal, jetzt im rechten Unterbauch lokalisiert. Übelkeit, einmaliges Erbrechen, Appetitlosigkeit. An Vorerkrankungen seien bekannt: Keine. Die Dauermedikation umfasse: Orale Kontrazeption. Allergien: Keine bekannt. Sozial- und Familienanamnese: Nichtraucherin, Alkohol am Wochenende. Letzte Regelblutung vor 2 Wochen. Unauffällig. Zusammenfassend ergibt sich der dringende Verdacht auf: Akute Appendizitis (Differenzialdiagnosen: Extrauteringravidität, Ovarialtorsion, Adnexitis)."
+    },
+    "isbarSteps": [
+      {
+        "step": "I",
+        "label": "Identify (Identifikation)",
+        "guidance": "Nennen Sie Name, Alter und aktuellen Bereich des Patienten / der Patientin.",
+        "sampleSpeech": "Ich übergebe Frau Lena Weber, 24 Jahre alt, aktuell in der Aufnahme (Chirurgie)."
+      },
+      {
+        "step": "S",
+        "label": "Situation (Aktuelle Situation)",
+        "guidance": "Benennen Sie Leitsymptom und Hauptverdachtsdiagnose.",
+        "sampleSpeech": "Vorstellungsgrund: Seit ca. 18 Stunden Bauchschmerzen, initial periumbilikal, jetzt im rechten Unterbauch lokalisiert. Übelkeit, einmaliges Erbrechen, Appetitlosigkeit. Es besteht der dringende Verdacht auf Akute Appendizitis."
+      },
+      {
+        "step": "B",
+        "label": "Background (Klinischer Hintergrund)",
+        "guidance": "Fassen Sie Vorerkrankungen, Dauermedikation und Allergien zusammen.",
+        "sampleSpeech": "Anamnestisch bekannt sind: Keine. Medikation: Orale Kontrazeption. Allergien: Keine bekannt."
+      },
+      {
+        "step": "A",
+        "label": "Assessment (Aktuelle Einschätzung & Vitalparameter)",
+        "guidance": "Berichten Sie über Vitalparameter, Untersuchungsbefund und Labor.",
+        "sampleSpeech": "Vitalparameter: RR 120/75 mmHg, HF 104 /min, Temp 38,4 °C, SpO₂ 98 % (Raumluft). Labor: Leukozyten: 14,2 /nl (erhöht), CRP: 48 mg/l (erhöht), β-HCG: negativ"
+      },
+      {
+        "step": "R",
+        "label": "Recommendation (Empfehlung & weiteres Vorgehen)",
+        "guidance": "Schlagen Sie die weitere Diagnostik und Therapie unter Berücksichtigung der Differenzialdiagnosen vor.",
+        "sampleSpeech": "Ich empfehle die zielgerichtete Weiterbehandlung bezüglich Akute Appendizitis sowie den Ausschluss der wichtigsten Differenzialdiagnosen (Extrauteringravidität, Ovarialtorsion, Adnexitis)."
+      }
+    ]
+  },
+  {
+    "id": "apoplex-ischaemischer-schlaganfall",
+    "title": "Apoplex (ischämischer Schlaganfall)",
+    "specialty": "Neurologie",
+    "category": "Neurologie",
+    "difficulty": "C1",
+    "patientName": "Frau Ingrid Becker",
+    "patientAge": 74,
+    "chiefComplaint": "Meine Tochter sagt, ich red so komisch. Und mein rechter Arm, der will einfach nicht mehr so wie ich.",
+    "patient": {
+      "name": "Frau Ingrid Becker",
+      "age": 74,
+      "gender": "w",
+      "occupation": "Rentnerin",
+      "chiefComplaint": "Meine Tochter sagt, ich red so komisch. Und mein rechter Arm, der will einfach nicht mehr so wie ich.",
+      "vitalSigns": {
+        "bp": "185/100 mmHg",
+        "hr": "88 /min",
+        "temp": "36,6 °C",
+        "spo2": "96 % (Raumluft)"
+      },
+      "historyDetails": "Seit ca. 90 Minuten (Symptombeginn beobachtet durch Tochter) Armparese rechts und Wortfindungsstörungen. Keine Kopfschmerzen, kein Trauma. Vorerkrankungen: Vorhofflimmern, Arterielle Hypertonie. Medikation: Bisoprolol 5 mg 1-0-0, Amlodipin 5 mg 1-0-0, Apixaban vor 1 Woche eigenständig abgesetzt. Allergien: Keine bekannt. Sozialanamnese: Verwitwet, lebt allein, selbstständig. Nichtraucherin. Familienanamnese: Mutter hatte einen Schlaganfall. Labor: Blutzucker: 128 mg/dl, INR: 1,0, Thrombozyten: 245 /nl."
+    },
+    "speaker": "Patientin mit Unterstützung der Tochter",
+    "patientDialogue": {
+      "beschwerden": "Meine Tochter sagt, ich red so komisch. Und mein rechter Arm, der will einfach nicht mehr so wie ich.",
+      "beginn": "Tochter: Um halb zehn haben wir zusammen Kaffee getrunken, da war noch alles normal. Um zehn ist ihr die Tasse aus der Hand gefallen. Das ist jetzt anderthalb Stunden her.",
+      "lokalisation": "Der rechte Arm ist so schwer, wie Blei. Das Bein geht, glaub ich. Das Gesicht hängt rechts ein bisschen, sagt meine Tochter.",
+      "charakter": "Weh tut nichts. Der Arm ist eher taub und kraftlos.",
+      "intensitaet": "Schmerzen hab ich keine, nein.",
+      "verlauf": "Tochter: Es ist seitdem gleich geblieben, nicht besser geworden. Beim Sprechen sucht sie immer nach den Wörtern.",
+      "begleitsymptome": "Kopfweh hab ich nicht. Schwindelig ein bisschen. Ich seh normal, glaub ich. Gestürzt bin ich nicht.",
+      "fieber": "Fieber hatte ich nicht.",
+      "verdauung": "Da ist alles normal.",
+      "wasserlassen": "Normal.",
+      "vorerkrankungen": "Ich hab so Herzstolpern, Vorhof... Vorhofflimmern. Und hohen Blutdruck.",
+      "operationen": "Die Gebärmutter ist vor zwanzig Jahren rausgekommen, und am grauen Star wurde ich operiert.",
+      "medikamente": "Bisoprolol und Amlodipin, beides morgens. Den Blutverdünner, Apixaban, hab ich vor einer Woche weggelassen, weil ich so blaue Flecken hatte.",
+      "allergien": "Nein, keine Allergien.",
+      "rauchen": "Nie geraucht.",
+      "alkohol": "Ein Gläschen Sekt an Geburtstagen.",
+      "beruf": "Ich bin Rentnerin, war früher Sekretärin.",
+      "wohnen": "Ich bin Witwe und wohne allein, mach noch alles selbst. Meine Tochter wohnt zwei Straßen weiter.",
+      "familie": "Meine Mutter hatte auch einen Schlaganfall.",
+      "sorgen": "Wird das wieder mit dem Arm? Ich will nicht ins Heim."
+    },
+    "anamneseQuestions": [
+      {
+        "id": "apoplex-ischaemischer-schlaganfall-q1",
+        "phase": "Gesprächseinstieg & Leitsymptom",
+        "doctorOptions": [
+          {
+            "text": "Guten Tag, mein Name ist … , ich bin hier die Ärztin / der Arzt. Was führt Sie heute zu uns?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorstellung mit Namen und Funktion, dann eine offene Einstiegsfrage."
+          },
+          {
+            "text": "Liegt bei Ihnen die typische Symptomatik für Ischämischer Schlaganfall im Stromgebiet der A. cerebri media links vor?",
+            "isOptimal": false,
+            "feedback": "FSP-Fehler: Keine geschlossene Diagnose-Frage zu Beginn. Lassen Sie den Patienten zuerst frei erzählen."
+          }
+        ],
+        "patientResponse": "Meine Tochter sagt, ich red so komisch. Und mein rechter Arm, der will einfach nicht mehr so wie ich."
+      },
+      {
+        "id": "apoplex-ischaemischer-schlaganfall-q2",
+        "phase": "Beginn, Ort & Art der Beschwerden",
+        "doctorOptions": [
+          {
+            "text": "Seit wann haben Sie die Beschwerden genau, wo spüren Sie sie und wie fühlen sie sich an? Strahlen sie irgendwohin aus?",
+            "isOptimal": true,
+            "feedback": "Gut strukturiert: Beginn, Lokalisation, Qualität und Ausstrahlung in verständlichen Worten erfragt."
+          },
+          {
+            "text": "Beschreiben Sie Onset, Lokalisation, Qualität und Irradiation der Symptomatik.",
+            "isOptimal": false,
+            "feedback": "Zu viel Fachjargon. „Ausstrahlen“ statt „Irradiation“, „Seit wann?“ statt „Onset“."
+          }
+        ],
+        "patientResponse": "Tochter: Um halb zehn haben wir zusammen Kaffee getrunken, da war noch alles normal. Um zehn ist ihr die Tasse aus der Hand gefallen. Das ist jetzt anderthalb Stunden her. Der rechte Arm ist so schwer, wie Blei. Das Bein geht, glaub ich. Das Gesicht hängt rechts ein bisschen, sagt meine Tochter. Weh tut nichts. Der Arm ist eher taub und kraftlos."
+      },
+      {
+        "id": "apoplex-ischaemischer-schlaganfall-q3",
+        "phase": "Intensität, Verlauf & Auslöser",
+        "doctorOptions": [
+          {
+            "text": "Wie stark sind die Beschwerden auf einer Skala von 0 bis 10? Sind sie besser oder schlimmer geworden, und gibt es etwas, das sie auslöst oder lindert?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Schmerzskala 0–10 ist im deutschen Klinikalltag Standard."
+          },
+          {
+            "text": "Ist es sehr schlimm?",
+            "isOptimal": false,
+            "feedback": "Zu unpräzise. Fragen Sie nach der Stärke auf einer Skala von 0 bis 10 und nach dem Verlauf."
+          }
+        ],
+        "patientResponse": "Schmerzen hab ich keine, nein. Tochter: Es ist seitdem gleich geblieben, nicht besser geworden. Beim Sprechen sucht sie immer nach den Wörtern."
+      },
+      {
+        "id": "apoplex-ischaemischer-schlaganfall-q4",
+        "phase": "Begleitsymptome & vegetative Anamnese",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie noch andere Beschwerden bemerkt, zum Beispiel Fieber, Übelkeit, Gewichtsverlust oder Probleme beim Stuhlgang oder Wasserlassen?",
+            "isOptimal": true,
+            "feedback": "Exzellent! Begleitsymptome und vegetative Anamnese in Patientensprache abgefragt."
+          },
+          {
+            "text": "Bestehen B-Symptomatik, Nausea, Emesis oder Miktionsbeschwerden?",
+            "isOptimal": false,
+            "feedback": "Fachjargon! Sagen Sie „Fieber, Nachtschweiß, Gewichtsverlust“, „Übelkeit“, „Erbrechen“ und „Probleme beim Wasserlassen“."
+          }
+        ],
+        "patientResponse": "Kopfweh hab ich nicht. Schwindelig ein bisschen. Ich seh normal, glaub ich. Gestürzt bin ich nicht. Fieber hatte ich nicht. Da ist alles normal. Normal."
+      },
+      {
+        "id": "apoplex-ischaemischer-schlaganfall-q5",
+        "phase": "Vorerkrankungen, Operationen & Medikamente",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie Vorerkrankungen oder wurden Sie schon einmal operiert? Welche Medikamente nehmen Sie regelmäßig ein, und haben Sie Allergien?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorerkrankungen, Operationen, Medikation und Allergien vollständig erfragt."
+          },
+          {
+            "text": "Welche Komorbiditäten, Voroperationen und Dauermedikation bestehen? Gibt es Unverträglichkeiten?",
+            "isOptimal": false,
+            "feedback": "„Komorbiditäten“ versteht kaum ein Patient. Sagen Sie „andere Erkrankungen“."
+          }
+        ],
+        "patientResponse": "Ich hab so Herzstolpern, Vorhof... Vorhofflimmern. Und hohen Blutdruck. Die Gebärmutter ist vor zwanzig Jahren rausgekommen, und am grauen Star wurde ich operiert. Bisoprolol und Amlodipin, beides morgens. Den Blutverdünner, Apixaban, hab ich vor einer Woche weggelassen, weil ich so blaue Flecken hatte. Nein, keine Allergien."
+      },
+      {
+        "id": "apoplex-ischaemischer-schlaganfall-q6",
+        "phase": "Sozial- & Familienanamnese",
+        "doctorOptions": [
+          {
+            "text": "Darf ich Sie noch etwas Persönliches fragen: Rauchen Sie, trinken Sie Alkohol, was machen Sie beruflich, wie wohnen Sie, und gibt es Krankheiten in Ihrer Familie?",
+            "isOptimal": true,
+            "feedback": "Sehr empathisch! Sie kündigen die persönlichen Fragen an und decken Noxen, Beruf, Wohnsituation und Familie ab."
+          },
+          {
+            "text": "Wie ist Ihr Noxenabusus und gibt es eine familiäre Belastung?",
+            "isOptimal": false,
+            "feedback": "Vermeiden Sie „Noxenabusus“. Fragen Sie direkt nach Rauchen, Alkohol und Drogen."
+          }
+        ],
+        "patientResponse": "Nie geraucht. Ein Gläschen Sekt an Geburtstagen. Ich bin Rentnerin, war früher Sekretärin. Ich bin Witwe und wohne allein, mach noch alles selbst. Meine Tochter wohnt zwei Straßen weiter. Meine Mutter hatte auch einen Schlaganfall."
+      },
+      {
+        "id": "apoplex-ischaemischer-schlaganfall-q7",
+        "phase": "Sorgen des Patienten & Gesprächsabschluss",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie selbst eine Vermutung oder machen Sie sich über etwas besonders Sorgen? Haben Sie noch Fragen an mich?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Sorgen des Patienten zu erfragen gehört zu einem patientenzentrierten FSP-Gespräch."
+          },
+          {
+            "text": "Gut, das war's. Sie hören dann von uns.",
+            "isOptimal": false,
+            "feedback": "Zu abrupt. Fragen Sie nach Sorgen und offenen Fragen und erklären Sie das weitere Vorgehen."
+          }
+        ],
+        "patientResponse": "Wird das wieder mit dem Arm? Ich will nicht ins Heim."
+      }
+    ],
+    "arztbriefTemplate": {
+      "prompt": "Verfassen Sie die Anamnese und Epikrise für Frau Ingrid Becker (74 J.) mit Verdacht auf Ischämischer Schlaganfall im Stromgebiet der A. cerebri media links im C1-Fachstil.",
+      "requiredTerms": [
+        "Ischämischer Schlaganfall im Stromgebiet der A. cerebri media links",
+        "Vorhofflimmern",
+        "Intrazerebrale Blutung",
+        "Anamnese",
+        "Vitalparameter"
+      ],
+      "sampleSolution": "Frau Ingrid Becker (74 J., Rentnerin) stellte sich mit folgender aktueller Anamnese vor: Seit ca. 90 Minuten (Symptombeginn beobachtet durch Tochter) Armparese rechts und Wortfindungsstörungen. Keine Kopfschmerzen, kein Trauma. An Vorerkrankungen seien bekannt: Vorhofflimmern, Arterielle Hypertonie. Die Dauermedikation umfasse: Bisoprolol 5 mg 1-0-0, Amlodipin 5 mg 1-0-0, Apixaban vor 1 Woche eigenständig abgesetzt. Allergien: Keine bekannt. Sozial- und Familienanamnese: Verwitwet, lebt allein, selbstständig. Nichtraucherin. Mutter hatte einen Schlaganfall. Zusammenfassend ergibt sich der dringende Verdacht auf: Ischämischer Schlaganfall im Stromgebiet der A. cerebri media links (Differenzialdiagnosen: Intrazerebrale Blutung, Hypoglykämie, Todd-Parese nach Krampfanfall)."
+    },
+    "isbarSteps": [
+      {
+        "step": "I",
+        "label": "Identify (Identifikation)",
+        "guidance": "Nennen Sie Name, Alter und aktuellen Bereich des Patienten / der Patientin.",
+        "sampleSpeech": "Ich übergebe Frau Ingrid Becker, 74 Jahre alt, aktuell in der Aufnahme (Neurologie)."
+      },
+      {
+        "step": "S",
+        "label": "Situation (Aktuelle Situation)",
+        "guidance": "Benennen Sie Leitsymptom und Hauptverdachtsdiagnose.",
+        "sampleSpeech": "Vorstellungsgrund: Seit ca. 90 Minuten (Symptombeginn beobachtet durch Tochter) Armparese rechts und Wortfindungsstörungen. Keine Kopfschmerzen, kein Trauma. Es besteht der dringende Verdacht auf Ischämischer Schlaganfall im Stromgebiet der A. cerebri media links."
+      },
+      {
+        "step": "B",
+        "label": "Background (Klinischer Hintergrund)",
+        "guidance": "Fassen Sie Vorerkrankungen, Dauermedikation und Allergien zusammen.",
+        "sampleSpeech": "Anamnestisch bekannt sind: Vorhofflimmern, Arterielle Hypertonie. Medikation: Bisoprolol 5 mg 1-0-0, Amlodipin 5 mg 1-0-0, Apixaban vor 1 Woche eigenständig abgesetzt. Allergien: Keine bekannt."
+      },
+      {
+        "step": "A",
+        "label": "Assessment (Aktuelle Einschätzung & Vitalparameter)",
+        "guidance": "Berichten Sie über Vitalparameter, Untersuchungsbefund und Labor.",
+        "sampleSpeech": "Vitalparameter: RR 185/100 mmHg, HF 88 /min, Temp 36,6 °C, SpO₂ 96 % (Raumluft). Labor: Blutzucker: 128 mg/dl, INR: 1,0, Thrombozyten: 245 /nl"
+      },
+      {
+        "step": "R",
+        "label": "Recommendation (Empfehlung & weiteres Vorgehen)",
+        "guidance": "Schlagen Sie die weitere Diagnostik und Therapie unter Berücksichtigung der Differenzialdiagnosen vor.",
+        "sampleSpeech": "Ich empfehle die zielgerichtete Weiterbehandlung bezüglich Ischämischer Schlaganfall im Stromgebiet der A. cerebri media links sowie den Ausschluss der wichtigsten Differenzialdiagnosen (Intrazerebrale Blutung, Hypoglykämie, Todd-Parese nach Krampfanfall)."
+      }
+    ]
+  },
   {
     "id": "akute-cholezystitis",
     "title": "Akute Cholezystitis bei Cholezystolithiasis",
@@ -1254,6 +1906,2990 @@ export const MEDICAL_CASES: MedicalCase[] = [
         "label": "Recommendation (Empfehlung & weiteres Vorgehen)",
         "guidance": "Schlagen Sie die weitere Diagnostik und Therapie unter Berücksichtigung der Differenzialdiagnosen vor.",
         "sampleSpeech": "Ich empfehle die zielgerichtete Weiterbehandlung bezüglich Akute arterielle Mesenterialischämie bei Embolie der A. mesenterica superior (Vorhofflimmern ohne Antikoagulation) sowie den Ausschluss der wichtigsten Differenzialdiagnosen (Mechanischer Ileus, Perforiertes Hohlorgan, Akute Pankreatitis)."
+      }
+    ]
+  },
+  {
+    "id": "copd-exazerbation",
+    "title": "Akute Exazerbation einer COPD",
+    "specialty": "Pneumologie",
+    "category": "Pneumologie",
+    "difficulty": "B2",
+    "patientName": "Herr Werner Hoffmann",
+    "patientAge": 68,
+    "chiefComplaint": "Ich krieg seit drei Tagen kaum noch Luft, Herr Doktor. Ich huste wie verrückt, und der Schleim ist jetzt so grün-gelb. Mein Spray hilft gar nicht mehr.",
+    "patient": {
+      "name": "Herr Werner Hoffmann",
+      "age": 68,
+      "gender": "m",
+      "occupation": "Rentner (ehem. Maurer)",
+      "chiefComplaint": "Ich krieg seit drei Tagen kaum noch Luft, Herr Doktor. Ich huste wie verrückt, und der Schleim ist jetzt so grün-gelb. Mein Spray hilft gar nicht mehr.",
+      "vitalSigns": {
+        "bp": "145/85 mmHg",
+        "hr": "108 /min",
+        "temp": "37,9 °C",
+        "spo2": "86 % (Raumluft)"
+      },
+      "historyDetails": "Seit 3 Tagen zunehmende Ruhedyspnoe, vermehrter Husten mit purulentem Sputum (gelb-grün), subfebrile Temperaturen. Bedarfsspray ohne ausreichende Wirkung. Kann nur noch wenige Schritte gehen, schläft mit drei Kissen. Vorerkrankungen: COPD GOLD E, zwei Exazerbationen im letzten Jahr, Arterielle Hypertonie, Z. n. Leistenhernien-OP rechts 2015. Medikation: Tiotropium/Olodaterol 2,5/2,5 µg 2 Hübe 1-0-0, Salbutamol-Dosieraerosol 100 µg bei Bedarf, Amlodipin 5 mg 1-0-0. Allergien: Keine bekannt. Sozialanamnese: Ex-Raucher seit 2 Jahren, davor ca. 50 pack years. Alkohol: 1–2 Bier am Abend. Verheiratet, lebt mit Ehefrau im 2. OG ohne Aufzug. Ehemals Maurer (Staubexposition). Familienanamnese: Vater an Lungenkrebs verstorben. Körperliche Untersuchung: Zentrale Zyanose, Lippenbremse, Einsatz der Atemhilfsmuskulatur. Auskultation: Exspiratorisches Giemen und Brummen beidseits, verlängertes Exspirium, keine feuchten Rasselgeräusche. Keine Beinödeme. Labor: pH (BGA): 7,33 (erniedrigt), pCO2: 54 mmHg (erhöht), pO2: 52 mmHg (erniedrigt), Leukozyten: 13,4 /nl (erhöht), CRP: 46 mg/l (erhöht), NT-proBNP: 180 pg/ml."
+    },
+    "patientDialogue": {
+      "beschwerden": "Ich krieg seit drei Tagen kaum noch Luft, Herr Doktor. Ich huste wie verrückt, und der Schleim ist jetzt so grün-gelb. Mein Spray hilft gar nicht mehr.",
+      "beginn": "Angefangen hat's mit einer Erkältung vor ungefähr fünf Tagen, Schnupfen und Halskratzen. Seit drei Tagen ist die Luft so knapp.",
+      "lokalisation": "Das sitzt alles auf der Brust, so ein Engegefühl beim Atmen. Richtige Schmerzen hab ich nicht.",
+      "charakter": "Ich krieg die Luft nicht richtig raus, es pfeift beim Ausatmen.",
+      "intensitaet": "Schlimm. Zu Hause schaff ich gerade noch vom Bett ins Bad, dann muss ich mich hinsetzen. Sonst geh ich mit dem Hund eine halbe Stunde.",
+      "verlauf": "Jeden Tag ein bisschen schlechter. Heute Nacht konnte ich nur im Sitzen schlafen, mit drei Kissen.",
+      "ausloeser": "Jede Bewegung macht es schlimmer. Das Spray hab ich heute bestimmt zehnmal genommen, das hilft nur noch ganz kurz.",
+      "begleitsymptome": "Ich huste viel, so gelb-grünen Schleim, ein halbes Wasserglas am Tag. Blut war keins dabei. Die Beine sind nicht dicker als sonst.",
+      "fieber": "Ein bisschen erhöht, gestern Abend 38 Grad. Schüttelfrost nicht.",
+      "appetit_gewicht": "Appetit hab ich kaum, das Essen strengt mich an. Abgenommen hab ich im letzten Jahr so drei, vier Kilo.",
+      "verdauung": "Stuhlgang ist normal.",
+      "wasserlassen": "Wasserlassen ist normal.",
+      "schlaf": "Schlafen geht kaum, ich wach auf, weil ich keine Luft krieg.",
+      "vorerkrankungen": "Ich hab COPD, seit acht Jahren. Letztes Jahr war ich zweimal deswegen im Krankenhaus. Und Bluthochdruck.",
+      "operationen": "Leistenbruch rechts, 2015.",
+      "medikamente": "Morgens das Spiolto, zwei Hübe, abends nichts. Dann das blaue Spray, Salbutamol, wenn ich es brauche. Und Amlodipin 5 für den Blutdruck.",
+      "allergien": "Allergien hab ich keine.",
+      "impfungen": "Grippeimpfung hab ich dieses Jahr noch nicht gemacht. Gegen Lungenentzündung bin ich, glaub ich, nicht geimpft.",
+      "rauchen": "Ich hab vor zwei Jahren aufgehört. Vorher hab ich fast 50 Jahre geraucht, zuletzt eine Schachtel am Tag.",
+      "alkohol": "Abends ein, zwei Bier vor dem Fernseher.",
+      "drogen": "Nein.",
+      "beruf": "Ich war Maurer, 40 Jahre lang auf dem Bau, viel Staub. Jetzt bin ich Rentner.",
+      "wohnen": "Mit meiner Frau, zweiter Stock ohne Aufzug. Die Treppen schaff ich zurzeit gar nicht.",
+      "familie": "Mein Vater hatte Lungenkrebs, daran ist er gestorben.",
+      "sorgen": "Ich hab Angst, dass ich wieder auf die Intensivstation muss, mit der Maske."
+    },
+    "anamneseQuestions": [
+      {
+        "id": "copd-exazerbation-q1",
+        "phase": "Gesprächseinstieg & Leitsymptom",
+        "doctorOptions": [
+          {
+            "text": "Guten Tag, mein Name ist … , ich bin hier die Ärztin / der Arzt. Was führt Sie heute zu uns?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorstellung mit Namen und Funktion, dann eine offene Einstiegsfrage."
+          },
+          {
+            "text": "Liegt bei Ihnen die typische Symptomatik für Akute infektexazerbierte COPD (GOLD E) vor?",
+            "isOptimal": false,
+            "feedback": "FSP-Fehler: Keine geschlossene Diagnose-Frage zu Beginn. Lassen Sie den Patienten zuerst frei erzählen."
+          }
+        ],
+        "patientResponse": "Ich krieg seit drei Tagen kaum noch Luft, Herr Doktor. Ich huste wie verrückt, und der Schleim ist jetzt so grün-gelb. Mein Spray hilft gar nicht mehr."
+      },
+      {
+        "id": "copd-exazerbation-q2",
+        "phase": "Beginn, Ort & Art der Beschwerden",
+        "doctorOptions": [
+          {
+            "text": "Seit wann haben Sie die Beschwerden genau, wo spüren Sie sie und wie fühlen sie sich an? Strahlen sie irgendwohin aus?",
+            "isOptimal": true,
+            "feedback": "Gut strukturiert: Beginn, Lokalisation, Qualität und Ausstrahlung in verständlichen Worten erfragt."
+          },
+          {
+            "text": "Beschreiben Sie Onset, Lokalisation, Qualität und Irradiation der Symptomatik.",
+            "isOptimal": false,
+            "feedback": "Zu viel Fachjargon. „Ausstrahlen“ statt „Irradiation“, „Seit wann?“ statt „Onset“."
+          }
+        ],
+        "patientResponse": "Angefangen hat's mit einer Erkältung vor ungefähr fünf Tagen, Schnupfen und Halskratzen. Seit drei Tagen ist die Luft so knapp. Das sitzt alles auf der Brust, so ein Engegefühl beim Atmen. Richtige Schmerzen hab ich nicht. Ich krieg die Luft nicht richtig raus, es pfeift beim Ausatmen."
+      },
+      {
+        "id": "copd-exazerbation-q3",
+        "phase": "Intensität, Verlauf & Auslöser",
+        "doctorOptions": [
+          {
+            "text": "Wie stark sind die Beschwerden auf einer Skala von 0 bis 10? Sind sie besser oder schlimmer geworden, und gibt es etwas, das sie auslöst oder lindert?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Schmerzskala 0–10 ist im deutschen Klinikalltag Standard."
+          },
+          {
+            "text": "Ist es sehr schlimm?",
+            "isOptimal": false,
+            "feedback": "Zu unpräzise. Fragen Sie nach der Stärke auf einer Skala von 0 bis 10 und nach dem Verlauf."
+          }
+        ],
+        "patientResponse": "Schlimm. Zu Hause schaff ich gerade noch vom Bett ins Bad, dann muss ich mich hinsetzen. Sonst geh ich mit dem Hund eine halbe Stunde. Jeden Tag ein bisschen schlechter. Heute Nacht konnte ich nur im Sitzen schlafen, mit drei Kissen. Jede Bewegung macht es schlimmer. Das Spray hab ich heute bestimmt zehnmal genommen, das hilft nur noch ganz kurz."
+      },
+      {
+        "id": "copd-exazerbation-q4",
+        "phase": "Begleitsymptome & vegetative Anamnese",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie noch andere Beschwerden bemerkt, zum Beispiel Fieber, Übelkeit, Gewichtsverlust oder Probleme beim Stuhlgang oder Wasserlassen?",
+            "isOptimal": true,
+            "feedback": "Exzellent! Begleitsymptome und vegetative Anamnese in Patientensprache abgefragt."
+          },
+          {
+            "text": "Bestehen B-Symptomatik, Nausea, Emesis oder Miktionsbeschwerden?",
+            "isOptimal": false,
+            "feedback": "Fachjargon! Sagen Sie „Fieber, Nachtschweiß, Gewichtsverlust“, „Übelkeit“, „Erbrechen“ und „Probleme beim Wasserlassen“."
+          }
+        ],
+        "patientResponse": "Ich huste viel, so gelb-grünen Schleim, ein halbes Wasserglas am Tag. Blut war keins dabei. Die Beine sind nicht dicker als sonst. Ein bisschen erhöht, gestern Abend 38 Grad. Schüttelfrost nicht. Appetit hab ich kaum, das Essen strengt mich an. Abgenommen hab ich im letzten Jahr so drei, vier Kilo. Stuhlgang ist normal. Wasserlassen ist normal. Schlafen geht kaum, ich wach auf, weil ich keine Luft krieg."
+      },
+      {
+        "id": "copd-exazerbation-q5",
+        "phase": "Vorerkrankungen, Operationen & Medikamente",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie Vorerkrankungen oder wurden Sie schon einmal operiert? Welche Medikamente nehmen Sie regelmäßig ein, und haben Sie Allergien?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorerkrankungen, Operationen, Medikation und Allergien vollständig erfragt."
+          },
+          {
+            "text": "Welche Komorbiditäten, Voroperationen und Dauermedikation bestehen? Gibt es Unverträglichkeiten?",
+            "isOptimal": false,
+            "feedback": "„Komorbiditäten“ versteht kaum ein Patient. Sagen Sie „andere Erkrankungen“."
+          }
+        ],
+        "patientResponse": "Ich hab COPD, seit acht Jahren. Letztes Jahr war ich zweimal deswegen im Krankenhaus. Und Bluthochdruck. Leistenbruch rechts, 2015. Morgens das Spiolto, zwei Hübe, abends nichts. Dann das blaue Spray, Salbutamol, wenn ich es brauche. Und Amlodipin 5 für den Blutdruck. Allergien hab ich keine."
+      },
+      {
+        "id": "copd-exazerbation-q6",
+        "phase": "Sozial- & Familienanamnese",
+        "doctorOptions": [
+          {
+            "text": "Darf ich Sie noch etwas Persönliches fragen: Rauchen Sie, trinken Sie Alkohol, was machen Sie beruflich, wie wohnen Sie, und gibt es Krankheiten in Ihrer Familie?",
+            "isOptimal": true,
+            "feedback": "Sehr empathisch! Sie kündigen die persönlichen Fragen an und decken Noxen, Beruf, Wohnsituation und Familie ab."
+          },
+          {
+            "text": "Wie ist Ihr Noxenabusus und gibt es eine familiäre Belastung?",
+            "isOptimal": false,
+            "feedback": "Vermeiden Sie „Noxenabusus“. Fragen Sie direkt nach Rauchen, Alkohol und Drogen."
+          }
+        ],
+        "patientResponse": "Ich hab vor zwei Jahren aufgehört. Vorher hab ich fast 50 Jahre geraucht, zuletzt eine Schachtel am Tag. Abends ein, zwei Bier vor dem Fernseher. Nein. Ich war Maurer, 40 Jahre lang auf dem Bau, viel Staub. Jetzt bin ich Rentner. Mit meiner Frau, zweiter Stock ohne Aufzug. Die Treppen schaff ich zurzeit gar nicht. Mein Vater hatte Lungenkrebs, daran ist er gestorben. Grippeimpfung hab ich dieses Jahr noch nicht gemacht. Gegen Lungenentzündung bin ich, glaub ich, nicht geimpft."
+      },
+      {
+        "id": "copd-exazerbation-q7",
+        "phase": "Sorgen des Patienten & Gesprächsabschluss",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie selbst eine Vermutung oder machen Sie sich über etwas besonders Sorgen? Haben Sie noch Fragen an mich?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Sorgen des Patienten zu erfragen gehört zu einem patientenzentrierten FSP-Gespräch."
+          },
+          {
+            "text": "Gut, das war's. Sie hören dann von uns.",
+            "isOptimal": false,
+            "feedback": "Zu abrupt. Fragen Sie nach Sorgen und offenen Fragen und erklären Sie das weitere Vorgehen."
+          }
+        ],
+        "patientResponse": "Ich hab Angst, dass ich wieder auf die Intensivstation muss, mit der Maske."
+      }
+    ],
+    "arztbriefTemplate": {
+      "prompt": "Verfassen Sie die Anamnese und Epikrise für Herr Werner Hoffmann (68 J.) mit Verdacht auf Akute infektexazerbierte COPD (GOLD E) im C1-Fachstil.",
+      "requiredTerms": [
+        "Akute infektexazerbierte COPD (GOLD E)",
+        "COPD",
+        "Ambulant erworbene Pneumonie",
+        "Anamnese",
+        "Vitalparameter"
+      ],
+      "sampleSolution": "Herr Werner Hoffmann (68 J., Rentner (ehem. Maurer)) stellte sich mit folgender aktueller Anamnese vor: Seit 3 Tagen zunehmende Ruhedyspnoe, vermehrter Husten mit purulentem Sputum (gelb-grün), subfebrile Temperaturen. Bedarfsspray ohne ausreichende Wirkung. Kann nur noch wenige Schritte gehen, schläft mit drei Kissen. An Vorerkrankungen seien bekannt: COPD GOLD E, zwei Exazerbationen im letzten Jahr, Arterielle Hypertonie, Z. n. Leistenhernien-OP rechts 2015. Die Dauermedikation umfasse: Tiotropium/Olodaterol 2,5/2,5 µg 2 Hübe 1-0-0, Salbutamol-Dosieraerosol 100 µg bei Bedarf, Amlodipin 5 mg 1-0-0. Allergien: Keine bekannt. Sozial- und Familienanamnese: Ex-Raucher seit 2 Jahren, davor ca. 50 pack years. Alkohol: 1–2 Bier am Abend. Verheiratet, lebt mit Ehefrau im 2. OG ohne Aufzug. Ehemals Maurer (Staubexposition). Vater an Lungenkrebs verstorben. Klinische Untersuchung: Zentrale Zyanose, Lippenbremse, Einsatz der Atemhilfsmuskulatur. Auskultation: Exspiratorisches Giemen und Brummen beidseits, verlängertes Exspirium, keine feuchten Rasselgeräusche. Keine Beinödeme. Zusammenfassend ergibt sich der dringende Verdacht auf: Akute infektexazerbierte COPD (GOLD E) (Differenzialdiagnosen: Ambulant erworbene Pneumonie, Dekompensierte Herzinsuffizienz, Lungenarterienembolie)."
+    },
+    "isbarSteps": [
+      {
+        "step": "I",
+        "label": "Identify (Identifikation)",
+        "guidance": "Nennen Sie Name, Alter und aktuellen Bereich des Patienten / der Patientin.",
+        "sampleSpeech": "Ich übergebe Herr Werner Hoffmann, 68 Jahre alt, aktuell in der Aufnahme (Pneumologie)."
+      },
+      {
+        "step": "S",
+        "label": "Situation (Aktuelle Situation)",
+        "guidance": "Benennen Sie Leitsymptom und Hauptverdachtsdiagnose.",
+        "sampleSpeech": "Vorstellungsgrund: Seit 3 Tagen zunehmende Ruhedyspnoe, vermehrter Husten mit purulentem Sputum (gelb-grün), subfebrile Temperaturen. Bedarfsspray ohne ausreichende Wirkung. Kann nur noch wenige Schritte gehen, schläft mit drei Kissen. Es besteht der dringende Verdacht auf Akute infektexazerbierte COPD (GOLD E)."
+      },
+      {
+        "step": "B",
+        "label": "Background (Klinischer Hintergrund)",
+        "guidance": "Fassen Sie Vorerkrankungen, Dauermedikation und Allergien zusammen.",
+        "sampleSpeech": "Anamnestisch bekannt sind: COPD GOLD E, zwei Exazerbationen im letzten Jahr, Arterielle Hypertonie, Z. n. Leistenhernien-OP rechts 2015. Medikation: Tiotropium/Olodaterol 2,5/2,5 µg 2 Hübe 1-0-0, Salbutamol-Dosieraerosol 100 µg bei Bedarf, Amlodipin 5 mg 1-0-0. Allergien: Keine bekannt."
+      },
+      {
+        "step": "A",
+        "label": "Assessment (Aktuelle Einschätzung & Vitalparameter)",
+        "guidance": "Berichten Sie über Vitalparameter, Untersuchungsbefund und Labor.",
+        "sampleSpeech": "Vitalparameter: RR 145/85 mmHg, HF 108 /min, Temp 37,9 °C, SpO₂ 86 % (Raumluft). Zentrale Zyanose, Lippenbremse, Einsatz der Atemhilfsmuskulatur. Auskultation: Exspiratorisches Giemen und Brummen beidseits, verlängertes Exspirium, keine feuchten Rasselgeräusche. Keine Beinödeme. Labor: pH (BGA): 7,33 (erniedrigt), pCO2: 54 mmHg (erhöht), pO2: 52 mmHg (erniedrigt), Leukozyten: 13,4 /nl (erhöht), CRP: 46 mg/l (erhöht), NT-proBNP: 180 pg/ml"
+      },
+      {
+        "step": "R",
+        "label": "Recommendation (Empfehlung & weiteres Vorgehen)",
+        "guidance": "Schlagen Sie die weitere Diagnostik und Therapie unter Berücksichtigung der Differenzialdiagnosen vor.",
+        "sampleSpeech": "Ich empfehle die zielgerichtete Weiterbehandlung bezüglich Akute infektexazerbierte COPD (GOLD E) sowie den Ausschluss der wichtigsten Differenzialdiagnosen (Ambulant erworbene Pneumonie, Dekompensierte Herzinsuffizienz, Lungenarterienembolie)."
+      }
+    ]
+  },
+  {
+    "id": "aortendissektion-stanford-a",
+    "title": "Akute Aortendissektion (Stanford A)",
+    "specialty": "Kardiologie",
+    "category": "Kardiologie",
+    "difficulty": "C1",
+    "patientName": "Herr Jürgen Lehmann",
+    "patientAge": 61,
+    "chiefComplaint": "Das kam ganz plötzlich, wie ein Messerstich in der Brust, und dann ist es zwischen die Schulterblätter gewandert. So einen Schmerz hatte ich noch nie im Leben.",
+    "patient": {
+      "name": "Herr Jürgen Lehmann",
+      "age": 61,
+      "gender": "m",
+      "occupation": "Lkw-Fahrer",
+      "chiefComplaint": "Das kam ganz plötzlich, wie ein Messerstich in der Brust, und dann ist es zwischen die Schulterblätter gewandert. So einen Schmerz hatte ich noch nie im Leben.",
+      "vitalSigns": {
+        "bp": "175/95 (rechts), 140/80 (links) mmHg",
+        "hr": "102 /min",
+        "temp": "36,7 °C",
+        "spo2": "96 % (Raumluft)"
+      },
+      "historyDetails": "Vor ca. 1 Stunde schlagartig einsetzender, reißender retrosternaler Schmerz (NRS 10/10) beim Heben einer Kiste, wandernd in den Rücken zwischen die Schulterblätter. Kaltschweißigkeit, kurzzeitiges Schwarzwerden vor Augen. Keine Dyspnoe. Vorerkrankungen: Arterielle Hypertonie (unzureichend eingestellt), Hyperlipidämie. Medikation: Candesartan 8 mg 1-0-0 (unregelmäßige Einnahme), Atorvastatin 20 mg 0-0-1. Allergien: Keine bekannt. Sozialanamnese: Raucher, ca. 35 pack years. Alkohol: am Wochenende. Geschieden, lebt allein. Fernfahrer, viel unterwegs. Familienanamnese: Bruder mit 55 Jahren Bauchaortenaneurysma operiert. Körperliche Untersuchung: Blasser, kaltschweißiger Patient. Blutdruckdifferenz zwischen beiden Armen > 20 mmHg. Diastolikum über Erb. Pulse an der linken A. radialis abgeschwächt. Neurologisch unauffällig. Labor: D-Dimere: 4,8 mg/l (erhöht), hs-Troponin T: 12 ng/l, Hb: 13,9 g/dl, Kreatinin: 1,1 mg/dl."
+    },
+    "patientDialogue": {
+      "beschwerden": "Das kam ganz plötzlich, wie ein Messerstich in der Brust, und dann ist es zwischen die Schulterblätter gewandert. So einen Schmerz hatte ich noch nie im Leben.",
+      "beginn": "Vor ungefähr einer Stunde, ganz schlagartig. Ich hab gerade eine schwere Kiste vom Lkw gehoben.",
+      "lokalisation": "Erst vorne hinter dem Brustbein, und dann ist es nach hinten in den Rücken gewandert, zwischen die Schulterblätter.",
+      "charakter": "Wie reißend, als ob da drinnen was zerreißt. Ganz anders als ein Muskelkater.",
+      "intensitaet": "Zehn von zehn. Das Schlimmste, was ich je hatte.",
+      "ausstrahlung": "Es ist in den Rücken gewandert und jetzt zieht es so Richtung Bauch.",
+      "verlauf": "Es war sofort voll da, ganz von null auf hundert. Seitdem ist es nicht weniger geworden.",
+      "ausloeser": "Beim Heben ging's los. Ob ich mich bewege oder nicht, macht keinen Unterschied. Atmen ändert auch nichts.",
+      "begleitsymptome": "Ich war klitschnass geschwitzt, und für einen Moment ist mir schwarz vor Augen geworden. Luft krieg ich eigentlich. Der linke Arm fühlt sich irgendwie komisch kalt an.",
+      "fieber": "Nein, kein Fieber.",
+      "appetit_gewicht": "Da hab ich mich in letzter Zeit nicht drum gekümmert. Gewicht ist gleich.",
+      "verdauung": "Normal.",
+      "wasserlassen": "Normal.",
+      "vorerkrankungen": "Bluthochdruck hab ich, und das Cholesterin ist zu hoch. Der Hausarzt schimpft immer, dass der Blutdruck nicht gut eingestellt ist.",
+      "operationen": "Nein, noch nie operiert.",
+      "medikamente": "Candesartan 8 morgens, aber ehrlich gesagt vergess ich das oft, wenn ich unterwegs bin. Und abends Atorvastatin 20.",
+      "allergien": "Keine Allergien.",
+      "rauchen": "Ja, ich rauch, so eine Schachtel am Tag, seit 35 Jahren.",
+      "alkohol": "Am Wochenende ein paar Bier.",
+      "drogen": "Nein, nie. Auch kein Kokain oder so, falls Sie das meinen.",
+      "beruf": "Ich fahr Lkw, Fernverkehr, oft die ganze Woche unterwegs.",
+      "wohnen": "Ich bin geschieden und wohne allein.",
+      "familie": "Mein Bruder wurde vor sechs Jahren an der Bauchschlagader operiert, da war so eine Aussackung.",
+      "sorgen": "Ist das ein Herzinfarkt? Muss ich jetzt sterben, Herr Doktor?"
+    },
+    "anamneseQuestions": [
+      {
+        "id": "aortendissektion-stanford-a-q1",
+        "phase": "Gesprächseinstieg & Leitsymptom",
+        "doctorOptions": [
+          {
+            "text": "Guten Tag, mein Name ist … , ich bin hier die Ärztin / der Arzt. Was führt Sie heute zu uns?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorstellung mit Namen und Funktion, dann eine offene Einstiegsfrage."
+          },
+          {
+            "text": "Liegt bei Ihnen die typische Symptomatik für Akute Aortendissektion Stanford Typ A vor?",
+            "isOptimal": false,
+            "feedback": "FSP-Fehler: Keine geschlossene Diagnose-Frage zu Beginn. Lassen Sie den Patienten zuerst frei erzählen."
+          }
+        ],
+        "patientResponse": "Das kam ganz plötzlich, wie ein Messerstich in der Brust, und dann ist es zwischen die Schulterblätter gewandert. So einen Schmerz hatte ich noch nie im Leben."
+      },
+      {
+        "id": "aortendissektion-stanford-a-q2",
+        "phase": "Beginn, Ort & Art der Beschwerden",
+        "doctorOptions": [
+          {
+            "text": "Seit wann haben Sie die Beschwerden genau, wo spüren Sie sie und wie fühlen sie sich an? Strahlen sie irgendwohin aus?",
+            "isOptimal": true,
+            "feedback": "Gut strukturiert: Beginn, Lokalisation, Qualität und Ausstrahlung in verständlichen Worten erfragt."
+          },
+          {
+            "text": "Beschreiben Sie Onset, Lokalisation, Qualität und Irradiation der Symptomatik.",
+            "isOptimal": false,
+            "feedback": "Zu viel Fachjargon. „Ausstrahlen“ statt „Irradiation“, „Seit wann?“ statt „Onset“."
+          }
+        ],
+        "patientResponse": "Vor ungefähr einer Stunde, ganz schlagartig. Ich hab gerade eine schwere Kiste vom Lkw gehoben. Erst vorne hinter dem Brustbein, und dann ist es nach hinten in den Rücken gewandert, zwischen die Schulterblätter. Wie reißend, als ob da drinnen was zerreißt. Ganz anders als ein Muskelkater. Es ist in den Rücken gewandert und jetzt zieht es so Richtung Bauch."
+      },
+      {
+        "id": "aortendissektion-stanford-a-q3",
+        "phase": "Intensität, Verlauf & Auslöser",
+        "doctorOptions": [
+          {
+            "text": "Wie stark sind die Beschwerden auf einer Skala von 0 bis 10? Sind sie besser oder schlimmer geworden, und gibt es etwas, das sie auslöst oder lindert?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Schmerzskala 0–10 ist im deutschen Klinikalltag Standard."
+          },
+          {
+            "text": "Ist es sehr schlimm?",
+            "isOptimal": false,
+            "feedback": "Zu unpräzise. Fragen Sie nach der Stärke auf einer Skala von 0 bis 10 und nach dem Verlauf."
+          }
+        ],
+        "patientResponse": "Zehn von zehn. Das Schlimmste, was ich je hatte. Es war sofort voll da, ganz von null auf hundert. Seitdem ist es nicht weniger geworden. Beim Heben ging's los. Ob ich mich bewege oder nicht, macht keinen Unterschied. Atmen ändert auch nichts."
+      },
+      {
+        "id": "aortendissektion-stanford-a-q4",
+        "phase": "Begleitsymptome & vegetative Anamnese",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie noch andere Beschwerden bemerkt, zum Beispiel Fieber, Übelkeit, Gewichtsverlust oder Probleme beim Stuhlgang oder Wasserlassen?",
+            "isOptimal": true,
+            "feedback": "Exzellent! Begleitsymptome und vegetative Anamnese in Patientensprache abgefragt."
+          },
+          {
+            "text": "Bestehen B-Symptomatik, Nausea, Emesis oder Miktionsbeschwerden?",
+            "isOptimal": false,
+            "feedback": "Fachjargon! Sagen Sie „Fieber, Nachtschweiß, Gewichtsverlust“, „Übelkeit“, „Erbrechen“ und „Probleme beim Wasserlassen“."
+          }
+        ],
+        "patientResponse": "Ich war klitschnass geschwitzt, und für einen Moment ist mir schwarz vor Augen geworden. Luft krieg ich eigentlich. Der linke Arm fühlt sich irgendwie komisch kalt an. Nein, kein Fieber. Da hab ich mich in letzter Zeit nicht drum gekümmert. Gewicht ist gleich. Normal. Normal."
+      },
+      {
+        "id": "aortendissektion-stanford-a-q5",
+        "phase": "Vorerkrankungen, Operationen & Medikamente",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie Vorerkrankungen oder wurden Sie schon einmal operiert? Welche Medikamente nehmen Sie regelmäßig ein, und haben Sie Allergien?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorerkrankungen, Operationen, Medikation und Allergien vollständig erfragt."
+          },
+          {
+            "text": "Welche Komorbiditäten, Voroperationen und Dauermedikation bestehen? Gibt es Unverträglichkeiten?",
+            "isOptimal": false,
+            "feedback": "„Komorbiditäten“ versteht kaum ein Patient. Sagen Sie „andere Erkrankungen“."
+          }
+        ],
+        "patientResponse": "Bluthochdruck hab ich, und das Cholesterin ist zu hoch. Der Hausarzt schimpft immer, dass der Blutdruck nicht gut eingestellt ist. Nein, noch nie operiert. Candesartan 8 morgens, aber ehrlich gesagt vergess ich das oft, wenn ich unterwegs bin. Und abends Atorvastatin 20. Keine Allergien."
+      },
+      {
+        "id": "aortendissektion-stanford-a-q6",
+        "phase": "Sozial- & Familienanamnese",
+        "doctorOptions": [
+          {
+            "text": "Darf ich Sie noch etwas Persönliches fragen: Rauchen Sie, trinken Sie Alkohol, was machen Sie beruflich, wie wohnen Sie, und gibt es Krankheiten in Ihrer Familie?",
+            "isOptimal": true,
+            "feedback": "Sehr empathisch! Sie kündigen die persönlichen Fragen an und decken Noxen, Beruf, Wohnsituation und Familie ab."
+          },
+          {
+            "text": "Wie ist Ihr Noxenabusus und gibt es eine familiäre Belastung?",
+            "isOptimal": false,
+            "feedback": "Vermeiden Sie „Noxenabusus“. Fragen Sie direkt nach Rauchen, Alkohol und Drogen."
+          }
+        ],
+        "patientResponse": "Ja, ich rauch, so eine Schachtel am Tag, seit 35 Jahren. Am Wochenende ein paar Bier. Nein, nie. Auch kein Kokain oder so, falls Sie das meinen. Ich fahr Lkw, Fernverkehr, oft die ganze Woche unterwegs. Ich bin geschieden und wohne allein. Mein Bruder wurde vor sechs Jahren an der Bauchschlagader operiert, da war so eine Aussackung."
+      },
+      {
+        "id": "aortendissektion-stanford-a-q7",
+        "phase": "Sorgen des Patienten & Gesprächsabschluss",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie selbst eine Vermutung oder machen Sie sich über etwas besonders Sorgen? Haben Sie noch Fragen an mich?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Sorgen des Patienten zu erfragen gehört zu einem patientenzentrierten FSP-Gespräch."
+          },
+          {
+            "text": "Gut, das war's. Sie hören dann von uns.",
+            "isOptimal": false,
+            "feedback": "Zu abrupt. Fragen Sie nach Sorgen und offenen Fragen und erklären Sie das weitere Vorgehen."
+          }
+        ],
+        "patientResponse": "Ist das ein Herzinfarkt? Muss ich jetzt sterben, Herr Doktor?"
+      }
+    ],
+    "arztbriefTemplate": {
+      "prompt": "Verfassen Sie die Anamnese und Epikrise für Herr Jürgen Lehmann (61 J.) mit Verdacht auf Akute Aortendissektion Stanford Typ A im C1-Fachstil.",
+      "requiredTerms": [
+        "Akute Aortendissektion Stanford Typ A",
+        "Arterielle",
+        "Akutes Koronarsyndrom",
+        "Anamnese",
+        "Vitalparameter"
+      ],
+      "sampleSolution": "Herr Jürgen Lehmann (61 J., Lkw-Fahrer) stellte sich mit folgender aktueller Anamnese vor: Vor ca. 1 Stunde schlagartig einsetzender, reißender retrosternaler Schmerz (NRS 10/10) beim Heben einer Kiste, wandernd in den Rücken zwischen die Schulterblätter. Kaltschweißigkeit, kurzzeitiges Schwarzwerden vor Augen. Keine Dyspnoe. An Vorerkrankungen seien bekannt: Arterielle Hypertonie (unzureichend eingestellt), Hyperlipidämie. Die Dauermedikation umfasse: Candesartan 8 mg 1-0-0 (unregelmäßige Einnahme), Atorvastatin 20 mg 0-0-1. Allergien: Keine bekannt. Sozial- und Familienanamnese: Raucher, ca. 35 pack years. Alkohol: am Wochenende. Geschieden, lebt allein. Fernfahrer, viel unterwegs. Bruder mit 55 Jahren Bauchaortenaneurysma operiert. Klinische Untersuchung: Blasser, kaltschweißiger Patient. Blutdruckdifferenz zwischen beiden Armen > 20 mmHg. Diastolikum über Erb. Pulse an der linken A. radialis abgeschwächt. Neurologisch unauffällig. Zusammenfassend ergibt sich der dringende Verdacht auf: Akute Aortendissektion Stanford Typ A (Differenzialdiagnosen: Akutes Koronarsyndrom, Lungenarterienembolie, Spontanpneumothorax)."
+    },
+    "isbarSteps": [
+      {
+        "step": "I",
+        "label": "Identify (Identifikation)",
+        "guidance": "Nennen Sie Name, Alter und aktuellen Bereich des Patienten / der Patientin.",
+        "sampleSpeech": "Ich übergebe Herr Jürgen Lehmann, 61 Jahre alt, aktuell in der Aufnahme (Kardiologie)."
+      },
+      {
+        "step": "S",
+        "label": "Situation (Aktuelle Situation)",
+        "guidance": "Benennen Sie Leitsymptom und Hauptverdachtsdiagnose.",
+        "sampleSpeech": "Vorstellungsgrund: Vor ca. 1 Stunde schlagartig einsetzender, reißender retrosternaler Schmerz (NRS 10/10) beim Heben einer Kiste, wandernd in den Rücken zwischen die Schulterblätter. Kaltschweißigkeit, kurzzeitiges Schwarzwerden vor Augen. Keine Dyspnoe. Es besteht der dringende Verdacht auf Akute Aortendissektion Stanford Typ A."
+      },
+      {
+        "step": "B",
+        "label": "Background (Klinischer Hintergrund)",
+        "guidance": "Fassen Sie Vorerkrankungen, Dauermedikation und Allergien zusammen.",
+        "sampleSpeech": "Anamnestisch bekannt sind: Arterielle Hypertonie (unzureichend eingestellt), Hyperlipidämie. Medikation: Candesartan 8 mg 1-0-0 (unregelmäßige Einnahme), Atorvastatin 20 mg 0-0-1. Allergien: Keine bekannt."
+      },
+      {
+        "step": "A",
+        "label": "Assessment (Aktuelle Einschätzung & Vitalparameter)",
+        "guidance": "Berichten Sie über Vitalparameter, Untersuchungsbefund und Labor.",
+        "sampleSpeech": "Vitalparameter: RR 175/95 (rechts), 140/80 (links) mmHg, HF 102 /min, Temp 36,7 °C, SpO₂ 96 % (Raumluft). Blasser, kaltschweißiger Patient. Blutdruckdifferenz zwischen beiden Armen > 20 mmHg. Diastolikum über Erb. Pulse an der linken A. radialis abgeschwächt. Neurologisch unauffällig. Labor: D-Dimere: 4,8 mg/l (erhöht), hs-Troponin T: 12 ng/l, Hb: 13,9 g/dl, Kreatinin: 1,1 mg/dl"
+      },
+      {
+        "step": "R",
+        "label": "Recommendation (Empfehlung & weiteres Vorgehen)",
+        "guidance": "Schlagen Sie die weitere Diagnostik und Therapie unter Berücksichtigung der Differenzialdiagnosen vor.",
+        "sampleSpeech": "Ich empfehle die zielgerichtete Weiterbehandlung bezüglich Akute Aortendissektion Stanford Typ A sowie den Ausschluss der wichtigsten Differenzialdiagnosen (Akutes Koronarsyndrom, Lungenarterienembolie, Spontanpneumothorax)."
+      }
+    ]
+  },
+  {
+    "id": "gastrooesophageale-refluxkrankheit",
+    "title": "Gastroösophageale Refluxkrankheit (GERD)",
+    "specialty": "Gastroenterologie",
+    "category": "Gastroenterologie",
+    "difficulty": "B1",
+    "patientName": "Frau Melanie Schulz",
+    "patientAge": 42,
+    "chiefComplaint": "Ich hab seit Wochen so ein Brennen hinterm Brustbein, vor allem nach dem Essen und nachts im Liegen. Manchmal kommt mir so was Saures hoch.",
+    "patient": {
+      "name": "Frau Melanie Schulz",
+      "age": 42,
+      "gender": "w",
+      "occupation": "Bürokauffrau",
+      "chiefComplaint": "Ich hab seit Wochen so ein Brennen hinterm Brustbein, vor allem nach dem Essen und nachts im Liegen. Manchmal kommt mir so was Saures hoch.",
+      "vitalSigns": {
+        "bp": "125/80 mmHg",
+        "hr": "76 /min",
+        "temp": "36,6 °C",
+        "spo2": "99 % (Raumluft)"
+      },
+      "historyDetails": "Seit ca. 2 Monaten retrosternales Brennen, v. a. postprandial und im Liegen, saures Aufstoßen, nächtlicher Reizhusten. Keine Dysphagie, kein Gewichtsverlust, kein Bluterbrechen, keine Teerstühle. Antazida helfen kurzfristig. Vorerkrankungen: Adipositas Grad I (BMI 32), Z. n. Sectio caesarea 2012. Medikation: Ibuprofen 400 mg bei Bedarf (ca. 3x/Woche wegen Rückenschmerzen). Allergien: Pflaster (Kontaktdermatitis). Sozialanamnese: Raucherin, ca. 10 Zigaretten/Tag. Trinkt viel Kaffee (5 Tassen/Tag), abends gelegentlich Wein. Verheiratet, zwei Kinder. Viel Stress bei der Arbeit. Familienanamnese: Vater hatte ein Magengeschwür. Körperliche Untersuchung: Abdomen weich, leichter epigastrischer Druckschmerz, keine Abwehrspannung, Darmgeräusche regelrecht. Herz und Lunge auskultatorisch o. B. Labor: Hb: 13,2 g/dl, hs-Troponin T: < 5 ng/l, Lipase: 32 U/l."
+    },
+    "patientDialogue": {
+      "beschwerden": "Ich hab seit Wochen so ein Brennen hinterm Brustbein, vor allem nach dem Essen und nachts im Liegen. Manchmal kommt mir so was Saures hoch.",
+      "beginn": "So seit ungefähr zwei Monaten. Am Anfang nur ab und zu, jetzt fast jeden Tag.",
+      "lokalisation": "Hier, hinter dem Brustbein, und manchmal oben im Magen. Das steigt so hoch bis in den Hals.",
+      "charakter": "Brennend, wie Sodbrennen eben. Und ich muss oft sauer aufstoßen.",
+      "intensitaet": "Meistens so vier, fünf von zehn. Nachts manchmal sechs.",
+      "ausstrahlung": "In den Hals hoch. In den Arm oder Kiefer zieht es nicht.",
+      "verlauf": "Es wird langsam immer häufiger.",
+      "ausloeser": "Nach großen Mahlzeiten, nach Kaffee und wenn ich abends Wein trinke. Wenn ich mich hinlege oder bücke, wird es schlimmer. Beim Treppensteigen oder Sport hab ich das nicht. Die Tabletten gegen Sodbrennen aus der Apotheke helfen kurz.",
+      "begleitsymptome": "Nachts muss ich oft husten, und morgens bin ich manchmal heiser. Schluckbeschwerden hab ich nicht, das Essen rutscht normal. Blut hab ich nie erbrochen.",
+      "fieber": "Nein.",
+      "appetit_gewicht": "Appetit ist gut, eher zu gut. Abgenommen hab ich leider nicht, eher zugenommen.",
+      "verdauung": "Stuhlgang ist normal, auch nicht schwarz.",
+      "wasserlassen": "Normal.",
+      "schlaf": "Ich wach nachts auf, weil es brennt, und schlaf schlecht wieder ein.",
+      "gyn": "Die Periode kommt regelmäßig. Schwanger bin ich nicht, wir haben zwei Kinder, das ist abgeschlossen.",
+      "vorerkrankungen": "Ich bin ein bisschen übergewichtig. Sonst eigentlich nichts.",
+      "operationen": "Kaiserschnitt beim zweiten Kind, 2012.",
+      "medikamente": "Regelmäßig nichts. Wegen meiner Rückenschmerzen nehm ich Ibuprofen 400, so drei Mal die Woche.",
+      "allergien": "Gegen Pflaster, da krieg ich Ausschlag.",
+      "rauchen": "Ja, ich rauche, so zehn Zigaretten am Tag.",
+      "alkohol": "Abends mal ein Glas Wein, zwei-, dreimal die Woche. Und viel Kaffee, bestimmt fünf Tassen.",
+      "drogen": "Nein.",
+      "beruf": "Ich bin Bürokauffrau, viel Sitzen, viel Stress, oft esse ich spät und schnell.",
+      "wohnen": "Mit meinem Mann und den Kindern in einer Wohnung.",
+      "familie": "Mein Vater hatte ein Magengeschwür.",
+      "sorgen": "Ich hab Angst, dass es was mit dem Herzen ist. Oder sogar Krebs in der Speiseröhre."
+    },
+    "anamneseQuestions": [
+      {
+        "id": "gastrooesophageale-refluxkrankheit-q1",
+        "phase": "Gesprächseinstieg & Leitsymptom",
+        "doctorOptions": [
+          {
+            "text": "Guten Tag, mein Name ist … , ich bin hier die Ärztin / der Arzt. Was führt Sie heute zu uns?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorstellung mit Namen und Funktion, dann eine offene Einstiegsfrage."
+          },
+          {
+            "text": "Liegt bei Ihnen die typische Symptomatik für Gastroösophageale Refluxkrankheit (V. a. Refluxösophagitis) vor?",
+            "isOptimal": false,
+            "feedback": "FSP-Fehler: Keine geschlossene Diagnose-Frage zu Beginn. Lassen Sie den Patienten zuerst frei erzählen."
+          }
+        ],
+        "patientResponse": "Ich hab seit Wochen so ein Brennen hinterm Brustbein, vor allem nach dem Essen und nachts im Liegen. Manchmal kommt mir so was Saures hoch."
+      },
+      {
+        "id": "gastrooesophageale-refluxkrankheit-q2",
+        "phase": "Beginn, Ort & Art der Beschwerden",
+        "doctorOptions": [
+          {
+            "text": "Seit wann haben Sie die Beschwerden genau, wo spüren Sie sie und wie fühlen sie sich an? Strahlen sie irgendwohin aus?",
+            "isOptimal": true,
+            "feedback": "Gut strukturiert: Beginn, Lokalisation, Qualität und Ausstrahlung in verständlichen Worten erfragt."
+          },
+          {
+            "text": "Beschreiben Sie Onset, Lokalisation, Qualität und Irradiation der Symptomatik.",
+            "isOptimal": false,
+            "feedback": "Zu viel Fachjargon. „Ausstrahlen“ statt „Irradiation“, „Seit wann?“ statt „Onset“."
+          }
+        ],
+        "patientResponse": "So seit ungefähr zwei Monaten. Am Anfang nur ab und zu, jetzt fast jeden Tag. Hier, hinter dem Brustbein, und manchmal oben im Magen. Das steigt so hoch bis in den Hals. Brennend, wie Sodbrennen eben. Und ich muss oft sauer aufstoßen. In den Hals hoch. In den Arm oder Kiefer zieht es nicht."
+      },
+      {
+        "id": "gastrooesophageale-refluxkrankheit-q3",
+        "phase": "Intensität, Verlauf & Auslöser",
+        "doctorOptions": [
+          {
+            "text": "Wie stark sind die Beschwerden auf einer Skala von 0 bis 10? Sind sie besser oder schlimmer geworden, und gibt es etwas, das sie auslöst oder lindert?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Schmerzskala 0–10 ist im deutschen Klinikalltag Standard."
+          },
+          {
+            "text": "Ist es sehr schlimm?",
+            "isOptimal": false,
+            "feedback": "Zu unpräzise. Fragen Sie nach der Stärke auf einer Skala von 0 bis 10 und nach dem Verlauf."
+          }
+        ],
+        "patientResponse": "Meistens so vier, fünf von zehn. Nachts manchmal sechs. Es wird langsam immer häufiger. Nach großen Mahlzeiten, nach Kaffee und wenn ich abends Wein trinke. Wenn ich mich hinlege oder bücke, wird es schlimmer. Beim Treppensteigen oder Sport hab ich das nicht. Die Tabletten gegen Sodbrennen aus der Apotheke helfen kurz."
+      },
+      {
+        "id": "gastrooesophageale-refluxkrankheit-q4",
+        "phase": "Begleitsymptome & vegetative Anamnese",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie noch andere Beschwerden bemerkt, zum Beispiel Fieber, Übelkeit, Gewichtsverlust oder Probleme beim Stuhlgang oder Wasserlassen?",
+            "isOptimal": true,
+            "feedback": "Exzellent! Begleitsymptome und vegetative Anamnese in Patientensprache abgefragt."
+          },
+          {
+            "text": "Bestehen B-Symptomatik, Nausea, Emesis oder Miktionsbeschwerden?",
+            "isOptimal": false,
+            "feedback": "Fachjargon! Sagen Sie „Fieber, Nachtschweiß, Gewichtsverlust“, „Übelkeit“, „Erbrechen“ und „Probleme beim Wasserlassen“."
+          }
+        ],
+        "patientResponse": "Nachts muss ich oft husten, und morgens bin ich manchmal heiser. Schluckbeschwerden hab ich nicht, das Essen rutscht normal. Blut hab ich nie erbrochen. Nein. Appetit ist gut, eher zu gut. Abgenommen hab ich leider nicht, eher zugenommen. Stuhlgang ist normal, auch nicht schwarz. Normal. Ich wach nachts auf, weil es brennt, und schlaf schlecht wieder ein."
+      },
+      {
+        "id": "gastrooesophageale-refluxkrankheit-q5",
+        "phase": "Vorerkrankungen, Operationen & Medikamente",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie Vorerkrankungen oder wurden Sie schon einmal operiert? Welche Medikamente nehmen Sie regelmäßig ein, und haben Sie Allergien?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorerkrankungen, Operationen, Medikation und Allergien vollständig erfragt."
+          },
+          {
+            "text": "Welche Komorbiditäten, Voroperationen und Dauermedikation bestehen? Gibt es Unverträglichkeiten?",
+            "isOptimal": false,
+            "feedback": "„Komorbiditäten“ versteht kaum ein Patient. Sagen Sie „andere Erkrankungen“."
+          }
+        ],
+        "patientResponse": "Ich bin ein bisschen übergewichtig. Sonst eigentlich nichts. Kaiserschnitt beim zweiten Kind, 2012. Regelmäßig nichts. Wegen meiner Rückenschmerzen nehm ich Ibuprofen 400, so drei Mal die Woche. Gegen Pflaster, da krieg ich Ausschlag."
+      },
+      {
+        "id": "gastrooesophageale-refluxkrankheit-q6",
+        "phase": "Sozial- & Familienanamnese",
+        "doctorOptions": [
+          {
+            "text": "Darf ich Sie noch etwas Persönliches fragen: Rauchen Sie, trinken Sie Alkohol, was machen Sie beruflich, wie wohnen Sie, und gibt es Krankheiten in Ihrer Familie?",
+            "isOptimal": true,
+            "feedback": "Sehr empathisch! Sie kündigen die persönlichen Fragen an und decken Noxen, Beruf, Wohnsituation und Familie ab."
+          },
+          {
+            "text": "Wie ist Ihr Noxenabusus und gibt es eine familiäre Belastung?",
+            "isOptimal": false,
+            "feedback": "Vermeiden Sie „Noxenabusus“. Fragen Sie direkt nach Rauchen, Alkohol und Drogen."
+          }
+        ],
+        "patientResponse": "Ja, ich rauche, so zehn Zigaretten am Tag. Abends mal ein Glas Wein, zwei-, dreimal die Woche. Und viel Kaffee, bestimmt fünf Tassen. Nein. Ich bin Bürokauffrau, viel Sitzen, viel Stress, oft esse ich spät und schnell. Mit meinem Mann und den Kindern in einer Wohnung. Mein Vater hatte ein Magengeschwür. Die Periode kommt regelmäßig. Schwanger bin ich nicht, wir haben zwei Kinder, das ist abgeschlossen."
+      },
+      {
+        "id": "gastrooesophageale-refluxkrankheit-q7",
+        "phase": "Sorgen des Patienten & Gesprächsabschluss",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie selbst eine Vermutung oder machen Sie sich über etwas besonders Sorgen? Haben Sie noch Fragen an mich?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Sorgen des Patienten zu erfragen gehört zu einem patientenzentrierten FSP-Gespräch."
+          },
+          {
+            "text": "Gut, das war's. Sie hören dann von uns.",
+            "isOptimal": false,
+            "feedback": "Zu abrupt. Fragen Sie nach Sorgen und offenen Fragen und erklären Sie das weitere Vorgehen."
+          }
+        ],
+        "patientResponse": "Ich hab Angst, dass es was mit dem Herzen ist. Oder sogar Krebs in der Speiseröhre."
+      }
+    ],
+    "arztbriefTemplate": {
+      "prompt": "Verfassen Sie die Anamnese und Epikrise für Frau Melanie Schulz (42 J.) mit Verdacht auf Gastroösophageale Refluxkrankheit (V. a. Refluxösophagitis) im C1-Fachstil.",
+      "requiredTerms": [
+        "Gastroösophageale Refluxkrankheit (V. a. Refluxösophagitis)",
+        "Adipositas",
+        "Angina pectoris",
+        "Anamnese",
+        "Vitalparameter"
+      ],
+      "sampleSolution": "Frau Melanie Schulz (42 J., Bürokauffrau) stellte sich mit folgender aktueller Anamnese vor: Seit ca. 2 Monaten retrosternales Brennen, v. a. postprandial und im Liegen, saures Aufstoßen, nächtlicher Reizhusten. Keine Dysphagie, kein Gewichtsverlust, kein Bluterbrechen, keine Teerstühle. Antazida helfen kurzfristig. An Vorerkrankungen seien bekannt: Adipositas Grad I (BMI 32), Z. n. Sectio caesarea 2012. Die Dauermedikation umfasse: Ibuprofen 400 mg bei Bedarf (ca. 3x/Woche wegen Rückenschmerzen). Allergien: Pflaster (Kontaktdermatitis). Sozial- und Familienanamnese: Raucherin, ca. 10 Zigaretten/Tag. Trinkt viel Kaffee (5 Tassen/Tag), abends gelegentlich Wein. Verheiratet, zwei Kinder. Viel Stress bei der Arbeit. Vater hatte ein Magengeschwür. Klinische Untersuchung: Abdomen weich, leichter epigastrischer Druckschmerz, keine Abwehrspannung, Darmgeräusche regelrecht. Herz und Lunge auskultatorisch o. B. Zusammenfassend ergibt sich der dringende Verdacht auf: Gastroösophageale Refluxkrankheit (V. a. Refluxösophagitis) (Differenzialdiagnosen: Angina pectoris, Eosinophile Ösophagitis, Ulcus ventriculi)."
+    },
+    "isbarSteps": [
+      {
+        "step": "I",
+        "label": "Identify (Identifikation)",
+        "guidance": "Nennen Sie Name, Alter und aktuellen Bereich des Patienten / der Patientin.",
+        "sampleSpeech": "Ich übergebe Frau Melanie Schulz, 42 Jahre alt, aktuell in der Aufnahme (Gastroenterologie)."
+      },
+      {
+        "step": "S",
+        "label": "Situation (Aktuelle Situation)",
+        "guidance": "Benennen Sie Leitsymptom und Hauptverdachtsdiagnose.",
+        "sampleSpeech": "Vorstellungsgrund: Seit ca. 2 Monaten retrosternales Brennen, v. a. postprandial und im Liegen, saures Aufstoßen, nächtlicher Reizhusten. Keine Dysphagie, kein Gewichtsverlust, kein Bluterbrechen, keine Teerstühle. Antazida helfen kurzfristig. Es besteht der dringende Verdacht auf Gastroösophageale Refluxkrankheit (V. a. Refluxösophagitis)."
+      },
+      {
+        "step": "B",
+        "label": "Background (Klinischer Hintergrund)",
+        "guidance": "Fassen Sie Vorerkrankungen, Dauermedikation und Allergien zusammen.",
+        "sampleSpeech": "Anamnestisch bekannt sind: Adipositas Grad I (BMI 32), Z. n. Sectio caesarea 2012. Medikation: Ibuprofen 400 mg bei Bedarf (ca. 3x/Woche wegen Rückenschmerzen). Allergien: Pflaster (Kontaktdermatitis)."
+      },
+      {
+        "step": "A",
+        "label": "Assessment (Aktuelle Einschätzung & Vitalparameter)",
+        "guidance": "Berichten Sie über Vitalparameter, Untersuchungsbefund und Labor.",
+        "sampleSpeech": "Vitalparameter: RR 125/80 mmHg, HF 76 /min, Temp 36,6 °C, SpO₂ 99 % (Raumluft). Abdomen weich, leichter epigastrischer Druckschmerz, keine Abwehrspannung, Darmgeräusche regelrecht. Herz und Lunge auskultatorisch o. B. Labor: Hb: 13,2 g/dl, hs-Troponin T: < 5 ng/l, Lipase: 32 U/l"
+      },
+      {
+        "step": "R",
+        "label": "Recommendation (Empfehlung & weiteres Vorgehen)",
+        "guidance": "Schlagen Sie die weitere Diagnostik und Therapie unter Berücksichtigung der Differenzialdiagnosen vor.",
+        "sampleSpeech": "Ich empfehle die zielgerichtete Weiterbehandlung bezüglich Gastroösophageale Refluxkrankheit (V. a. Refluxösophagitis) sowie den Ausschluss der wichtigsten Differenzialdiagnosen (Angina pectoris, Eosinophile Ösophagitis, Ulcus ventriculi)."
+      }
+    ]
+  },
+  {
+    "id": "colitis-ulcerosa-erstmanifestation",
+    "title": "Colitis ulcerosa (Erstmanifestation)",
+    "specialty": "Gastroenterologie",
+    "category": "Gastroenterologie",
+    "difficulty": "B2",
+    "patientName": "Herr Jonas Wagner",
+    "patientAge": 26,
+    "chiefComplaint": "Ich hab seit drei Wochen Durchfall, bestimmt acht Mal am Tag, und da ist jetzt auch Blut und Schleim dabei. Ich muss sogar nachts raus.",
+    "patient": {
+      "name": "Herr Jonas Wagner",
+      "age": 26,
+      "gender": "m",
+      "occupation": "Informatikstudent",
+      "chiefComplaint": "Ich hab seit drei Wochen Durchfall, bestimmt acht Mal am Tag, und da ist jetzt auch Blut und Schleim dabei. Ich muss sogar nachts raus.",
+      "vitalSigns": {
+        "bp": "115/70 mmHg",
+        "hr": "98 /min",
+        "temp": "37,8 °C",
+        "spo2": "98 % (Raumluft)"
+      },
+      "historyDetails": "Seit 3 Wochen 6–8 breiig-flüssige Stühle pro Tag mit Blut- und Schleimbeimengung, auch nachts. Tenesmen, krampfartige Schmerzen im linken Unterbauch vor dem Stuhlgang. Gewichtsverlust 4 kg. Keine Auslandsreise, keine Antibiotika in den letzten Monaten. Vorerkrankungen: Keine. Medikation: Keine Dauermedikation. Allergien: Keine bekannt. Sozialanamnese: Nichtraucher (hat vor 6 Monaten aufgehört). Alkohol selten. Lebt in einer WG. Prüfungsphase im Studium. Familienanamnese: Tante mütterlicherseits mit Morbus Crohn. Körperliche Untersuchung: Abdomen weich, Druckschmerz im linken Unterbauch, keine Abwehrspannung, lebhafte Darmgeräusche. Rektale Untersuchung: Blut am Fingerling, keine Raumforderung. Labor: Hb: 11,6 g/dl (erniedrigt), Leukozyten: 11,2 /nl (erhöht), CRP: 38 mg/l (erhöht), Albumin: 3,3 g/dl (erniedrigt), Calprotectin im Stuhl: 1.250 µg/g (erhöht), Stuhlkultur und C.-difficile-Toxin: ausstehend."
+    },
+    "patientDialogue": {
+      "beschwerden": "Ich hab seit drei Wochen Durchfall, bestimmt acht Mal am Tag, und da ist jetzt auch Blut und Schleim dabei. Ich muss sogar nachts raus.",
+      "beginn": "Ungefähr vor drei Wochen. Erst dachte ich, ich hab was Falsches gegessen.",
+      "lokalisation": "Die Bauchschmerzen sind links unten.",
+      "charakter": "Krampfartig, kurz bevor ich aufs Klo muss. Danach ist es besser.",
+      "intensitaet": "Die Krämpfe so fünf von zehn.",
+      "verlauf": "Es wird eher schlimmer. Am Anfang drei-, viermal am Tag, jetzt sieben, acht Mal.",
+      "ausloeser": "Nach dem Essen muss ich meistens sofort los. Ich hab ständig das Gefühl, ich muss, auch wenn nichts mehr kommt.",
+      "begleitsymptome": "Ich bin total schlapp. Gelenkschmerzen oder Augenprobleme hab ich nicht. Hautausschlag auch nicht.",
+      "fieber": "Abends manchmal leicht erhöht, so 37,8.",
+      "appetit_gewicht": "Ich hab vier Kilo abgenommen in den drei Wochen. Ich trau mich kaum noch was zu essen.",
+      "verdauung": "Breiig bis flüssig, mit hellrotem Blut und Schleim. Auch nachts muss ich ein-, zweimal raus.",
+      "wasserlassen": "Wasserlassen ist normal.",
+      "schlaf": "Schlecht, weil ich nachts aufs Klo muss.",
+      "reisen": "Nein, ich war nicht im Ausland. Antibiotika hab ich auch nicht genommen. In der WG ist sonst keiner krank.",
+      "vorerkrankungen": "Nein, ich war bisher eigentlich nie krank.",
+      "operationen": "Keine.",
+      "medikamente": "Keine. Gegen den Durchfall hab ich Loperamid aus der Apotheke probiert, hat nicht geholfen.",
+      "allergien": "Keine bekannt.",
+      "rauchen": "Ich hab vor einem halben Jahr mit dem Rauchen aufgehört. Komisch, seitdem geht's mir eher schlechter.",
+      "alkohol": "Selten, auf Partys.",
+      "drogen": "Ab und zu mal Gras, aber seit Monaten nicht mehr.",
+      "beruf": "Ich studiere Informatik, gerade ist Prüfungsphase.",
+      "wohnen": "In einer WG mit drei Leuten, und wir haben nur ein Bad. Das ist gerade echt stressig.",
+      "familie": "Meine Tante hat Morbus Crohn, so eine Darmentzündung.",
+      "sorgen": "Ist das was Chronisches wie bei meiner Tante? Krieg ich dann einen künstlichen Darmausgang?"
+    },
+    "anamneseQuestions": [
+      {
+        "id": "colitis-ulcerosa-erstmanifestation-q1",
+        "phase": "Gesprächseinstieg & Leitsymptom",
+        "doctorOptions": [
+          {
+            "text": "Guten Tag, mein Name ist … , ich bin hier die Ärztin / der Arzt. Was führt Sie heute zu uns?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorstellung mit Namen und Funktion, dann eine offene Einstiegsfrage."
+          },
+          {
+            "text": "Liegt bei Ihnen die typische Symptomatik für Erstmanifestation einer Colitis ulcerosa (mittelschwerer Schub) vor?",
+            "isOptimal": false,
+            "feedback": "FSP-Fehler: Keine geschlossene Diagnose-Frage zu Beginn. Lassen Sie den Patienten zuerst frei erzählen."
+          }
+        ],
+        "patientResponse": "Ich hab seit drei Wochen Durchfall, bestimmt acht Mal am Tag, und da ist jetzt auch Blut und Schleim dabei. Ich muss sogar nachts raus."
+      },
+      {
+        "id": "colitis-ulcerosa-erstmanifestation-q2",
+        "phase": "Beginn, Ort & Art der Beschwerden",
+        "doctorOptions": [
+          {
+            "text": "Seit wann haben Sie die Beschwerden genau, wo spüren Sie sie und wie fühlen sie sich an? Strahlen sie irgendwohin aus?",
+            "isOptimal": true,
+            "feedback": "Gut strukturiert: Beginn, Lokalisation, Qualität und Ausstrahlung in verständlichen Worten erfragt."
+          },
+          {
+            "text": "Beschreiben Sie Onset, Lokalisation, Qualität und Irradiation der Symptomatik.",
+            "isOptimal": false,
+            "feedback": "Zu viel Fachjargon. „Ausstrahlen“ statt „Irradiation“, „Seit wann?“ statt „Onset“."
+          }
+        ],
+        "patientResponse": "Ungefähr vor drei Wochen. Erst dachte ich, ich hab was Falsches gegessen. Die Bauchschmerzen sind links unten. Krampfartig, kurz bevor ich aufs Klo muss. Danach ist es besser."
+      },
+      {
+        "id": "colitis-ulcerosa-erstmanifestation-q3",
+        "phase": "Intensität, Verlauf & Auslöser",
+        "doctorOptions": [
+          {
+            "text": "Wie stark sind die Beschwerden auf einer Skala von 0 bis 10? Sind sie besser oder schlimmer geworden, und gibt es etwas, das sie auslöst oder lindert?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Schmerzskala 0–10 ist im deutschen Klinikalltag Standard."
+          },
+          {
+            "text": "Ist es sehr schlimm?",
+            "isOptimal": false,
+            "feedback": "Zu unpräzise. Fragen Sie nach der Stärke auf einer Skala von 0 bis 10 und nach dem Verlauf."
+          }
+        ],
+        "patientResponse": "Die Krämpfe so fünf von zehn. Es wird eher schlimmer. Am Anfang drei-, viermal am Tag, jetzt sieben, acht Mal. Nach dem Essen muss ich meistens sofort los. Ich hab ständig das Gefühl, ich muss, auch wenn nichts mehr kommt."
+      },
+      {
+        "id": "colitis-ulcerosa-erstmanifestation-q4",
+        "phase": "Begleitsymptome & vegetative Anamnese",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie noch andere Beschwerden bemerkt, zum Beispiel Fieber, Übelkeit, Gewichtsverlust oder Probleme beim Stuhlgang oder Wasserlassen?",
+            "isOptimal": true,
+            "feedback": "Exzellent! Begleitsymptome und vegetative Anamnese in Patientensprache abgefragt."
+          },
+          {
+            "text": "Bestehen B-Symptomatik, Nausea, Emesis oder Miktionsbeschwerden?",
+            "isOptimal": false,
+            "feedback": "Fachjargon! Sagen Sie „Fieber, Nachtschweiß, Gewichtsverlust“, „Übelkeit“, „Erbrechen“ und „Probleme beim Wasserlassen“."
+          }
+        ],
+        "patientResponse": "Ich bin total schlapp. Gelenkschmerzen oder Augenprobleme hab ich nicht. Hautausschlag auch nicht. Abends manchmal leicht erhöht, so 37,8. Ich hab vier Kilo abgenommen in den drei Wochen. Ich trau mich kaum noch was zu essen. Breiig bis flüssig, mit hellrotem Blut und Schleim. Auch nachts muss ich ein-, zweimal raus. Wasserlassen ist normal. Schlecht, weil ich nachts aufs Klo muss."
+      },
+      {
+        "id": "colitis-ulcerosa-erstmanifestation-q5",
+        "phase": "Vorerkrankungen, Operationen & Medikamente",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie Vorerkrankungen oder wurden Sie schon einmal operiert? Welche Medikamente nehmen Sie regelmäßig ein, und haben Sie Allergien?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorerkrankungen, Operationen, Medikation und Allergien vollständig erfragt."
+          },
+          {
+            "text": "Welche Komorbiditäten, Voroperationen und Dauermedikation bestehen? Gibt es Unverträglichkeiten?",
+            "isOptimal": false,
+            "feedback": "„Komorbiditäten“ versteht kaum ein Patient. Sagen Sie „andere Erkrankungen“."
+          }
+        ],
+        "patientResponse": "Nein, ich war bisher eigentlich nie krank. Keine. Keine. Gegen den Durchfall hab ich Loperamid aus der Apotheke probiert, hat nicht geholfen. Keine bekannt."
+      },
+      {
+        "id": "colitis-ulcerosa-erstmanifestation-q6",
+        "phase": "Sozial- & Familienanamnese",
+        "doctorOptions": [
+          {
+            "text": "Darf ich Sie noch etwas Persönliches fragen: Rauchen Sie, trinken Sie Alkohol, was machen Sie beruflich, wie wohnen Sie, und gibt es Krankheiten in Ihrer Familie?",
+            "isOptimal": true,
+            "feedback": "Sehr empathisch! Sie kündigen die persönlichen Fragen an und decken Noxen, Beruf, Wohnsituation und Familie ab."
+          },
+          {
+            "text": "Wie ist Ihr Noxenabusus und gibt es eine familiäre Belastung?",
+            "isOptimal": false,
+            "feedback": "Vermeiden Sie „Noxenabusus“. Fragen Sie direkt nach Rauchen, Alkohol und Drogen."
+          }
+        ],
+        "patientResponse": "Ich hab vor einem halben Jahr mit dem Rauchen aufgehört. Komisch, seitdem geht's mir eher schlechter. Selten, auf Partys. Ab und zu mal Gras, aber seit Monaten nicht mehr. Ich studiere Informatik, gerade ist Prüfungsphase. In einer WG mit drei Leuten, und wir haben nur ein Bad. Das ist gerade echt stressig. Meine Tante hat Morbus Crohn, so eine Darmentzündung. Nein, ich war nicht im Ausland. Antibiotika hab ich auch nicht genommen. In der WG ist sonst keiner krank."
+      },
+      {
+        "id": "colitis-ulcerosa-erstmanifestation-q7",
+        "phase": "Sorgen des Patienten & Gesprächsabschluss",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie selbst eine Vermutung oder machen Sie sich über etwas besonders Sorgen? Haben Sie noch Fragen an mich?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Sorgen des Patienten zu erfragen gehört zu einem patientenzentrierten FSP-Gespräch."
+          },
+          {
+            "text": "Gut, das war's. Sie hören dann von uns.",
+            "isOptimal": false,
+            "feedback": "Zu abrupt. Fragen Sie nach Sorgen und offenen Fragen und erklären Sie das weitere Vorgehen."
+          }
+        ],
+        "patientResponse": "Ist das was Chronisches wie bei meiner Tante? Krieg ich dann einen künstlichen Darmausgang?"
+      }
+    ],
+    "arztbriefTemplate": {
+      "prompt": "Verfassen Sie die Anamnese und Epikrise für Herr Jonas Wagner (26 J.) mit Verdacht auf Erstmanifestation einer Colitis ulcerosa (mittelschwerer Schub) im C1-Fachstil.",
+      "requiredTerms": [
+        "Erstmanifestation einer Colitis ulcerosa (mittelschwerer Schub)",
+        "Keine",
+        "Infektiöse Kolitis (z. B. Campylobacter, C. difficile)",
+        "Anamnese",
+        "Vitalparameter"
+      ],
+      "sampleSolution": "Herr Jonas Wagner (26 J., Informatikstudent) stellte sich mit folgender aktueller Anamnese vor: Seit 3 Wochen 6–8 breiig-flüssige Stühle pro Tag mit Blut- und Schleimbeimengung, auch nachts. Tenesmen, krampfartige Schmerzen im linken Unterbauch vor dem Stuhlgang. Gewichtsverlust 4 kg. Keine Auslandsreise, keine Antibiotika in den letzten Monaten. An Vorerkrankungen seien bekannt: Keine. Die Dauermedikation umfasse: Keine Dauermedikation. Allergien: Keine bekannt. Sozial- und Familienanamnese: Nichtraucher (hat vor 6 Monaten aufgehört). Alkohol selten. Lebt in einer WG. Prüfungsphase im Studium. Tante mütterlicherseits mit Morbus Crohn. Klinische Untersuchung: Abdomen weich, Druckschmerz im linken Unterbauch, keine Abwehrspannung, lebhafte Darmgeräusche. Rektale Untersuchung: Blut am Fingerling, keine Raumforderung. Zusammenfassend ergibt sich der dringende Verdacht auf: Erstmanifestation einer Colitis ulcerosa (mittelschwerer Schub) (Differenzialdiagnosen: Infektiöse Kolitis (z. B. Campylobacter, C. difficile), Morbus Crohn, Ischämische Kolitis)."
+    },
+    "isbarSteps": [
+      {
+        "step": "I",
+        "label": "Identify (Identifikation)",
+        "guidance": "Nennen Sie Name, Alter und aktuellen Bereich des Patienten / der Patientin.",
+        "sampleSpeech": "Ich übergebe Herr Jonas Wagner, 26 Jahre alt, aktuell in der Aufnahme (Gastroenterologie)."
+      },
+      {
+        "step": "S",
+        "label": "Situation (Aktuelle Situation)",
+        "guidance": "Benennen Sie Leitsymptom und Hauptverdachtsdiagnose.",
+        "sampleSpeech": "Vorstellungsgrund: Seit 3 Wochen 6–8 breiig-flüssige Stühle pro Tag mit Blut- und Schleimbeimengung, auch nachts. Tenesmen, krampfartige Schmerzen im linken Unterbauch vor dem Stuhlgang. Gewichtsverlust 4 kg. Keine Auslandsreise, keine Antibiotika in den letzten Monaten. Es besteht der dringende Verdacht auf Erstmanifestation einer Colitis ulcerosa (mittelschwerer Schub)."
+      },
+      {
+        "step": "B",
+        "label": "Background (Klinischer Hintergrund)",
+        "guidance": "Fassen Sie Vorerkrankungen, Dauermedikation und Allergien zusammen.",
+        "sampleSpeech": "Anamnestisch bekannt sind: Keine. Medikation: Keine Dauermedikation. Allergien: Keine bekannt."
+      },
+      {
+        "step": "A",
+        "label": "Assessment (Aktuelle Einschätzung & Vitalparameter)",
+        "guidance": "Berichten Sie über Vitalparameter, Untersuchungsbefund und Labor.",
+        "sampleSpeech": "Vitalparameter: RR 115/70 mmHg, HF 98 /min, Temp 37,8 °C, SpO₂ 98 % (Raumluft). Abdomen weich, Druckschmerz im linken Unterbauch, keine Abwehrspannung, lebhafte Darmgeräusche. Rektale Untersuchung: Blut am Fingerling, keine Raumforderung. Labor: Hb: 11,6 g/dl (erniedrigt), Leukozyten: 11,2 /nl (erhöht), CRP: 38 mg/l (erhöht), Albumin: 3,3 g/dl (erniedrigt), Calprotectin im Stuhl: 1.250 µg/g (erhöht), Stuhlkultur und C.-difficile-Toxin: ausstehend"
+      },
+      {
+        "step": "R",
+        "label": "Recommendation (Empfehlung & weiteres Vorgehen)",
+        "guidance": "Schlagen Sie die weitere Diagnostik und Therapie unter Berücksichtigung der Differenzialdiagnosen vor.",
+        "sampleSpeech": "Ich empfehle die zielgerichtete Weiterbehandlung bezüglich Erstmanifestation einer Colitis ulcerosa (mittelschwerer Schub) sowie den Ausschluss der wichtigsten Differenzialdiagnosen (Infektiöse Kolitis (z. B. Campylobacter, C. difficile), Morbus Crohn, Ischämische Kolitis)."
+      }
+    ]
+  },
+  {
+    "id": "akuter-harnverhalt-bph",
+    "title": "Akuter Harnverhalt bei Prostatahyperplasie",
+    "specialty": "Urologie",
+    "category": "Urologie",
+    "difficulty": "B1",
+    "patientName": "Herr Heinz Zimmermann",
+    "patientAge": 76,
+    "chiefComplaint": "Ich kann seit gestern Abend kein Wasser mehr lassen, Herr Doktor. Der Bauch ist ganz dick und tut furchtbar weh, ich halt das nicht mehr aus.",
+    "patient": {
+      "name": "Herr Heinz Zimmermann",
+      "age": 76,
+      "gender": "m",
+      "occupation": "Rentner (ehem. Schlosser)",
+      "chiefComplaint": "Ich kann seit gestern Abend kein Wasser mehr lassen, Herr Doktor. Der Bauch ist ganz dick und tut furchtbar weh, ich halt das nicht mehr aus.",
+      "vitalSigns": {
+        "bp": "165/90 mmHg",
+        "hr": "96 /min",
+        "temp": "36,9 °C",
+        "spo2": "97 % (Raumluft)"
+      },
+      "historyDetails": "Seit ca. 14 Stunden keine Miktion mehr möglich, zunehmende Unterbauchschmerzen. Seit Jahren abgeschwächter Harnstrahl, Nachträufeln, Nykturie 3x. Vor 2 Tagen vom Hausarzt wegen Juckreiz Dimenhydrinat und ein Erkältungsmittel eingenommen. Vorerkrankungen: Benigne Prostatahyperplasie, Diabetes mellitus Typ 2, Arterielle Hypertonie. Medikation: Tamsulosin 0,4 mg 0-0-1 (seit 1 Woche nicht eingenommen, Packung leer), Metformin 1000 mg 1-0-1, Ramipril 5 mg 1-0-0, Dimenhydrinat 50 mg bei Bedarf (seit 2 Tagen 3x täglich). Allergien: Keine bekannt. Sozialanamnese: Nichtraucher seit 20 Jahren. Alkohol: ein Glas Wein zum Essen. Verwitwet, lebt allein, Tochter wohnt in der Nähe. Familienanamnese: Bruder mit Prostatakrebs. Körperliche Untersuchung: Prall gefüllte, druckschmerzhafte Harnblase bis 2 Querfinger unter dem Nabel tastbar. Digital-rektale Untersuchung: Prostata vergrößert, prallelastisch, glatt, nicht druckschmerzhaft. Sonografie: Blasenvolumen ca. 1.100 ml. Labor: Kreatinin: 1,6 mg/dl (erhöht), Kalium: 4,9 mmol/l, Urinstatus: Leukozyten negativ, Nitrit negativ, PSA: nach Entlastung bestimmen."
+    },
+    "patientDialogue": {
+      "beschwerden": "Ich kann seit gestern Abend kein Wasser mehr lassen, Herr Doktor. Der Bauch ist ganz dick und tut furchtbar weh, ich halt das nicht mehr aus.",
+      "beginn": "Das letzte Mal richtig auf Toilette war gestern so um acht Uhr abends. Seitdem kommt nur noch ab und zu ein Tröpfchen.",
+      "lokalisation": "Unten im Bauch, über dem Schambein. Da ist es ganz hart.",
+      "charakter": "Ein Druck, wie wenn die Blase gleich platzt.",
+      "intensitaet": "Neun von zehn. Ich kann nicht still sitzen.",
+      "verlauf": "Wird stündlich schlimmer.",
+      "ausloeser": "Vor zwei Tagen hat mir der Hausarzt was gegen den Juckreiz gegeben, und ich hab noch ein Erkältungsmittel genommen. Und die Prostatatabletten waren seit einer Woche alle.",
+      "begleitsymptome": "Mir ist ein bisschen übel vor Schmerzen. Rückenschmerzen hab ich nicht.",
+      "fieber": "Nein, kein Fieber und kein Schüttelfrost.",
+      "appetit_gewicht": "Appetit ist eigentlich normal. Gewicht gleich.",
+      "verdauung": "Stuhlgang war gestern noch normal, heute noch nicht.",
+      "wasserlassen": "Schon seit Jahren ist der Strahl schwach, und es tröpfelt nach. Nachts muss ich drei-, viermal raus. Brennen hatte ich nicht, Blut im Urin auch nicht.",
+      "schlaf": "Wegen dem Wasserlassen nachts schlaf ich schon länger schlecht.",
+      "vorerkrankungen": "Die Prostata ist vergrößert, schon seit Jahren. Dann Zucker und hoher Blutdruck.",
+      "operationen": "Am Knie wurde ich mal operiert, Meniskus, ist lange her.",
+      "medikamente": "Tamsulosin abends, aber die Packung war seit einer Woche leer. Metformin 1000 morgens und abends, Ramipril 5 morgens. Und seit zwei Tagen dreimal täglich diese Tabletten gegen das Jucken, Dimenhydrinat heißen die, glaub ich.",
+      "allergien": "Nein.",
+      "rauchen": "Vor 20 Jahren aufgehört.",
+      "alkohol": "Ein Glas Wein zum Abendessen.",
+      "beruf": "Ich war Schlosser, jetzt bin ich Rentner.",
+      "wohnen": "Meine Frau ist vor drei Jahren gestorben, ich wohn allein. Meine Tochter wohnt in der Nähe und hilft mir.",
+      "familie": "Mein Bruder hat Prostatakrebs.",
+      "sorgen": "Hab ich jetzt auch Krebs wie mein Bruder? Und kriegen Sie das Wasser raus?"
+    },
+    "anamneseQuestions": [
+      {
+        "id": "akuter-harnverhalt-bph-q1",
+        "phase": "Gesprächseinstieg & Leitsymptom",
+        "doctorOptions": [
+          {
+            "text": "Guten Tag, mein Name ist … , ich bin hier die Ärztin / der Arzt. Was führt Sie heute zu uns?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorstellung mit Namen und Funktion, dann eine offene Einstiegsfrage."
+          },
+          {
+            "text": "Liegt bei Ihnen die typische Symptomatik für Akuter Harnverhalt bei benigner Prostatahyperplasie, ausgelöst durch Anticholinergikum vor?",
+            "isOptimal": false,
+            "feedback": "FSP-Fehler: Keine geschlossene Diagnose-Frage zu Beginn. Lassen Sie den Patienten zuerst frei erzählen."
+          }
+        ],
+        "patientResponse": "Ich kann seit gestern Abend kein Wasser mehr lassen, Herr Doktor. Der Bauch ist ganz dick und tut furchtbar weh, ich halt das nicht mehr aus."
+      },
+      {
+        "id": "akuter-harnverhalt-bph-q2",
+        "phase": "Beginn, Ort & Art der Beschwerden",
+        "doctorOptions": [
+          {
+            "text": "Seit wann haben Sie die Beschwerden genau, wo spüren Sie sie und wie fühlen sie sich an? Strahlen sie irgendwohin aus?",
+            "isOptimal": true,
+            "feedback": "Gut strukturiert: Beginn, Lokalisation, Qualität und Ausstrahlung in verständlichen Worten erfragt."
+          },
+          {
+            "text": "Beschreiben Sie Onset, Lokalisation, Qualität und Irradiation der Symptomatik.",
+            "isOptimal": false,
+            "feedback": "Zu viel Fachjargon. „Ausstrahlen“ statt „Irradiation“, „Seit wann?“ statt „Onset“."
+          }
+        ],
+        "patientResponse": "Das letzte Mal richtig auf Toilette war gestern so um acht Uhr abends. Seitdem kommt nur noch ab und zu ein Tröpfchen. Unten im Bauch, über dem Schambein. Da ist es ganz hart. Ein Druck, wie wenn die Blase gleich platzt."
+      },
+      {
+        "id": "akuter-harnverhalt-bph-q3",
+        "phase": "Intensität, Verlauf & Auslöser",
+        "doctorOptions": [
+          {
+            "text": "Wie stark sind die Beschwerden auf einer Skala von 0 bis 10? Sind sie besser oder schlimmer geworden, und gibt es etwas, das sie auslöst oder lindert?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Schmerzskala 0–10 ist im deutschen Klinikalltag Standard."
+          },
+          {
+            "text": "Ist es sehr schlimm?",
+            "isOptimal": false,
+            "feedback": "Zu unpräzise. Fragen Sie nach der Stärke auf einer Skala von 0 bis 10 und nach dem Verlauf."
+          }
+        ],
+        "patientResponse": "Neun von zehn. Ich kann nicht still sitzen. Wird stündlich schlimmer. Vor zwei Tagen hat mir der Hausarzt was gegen den Juckreiz gegeben, und ich hab noch ein Erkältungsmittel genommen. Und die Prostatatabletten waren seit einer Woche alle."
+      },
+      {
+        "id": "akuter-harnverhalt-bph-q4",
+        "phase": "Begleitsymptome & vegetative Anamnese",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie noch andere Beschwerden bemerkt, zum Beispiel Fieber, Übelkeit, Gewichtsverlust oder Probleme beim Stuhlgang oder Wasserlassen?",
+            "isOptimal": true,
+            "feedback": "Exzellent! Begleitsymptome und vegetative Anamnese in Patientensprache abgefragt."
+          },
+          {
+            "text": "Bestehen B-Symptomatik, Nausea, Emesis oder Miktionsbeschwerden?",
+            "isOptimal": false,
+            "feedback": "Fachjargon! Sagen Sie „Fieber, Nachtschweiß, Gewichtsverlust“, „Übelkeit“, „Erbrechen“ und „Probleme beim Wasserlassen“."
+          }
+        ],
+        "patientResponse": "Mir ist ein bisschen übel vor Schmerzen. Rückenschmerzen hab ich nicht. Nein, kein Fieber und kein Schüttelfrost. Appetit ist eigentlich normal. Gewicht gleich. Stuhlgang war gestern noch normal, heute noch nicht. Schon seit Jahren ist der Strahl schwach, und es tröpfelt nach. Nachts muss ich drei-, viermal raus. Brennen hatte ich nicht, Blut im Urin auch nicht. Wegen dem Wasserlassen nachts schlaf ich schon länger schlecht."
+      },
+      {
+        "id": "akuter-harnverhalt-bph-q5",
+        "phase": "Vorerkrankungen, Operationen & Medikamente",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie Vorerkrankungen oder wurden Sie schon einmal operiert? Welche Medikamente nehmen Sie regelmäßig ein, und haben Sie Allergien?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorerkrankungen, Operationen, Medikation und Allergien vollständig erfragt."
+          },
+          {
+            "text": "Welche Komorbiditäten, Voroperationen und Dauermedikation bestehen? Gibt es Unverträglichkeiten?",
+            "isOptimal": false,
+            "feedback": "„Komorbiditäten“ versteht kaum ein Patient. Sagen Sie „andere Erkrankungen“."
+          }
+        ],
+        "patientResponse": "Die Prostata ist vergrößert, schon seit Jahren. Dann Zucker und hoher Blutdruck. Am Knie wurde ich mal operiert, Meniskus, ist lange her. Tamsulosin abends, aber die Packung war seit einer Woche leer. Metformin 1000 morgens und abends, Ramipril 5 morgens. Und seit zwei Tagen dreimal täglich diese Tabletten gegen das Jucken, Dimenhydrinat heißen die, glaub ich. Nein."
+      },
+      {
+        "id": "akuter-harnverhalt-bph-q6",
+        "phase": "Sozial- & Familienanamnese",
+        "doctorOptions": [
+          {
+            "text": "Darf ich Sie noch etwas Persönliches fragen: Rauchen Sie, trinken Sie Alkohol, was machen Sie beruflich, wie wohnen Sie, und gibt es Krankheiten in Ihrer Familie?",
+            "isOptimal": true,
+            "feedback": "Sehr empathisch! Sie kündigen die persönlichen Fragen an und decken Noxen, Beruf, Wohnsituation und Familie ab."
+          },
+          {
+            "text": "Wie ist Ihr Noxenabusus und gibt es eine familiäre Belastung?",
+            "isOptimal": false,
+            "feedback": "Vermeiden Sie „Noxenabusus“. Fragen Sie direkt nach Rauchen, Alkohol und Drogen."
+          }
+        ],
+        "patientResponse": "Vor 20 Jahren aufgehört. Ein Glas Wein zum Abendessen. Ich war Schlosser, jetzt bin ich Rentner. Meine Frau ist vor drei Jahren gestorben, ich wohn allein. Meine Tochter wohnt in der Nähe und hilft mir. Mein Bruder hat Prostatakrebs."
+      },
+      {
+        "id": "akuter-harnverhalt-bph-q7",
+        "phase": "Sorgen des Patienten & Gesprächsabschluss",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie selbst eine Vermutung oder machen Sie sich über etwas besonders Sorgen? Haben Sie noch Fragen an mich?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Sorgen des Patienten zu erfragen gehört zu einem patientenzentrierten FSP-Gespräch."
+          },
+          {
+            "text": "Gut, das war's. Sie hören dann von uns.",
+            "isOptimal": false,
+            "feedback": "Zu abrupt. Fragen Sie nach Sorgen und offenen Fragen und erklären Sie das weitere Vorgehen."
+          }
+        ],
+        "patientResponse": "Hab ich jetzt auch Krebs wie mein Bruder? Und kriegen Sie das Wasser raus?"
+      }
+    ],
+    "arztbriefTemplate": {
+      "prompt": "Verfassen Sie die Anamnese und Epikrise für Herr Heinz Zimmermann (76 J.) mit Verdacht auf Akuter Harnverhalt bei benigner Prostatahyperplasie, ausgelöst durch Anticholinergikum im C1-Fachstil.",
+      "requiredTerms": [
+        "Akuter Harnverhalt bei benigner Prostatahyperplasie, ausgelöst durch Anticholinergikum",
+        "Benigne",
+        "Prostatakarzinom",
+        "Anamnese",
+        "Vitalparameter"
+      ],
+      "sampleSolution": "Herr Heinz Zimmermann (76 J., Rentner (ehem. Schlosser)) stellte sich mit folgender aktueller Anamnese vor: Seit ca. 14 Stunden keine Miktion mehr möglich, zunehmende Unterbauchschmerzen. Seit Jahren abgeschwächter Harnstrahl, Nachträufeln, Nykturie 3x. Vor 2 Tagen vom Hausarzt wegen Juckreiz Dimenhydrinat und ein Erkältungsmittel eingenommen. An Vorerkrankungen seien bekannt: Benigne Prostatahyperplasie, Diabetes mellitus Typ 2, Arterielle Hypertonie. Die Dauermedikation umfasse: Tamsulosin 0,4 mg 0-0-1 (seit 1 Woche nicht eingenommen, Packung leer), Metformin 1000 mg 1-0-1, Ramipril 5 mg 1-0-0, Dimenhydrinat 50 mg bei Bedarf (seit 2 Tagen 3x täglich). Allergien: Keine bekannt. Sozial- und Familienanamnese: Nichtraucher seit 20 Jahren. Alkohol: ein Glas Wein zum Essen. Verwitwet, lebt allein, Tochter wohnt in der Nähe. Bruder mit Prostatakrebs. Klinische Untersuchung: Prall gefüllte, druckschmerzhafte Harnblase bis 2 Querfinger unter dem Nabel tastbar. Digital-rektale Untersuchung: Prostata vergrößert, prallelastisch, glatt, nicht druckschmerzhaft. Sonografie: Blasenvolumen ca. 1.100 ml. Zusammenfassend ergibt sich der dringende Verdacht auf: Akuter Harnverhalt bei benigner Prostatahyperplasie, ausgelöst durch Anticholinergikum (Differenzialdiagnosen: Prostatakarzinom, Harnröhrenstriktur, Neurogene Blasenentleerungsstörung)."
+    },
+    "isbarSteps": [
+      {
+        "step": "I",
+        "label": "Identify (Identifikation)",
+        "guidance": "Nennen Sie Name, Alter und aktuellen Bereich des Patienten / der Patientin.",
+        "sampleSpeech": "Ich übergebe Herr Heinz Zimmermann, 76 Jahre alt, aktuell in der Aufnahme (Urologie)."
+      },
+      {
+        "step": "S",
+        "label": "Situation (Aktuelle Situation)",
+        "guidance": "Benennen Sie Leitsymptom und Hauptverdachtsdiagnose.",
+        "sampleSpeech": "Vorstellungsgrund: Seit ca. 14 Stunden keine Miktion mehr möglich, zunehmende Unterbauchschmerzen. Seit Jahren abgeschwächter Harnstrahl, Nachträufeln, Nykturie 3x. Vor 2 Tagen vom Hausarzt wegen Juckreiz Dimenhydrinat und ein Erkältungsmittel eingenommen. Es besteht der dringende Verdacht auf Akuter Harnverhalt bei benigner Prostatahyperplasie, ausgelöst durch Anticholinergikum."
+      },
+      {
+        "step": "B",
+        "label": "Background (Klinischer Hintergrund)",
+        "guidance": "Fassen Sie Vorerkrankungen, Dauermedikation und Allergien zusammen.",
+        "sampleSpeech": "Anamnestisch bekannt sind: Benigne Prostatahyperplasie, Diabetes mellitus Typ 2, Arterielle Hypertonie. Medikation: Tamsulosin 0,4 mg 0-0-1 (seit 1 Woche nicht eingenommen, Packung leer), Metformin 1000 mg 1-0-1, Ramipril 5 mg 1-0-0, Dimenhydrinat 50 mg bei Bedarf (seit 2 Tagen 3x täglich). Allergien: Keine bekannt."
+      },
+      {
+        "step": "A",
+        "label": "Assessment (Aktuelle Einschätzung & Vitalparameter)",
+        "guidance": "Berichten Sie über Vitalparameter, Untersuchungsbefund und Labor.",
+        "sampleSpeech": "Vitalparameter: RR 165/90 mmHg, HF 96 /min, Temp 36,9 °C, SpO₂ 97 % (Raumluft). Prall gefüllte, druckschmerzhafte Harnblase bis 2 Querfinger unter dem Nabel tastbar. Digital-rektale Untersuchung: Prostata vergrößert, prallelastisch, glatt, nicht druckschmerzhaft. Sonografie: Blasenvolumen ca. 1.100 ml. Labor: Kreatinin: 1,6 mg/dl (erhöht), Kalium: 4,9 mmol/l, Urinstatus: Leukozyten negativ, Nitrit negativ, PSA: nach Entlastung bestimmen"
+      },
+      {
+        "step": "R",
+        "label": "Recommendation (Empfehlung & weiteres Vorgehen)",
+        "guidance": "Schlagen Sie die weitere Diagnostik und Therapie unter Berücksichtigung der Differenzialdiagnosen vor.",
+        "sampleSpeech": "Ich empfehle die zielgerichtete Weiterbehandlung bezüglich Akuter Harnverhalt bei benigner Prostatahyperplasie, ausgelöst durch Anticholinergikum sowie den Ausschluss der wichtigsten Differenzialdiagnosen (Prostatakarzinom, Harnröhrenstriktur, Neurogene Blasenentleerungsstörung)."
+      }
+    ]
+  },
+  {
+    "id": "hodentorsion",
+    "title": "Hodentorsion",
+    "specialty": "Urologie",
+    "category": "Urologie",
+    "difficulty": "B2",
+    "patientName": "Herr Luca Neumann",
+    "patientAge": 16,
+    "chiefComplaint": "Ich bin heute Nacht aufgewacht, weil mein linker Hoden so extrem wehtut. Mir ist richtig schlecht davon, ich hab schon zweimal gebrochen.",
+    "patient": {
+      "name": "Herr Luca Neumann",
+      "age": 16,
+      "gender": "m",
+      "occupation": "Schüler",
+      "chiefComplaint": "Ich bin heute Nacht aufgewacht, weil mein linker Hoden so extrem wehtut. Mir ist richtig schlecht davon, ich hab schon zweimal gebrochen.",
+      "vitalSigns": {
+        "bp": "130/75 mmHg",
+        "hr": "104 /min",
+        "temp": "36,8 °C",
+        "spo2": "99 % (Raumluft)"
+      },
+      "historyDetails": "Seit ca. 3 Stunden (Beginn 4 Uhr nachts aus dem Schlaf) plötzliche, stärkste Schmerzen im linken Hoden mit Ausstrahlung in die Leiste. Übelkeit, zweimaliges Erbrechen. Kein Trauma, kein Brennen beim Wasserlassen, kein Fieber. Vor einigen Wochen schon einmal kurze ähnliche Schmerzen, die spontan aufhörten. Vorerkrankungen: Keine. Medikation: Keine. Allergien: Keine bekannt. Sozialanamnese: Schüler (10. Klasse), spielt Fußball im Verein. Nichtraucher, kein Alkohol. Kein Geschlechtsverkehr bisher. Lebt bei den Eltern; Mutter ist mitgekommen. Familienanamnese: Unauffällig. Körperliche Untersuchung: Linker Hoden hochstehend, quer liegend, stark druckschmerzhaft, geschwollen. Kremasterreflex links nicht auslösbar. Prehn-Zeichen negativ (keine Schmerzlinderung beim Anheben). Dopplersonografie: fehlende Perfusion links. Labor: Leukozyten: 10,8 /nl, CRP: < 5 mg/l, Urinstatus: unauffällig."
+    },
+    "patientDialogue": {
+      "beschwerden": "Ich bin heute Nacht aufgewacht, weil mein linker Hoden so extrem wehtut. Mir ist richtig schlecht davon, ich hab schon zweimal gebrochen.",
+      "beginn": "So um vier Uhr nachts, ich bin davon aufgewacht. Jetzt ist es sieben, also drei Stunden.",
+      "lokalisation": "Der linke Hoden, und das zieht hoch in die Leiste.",
+      "charakter": "Ganz plötzlich und total heftig, so stechend und ziehend.",
+      "intensitaet": "Neun, eher zehn von zehn.",
+      "ausstrahlung": "In die linke Leiste und ein bisschen in den Bauch.",
+      "verlauf": "Es ist nicht besser geworden, seit es angefangen hat.",
+      "ausloeser": "Ich hab gar nichts gemacht, ich hab geschlafen. Verletzt hab ich mich auch nicht, beim Fußball gestern war nichts.",
+      "begleitsymptome": "Mir ist schlecht, ich hab zweimal erbrochen. Der Hoden ist geschwollen.",
+      "fieber": "Nein, kein Fieber.",
+      "appetit_gewicht": "Normal.",
+      "verdauung": "Stuhlgang ist normal.",
+      "wasserlassen": "Wasserlassen ist normal, es brennt nicht.",
+      "vorerkrankungen": "Nein, ich bin gesund. Vor ein paar Wochen hatte ich mal kurz so ähnliche Schmerzen, aber nur ein paar Minuten, dann war es weg.",
+      "operationen": "Nein, noch nie.",
+      "medikamente": "Keine.",
+      "allergien": "Keine.",
+      "rauchen": "Nein.",
+      "alkohol": "Nein.",
+      "drogen": "Nein.",
+      "beruf": "Ich geh in die zehnte Klasse. Ich spiele Fußball im Verein.",
+      "wohnen": "Bei meinen Eltern. Meine Mutter ist draußen im Wartezimmer.",
+      "familie": "Nein, da weiß ich nichts.",
+      "sorgen": "Muss ich operiert werden? Kann ich später noch Kinder kriegen? Kann meine Mutter bitte reinkommen?"
+    },
+    "anamneseQuestions": [
+      {
+        "id": "hodentorsion-q1",
+        "phase": "Gesprächseinstieg & Leitsymptom",
+        "doctorOptions": [
+          {
+            "text": "Guten Tag, mein Name ist … , ich bin hier die Ärztin / der Arzt. Was führt Sie heute zu uns?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorstellung mit Namen und Funktion, dann eine offene Einstiegsfrage."
+          },
+          {
+            "text": "Liegt bei Ihnen die typische Symptomatik für Hodentorsion links vor?",
+            "isOptimal": false,
+            "feedback": "FSP-Fehler: Keine geschlossene Diagnose-Frage zu Beginn. Lassen Sie den Patienten zuerst frei erzählen."
+          }
+        ],
+        "patientResponse": "Ich bin heute Nacht aufgewacht, weil mein linker Hoden so extrem wehtut. Mir ist richtig schlecht davon, ich hab schon zweimal gebrochen."
+      },
+      {
+        "id": "hodentorsion-q2",
+        "phase": "Beginn, Ort & Art der Beschwerden",
+        "doctorOptions": [
+          {
+            "text": "Seit wann haben Sie die Beschwerden genau, wo spüren Sie sie und wie fühlen sie sich an? Strahlen sie irgendwohin aus?",
+            "isOptimal": true,
+            "feedback": "Gut strukturiert: Beginn, Lokalisation, Qualität und Ausstrahlung in verständlichen Worten erfragt."
+          },
+          {
+            "text": "Beschreiben Sie Onset, Lokalisation, Qualität und Irradiation der Symptomatik.",
+            "isOptimal": false,
+            "feedback": "Zu viel Fachjargon. „Ausstrahlen“ statt „Irradiation“, „Seit wann?“ statt „Onset“."
+          }
+        ],
+        "patientResponse": "So um vier Uhr nachts, ich bin davon aufgewacht. Jetzt ist es sieben, also drei Stunden. Der linke Hoden, und das zieht hoch in die Leiste. Ganz plötzlich und total heftig, so stechend und ziehend. In die linke Leiste und ein bisschen in den Bauch."
+      },
+      {
+        "id": "hodentorsion-q3",
+        "phase": "Intensität, Verlauf & Auslöser",
+        "doctorOptions": [
+          {
+            "text": "Wie stark sind die Beschwerden auf einer Skala von 0 bis 10? Sind sie besser oder schlimmer geworden, und gibt es etwas, das sie auslöst oder lindert?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Schmerzskala 0–10 ist im deutschen Klinikalltag Standard."
+          },
+          {
+            "text": "Ist es sehr schlimm?",
+            "isOptimal": false,
+            "feedback": "Zu unpräzise. Fragen Sie nach der Stärke auf einer Skala von 0 bis 10 und nach dem Verlauf."
+          }
+        ],
+        "patientResponse": "Neun, eher zehn von zehn. Es ist nicht besser geworden, seit es angefangen hat. Ich hab gar nichts gemacht, ich hab geschlafen. Verletzt hab ich mich auch nicht, beim Fußball gestern war nichts."
+      },
+      {
+        "id": "hodentorsion-q4",
+        "phase": "Begleitsymptome & vegetative Anamnese",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie noch andere Beschwerden bemerkt, zum Beispiel Fieber, Übelkeit, Gewichtsverlust oder Probleme beim Stuhlgang oder Wasserlassen?",
+            "isOptimal": true,
+            "feedback": "Exzellent! Begleitsymptome und vegetative Anamnese in Patientensprache abgefragt."
+          },
+          {
+            "text": "Bestehen B-Symptomatik, Nausea, Emesis oder Miktionsbeschwerden?",
+            "isOptimal": false,
+            "feedback": "Fachjargon! Sagen Sie „Fieber, Nachtschweiß, Gewichtsverlust“, „Übelkeit“, „Erbrechen“ und „Probleme beim Wasserlassen“."
+          }
+        ],
+        "patientResponse": "Mir ist schlecht, ich hab zweimal erbrochen. Der Hoden ist geschwollen. Nein, kein Fieber. Normal. Stuhlgang ist normal. Wasserlassen ist normal, es brennt nicht."
+      },
+      {
+        "id": "hodentorsion-q5",
+        "phase": "Vorerkrankungen, Operationen & Medikamente",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie Vorerkrankungen oder wurden Sie schon einmal operiert? Welche Medikamente nehmen Sie regelmäßig ein, und haben Sie Allergien?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorerkrankungen, Operationen, Medikation und Allergien vollständig erfragt."
+          },
+          {
+            "text": "Welche Komorbiditäten, Voroperationen und Dauermedikation bestehen? Gibt es Unverträglichkeiten?",
+            "isOptimal": false,
+            "feedback": "„Komorbiditäten“ versteht kaum ein Patient. Sagen Sie „andere Erkrankungen“."
+          }
+        ],
+        "patientResponse": "Nein, ich bin gesund. Vor ein paar Wochen hatte ich mal kurz so ähnliche Schmerzen, aber nur ein paar Minuten, dann war es weg. Nein, noch nie. Keine. Keine."
+      },
+      {
+        "id": "hodentorsion-q6",
+        "phase": "Sozial- & Familienanamnese",
+        "doctorOptions": [
+          {
+            "text": "Darf ich Sie noch etwas Persönliches fragen: Rauchen Sie, trinken Sie Alkohol, was machen Sie beruflich, wie wohnen Sie, und gibt es Krankheiten in Ihrer Familie?",
+            "isOptimal": true,
+            "feedback": "Sehr empathisch! Sie kündigen die persönlichen Fragen an und decken Noxen, Beruf, Wohnsituation und Familie ab."
+          },
+          {
+            "text": "Wie ist Ihr Noxenabusus und gibt es eine familiäre Belastung?",
+            "isOptimal": false,
+            "feedback": "Vermeiden Sie „Noxenabusus“. Fragen Sie direkt nach Rauchen, Alkohol und Drogen."
+          }
+        ],
+        "patientResponse": "Nein. Nein. Nein. Ich geh in die zehnte Klasse. Ich spiele Fußball im Verein. Bei meinen Eltern. Meine Mutter ist draußen im Wartezimmer. Nein, da weiß ich nichts."
+      },
+      {
+        "id": "hodentorsion-q7",
+        "phase": "Sorgen des Patienten & Gesprächsabschluss",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie selbst eine Vermutung oder machen Sie sich über etwas besonders Sorgen? Haben Sie noch Fragen an mich?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Sorgen des Patienten zu erfragen gehört zu einem patientenzentrierten FSP-Gespräch."
+          },
+          {
+            "text": "Gut, das war's. Sie hören dann von uns.",
+            "isOptimal": false,
+            "feedback": "Zu abrupt. Fragen Sie nach Sorgen und offenen Fragen und erklären Sie das weitere Vorgehen."
+          }
+        ],
+        "patientResponse": "Muss ich operiert werden? Kann ich später noch Kinder kriegen? Kann meine Mutter bitte reinkommen?"
+      }
+    ],
+    "arztbriefTemplate": {
+      "prompt": "Verfassen Sie die Anamnese und Epikrise für Herr Luca Neumann (16 J.) mit Verdacht auf Hodentorsion links im C1-Fachstil.",
+      "requiredTerms": [
+        "Hodentorsion links",
+        "Keine",
+        "Epididymitis",
+        "Anamnese",
+        "Vitalparameter"
+      ],
+      "sampleSolution": "Herr Luca Neumann (16 J., Schüler) stellte sich mit folgender aktueller Anamnese vor: Seit ca. 3 Stunden (Beginn 4 Uhr nachts aus dem Schlaf) plötzliche, stärkste Schmerzen im linken Hoden mit Ausstrahlung in die Leiste. Übelkeit, zweimaliges Erbrechen. Kein Trauma, kein Brennen beim Wasserlassen, kein Fieber. Vor einigen Wochen schon einmal kurze ähnliche Schmerzen, die spontan aufhörten. An Vorerkrankungen seien bekannt: Keine. Die Dauermedikation umfasse: Keine. Allergien: Keine bekannt. Sozial- und Familienanamnese: Schüler (10. Klasse), spielt Fußball im Verein. Nichtraucher, kein Alkohol. Kein Geschlechtsverkehr bisher. Lebt bei den Eltern; Mutter ist mitgekommen. Unauffällig. Klinische Untersuchung: Linker Hoden hochstehend, quer liegend, stark druckschmerzhaft, geschwollen. Kremasterreflex links nicht auslösbar. Prehn-Zeichen negativ (keine Schmerzlinderung beim Anheben). Dopplersonografie: fehlende Perfusion links. Zusammenfassend ergibt sich der dringende Verdacht auf: Hodentorsion links (Differenzialdiagnosen: Epididymitis, Hydatidentorsion, Inkarzerierte Leistenhernie)."
+    },
+    "isbarSteps": [
+      {
+        "step": "I",
+        "label": "Identify (Identifikation)",
+        "guidance": "Nennen Sie Name, Alter und aktuellen Bereich des Patienten / der Patientin.",
+        "sampleSpeech": "Ich übergebe Herr Luca Neumann, 16 Jahre alt, aktuell in der Aufnahme (Urologie)."
+      },
+      {
+        "step": "S",
+        "label": "Situation (Aktuelle Situation)",
+        "guidance": "Benennen Sie Leitsymptom und Hauptverdachtsdiagnose.",
+        "sampleSpeech": "Vorstellungsgrund: Seit ca. 3 Stunden (Beginn 4 Uhr nachts aus dem Schlaf) plötzliche, stärkste Schmerzen im linken Hoden mit Ausstrahlung in die Leiste. Übelkeit, zweimaliges Erbrechen. Kein Trauma, kein Brennen beim Wasserlassen, kein Fieber. Vor einigen Wochen schon einmal kurze ähnliche Schmerzen, die spontan aufhörten. Es besteht der dringende Verdacht auf Hodentorsion links."
+      },
+      {
+        "step": "B",
+        "label": "Background (Klinischer Hintergrund)",
+        "guidance": "Fassen Sie Vorerkrankungen, Dauermedikation und Allergien zusammen.",
+        "sampleSpeech": "Anamnestisch bekannt sind: Keine. Medikation: Keine. Allergien: Keine bekannt."
+      },
+      {
+        "step": "A",
+        "label": "Assessment (Aktuelle Einschätzung & Vitalparameter)",
+        "guidance": "Berichten Sie über Vitalparameter, Untersuchungsbefund und Labor.",
+        "sampleSpeech": "Vitalparameter: RR 130/75 mmHg, HF 104 /min, Temp 36,8 °C, SpO₂ 99 % (Raumluft). Linker Hoden hochstehend, quer liegend, stark druckschmerzhaft, geschwollen. Kremasterreflex links nicht auslösbar. Prehn-Zeichen negativ (keine Schmerzlinderung beim Anheben). Dopplersonografie: fehlende Perfusion links. Labor: Leukozyten: 10,8 /nl, CRP: < 5 mg/l, Urinstatus: unauffällig"
+      },
+      {
+        "step": "R",
+        "label": "Recommendation (Empfehlung & weiteres Vorgehen)",
+        "guidance": "Schlagen Sie die weitere Diagnostik und Therapie unter Berücksichtigung der Differenzialdiagnosen vor.",
+        "sampleSpeech": "Ich empfehle die zielgerichtete Weiterbehandlung bezüglich Hodentorsion links sowie den Ausschluss der wichtigsten Differenzialdiagnosen (Epididymitis, Hydatidentorsion, Inkarzerierte Leistenhernie)."
+      }
+    ]
+  },
+  {
+    "id": "osg-fraktur-weber-b",
+    "title": "Sprunggelenksfraktur Typ Weber B",
+    "specialty": "Unfallchirurgie",
+    "category": "Unfallchirurgie",
+    "difficulty": "B1",
+    "patientName": "Frau Julia Braun",
+    "patientAge": 34,
+    "chiefComplaint": "Ich bin beim Joggen umgeknickt, nach außen. Es hat richtig geknackt, und jetzt ist der Knöchel dick wie ein Ball. Ich kann gar nicht mehr auftreten.",
+    "patient": {
+      "name": "Frau Julia Braun",
+      "age": 34,
+      "gender": "w",
+      "occupation": "Erzieherin",
+      "chiefComplaint": "Ich bin beim Joggen umgeknickt, nach außen. Es hat richtig geknackt, und jetzt ist der Knöchel dick wie ein Ball. Ich kann gar nicht mehr auftreten.",
+      "vitalSigns": {
+        "bp": "125/80 mmHg",
+        "hr": "88 /min",
+        "temp": "36,7 °C",
+        "spo2": "99 % (Raumluft)"
+      },
+      "historyDetails": "Vor ca. 2 Stunden beim Joggen auf unebenem Waldweg mit dem rechten Fuß nach außen umgeknickt (Supinationstrauma), hörbares Knacken. Sofortige Schwellung und Schmerzen am Außenknöchel, Belastung nicht möglich. Kein Kopfanprall, keine Bewusstlosigkeit. Vorerkrankungen: Hashimoto-Thyreoiditis. Medikation: L-Thyroxin 75 µg 1-0-0 (nüchtern), Orale Kontrazeption (Levonorgestrel/Ethinylestradiol). Allergien: Penicillin (Urtikaria). Sozialanamnese: Nichtraucherin, Alkohol gelegentlich. In fester Partnerschaft, keine Kinder. Wohnt im 3. Stock ohne Aufzug. Letzte Mahlzeit vor 4 Stunden. Tetanusimpfung vor 3 Jahren. Familienanamnese: Mutter mit Osteoporose. Körperliche Untersuchung: Deutliche Schwellung und Hämatom am rechten Außenknöchel, Druckschmerz über der distalen Fibula (Ottawa-Kriterien positiv). Kein Druckschmerz am proximalen Wadenbein und an der MT-V-Basis. Durchblutung, Motorik und Sensibilität distal intakt. Röntgen OSG in 2 Ebenen: Schrägfraktur der Fibula auf Höhe der Syndesmose. Labor: Quick: 98 %, Hb: 13,4 g/dl, β-HCG: negativ."
+    },
+    "patientDialogue": {
+      "beschwerden": "Ich bin beim Joggen umgeknickt, nach außen. Es hat richtig geknackt, und jetzt ist der Knöchel dick wie ein Ball. Ich kann gar nicht mehr auftreten.",
+      "beginn": "Vor ungefähr zwei Stunden, heute Morgen um halb acht im Wald.",
+      "lokalisation": "Rechter Fuß, außen am Knöchel. Oben am Knie tut nichts weh.",
+      "charakter": "Pochend, und wenn ich den Fuß bewege, sticht es richtig.",
+      "intensitaet": "In Ruhe so sechs, beim Auftreten zehn von zehn.",
+      "verlauf": "Es ist sofort angeschwollen und blau geworden. Ich hab gekühlt, aber es ist eher dicker geworden.",
+      "ausloeser": "Ich bin auf eine Wurzel getreten, mit dem Fuß nach innen weggeknickt, also der Fuß ist nach außen umgeschlagen. Ich bin nicht auf den Kopf gefallen, war auch nicht bewusstlos.",
+      "begleitsymptome": "Die Zehen kann ich bewegen und spüren. Sonst tut mir nichts weh.",
+      "fieber": "Nein.",
+      "appetit_gewicht": "Normal. Gefrühstückt hab ich vor vier Stunden, seitdem nur Wasser.",
+      "gyn": "Meine letzte Periode war vor drei Wochen. Ich nehme die Pille, schwanger bin ich nicht.",
+      "vorerkrankungen": "Ich hab Hashimoto, die Schilddrüse.",
+      "operationen": "Mandeln als Kind, sonst nichts.",
+      "medikamente": "L-Thyroxin 75 morgens nüchtern und die Pille.",
+      "allergien": "Ja, Penicillin. Da hatte ich Nesselsucht am ganzen Körper.",
+      "impfungen": "Tetanus wurde vor drei Jahren aufgefrischt, das steht im Impfpass.",
+      "rauchen": "Nein, ich rauche nicht.",
+      "alkohol": "Am Wochenende mal ein Glas Wein.",
+      "beruf": "Ich bin Erzieherin im Kindergarten. Da muss ich viel stehen und auch mal rennen.",
+      "wohnen": "Mit meinem Freund im dritten Stock, ohne Aufzug.",
+      "familie": "Meine Mutter hat Osteoporose.",
+      "sorgen": "Ist der Knöchel gebrochen? Muss das operiert werden, und wie lange kann ich nicht arbeiten?"
+    },
+    "anamneseQuestions": [
+      {
+        "id": "osg-fraktur-weber-b-q1",
+        "phase": "Gesprächseinstieg & Leitsymptom",
+        "doctorOptions": [
+          {
+            "text": "Guten Tag, mein Name ist … , ich bin hier die Ärztin / der Arzt. Was führt Sie heute zu uns?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorstellung mit Namen und Funktion, dann eine offene Einstiegsfrage."
+          },
+          {
+            "text": "Liegt bei Ihnen die typische Symptomatik für Distale Fibulafraktur Typ Weber B rechts (Supinationstrauma) vor?",
+            "isOptimal": false,
+            "feedback": "FSP-Fehler: Keine geschlossene Diagnose-Frage zu Beginn. Lassen Sie den Patienten zuerst frei erzählen."
+          }
+        ],
+        "patientResponse": "Ich bin beim Joggen umgeknickt, nach außen. Es hat richtig geknackt, und jetzt ist der Knöchel dick wie ein Ball. Ich kann gar nicht mehr auftreten."
+      },
+      {
+        "id": "osg-fraktur-weber-b-q2",
+        "phase": "Beginn, Ort & Art der Beschwerden",
+        "doctorOptions": [
+          {
+            "text": "Seit wann haben Sie die Beschwerden genau, wo spüren Sie sie und wie fühlen sie sich an? Strahlen sie irgendwohin aus?",
+            "isOptimal": true,
+            "feedback": "Gut strukturiert: Beginn, Lokalisation, Qualität und Ausstrahlung in verständlichen Worten erfragt."
+          },
+          {
+            "text": "Beschreiben Sie Onset, Lokalisation, Qualität und Irradiation der Symptomatik.",
+            "isOptimal": false,
+            "feedback": "Zu viel Fachjargon. „Ausstrahlen“ statt „Irradiation“, „Seit wann?“ statt „Onset“."
+          }
+        ],
+        "patientResponse": "Vor ungefähr zwei Stunden, heute Morgen um halb acht im Wald. Rechter Fuß, außen am Knöchel. Oben am Knie tut nichts weh. Pochend, und wenn ich den Fuß bewege, sticht es richtig."
+      },
+      {
+        "id": "osg-fraktur-weber-b-q3",
+        "phase": "Intensität, Verlauf & Auslöser",
+        "doctorOptions": [
+          {
+            "text": "Wie stark sind die Beschwerden auf einer Skala von 0 bis 10? Sind sie besser oder schlimmer geworden, und gibt es etwas, das sie auslöst oder lindert?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Schmerzskala 0–10 ist im deutschen Klinikalltag Standard."
+          },
+          {
+            "text": "Ist es sehr schlimm?",
+            "isOptimal": false,
+            "feedback": "Zu unpräzise. Fragen Sie nach der Stärke auf einer Skala von 0 bis 10 und nach dem Verlauf."
+          }
+        ],
+        "patientResponse": "In Ruhe so sechs, beim Auftreten zehn von zehn. Es ist sofort angeschwollen und blau geworden. Ich hab gekühlt, aber es ist eher dicker geworden. Ich bin auf eine Wurzel getreten, mit dem Fuß nach innen weggeknickt, also der Fuß ist nach außen umgeschlagen. Ich bin nicht auf den Kopf gefallen, war auch nicht bewusstlos."
+      },
+      {
+        "id": "osg-fraktur-weber-b-q4",
+        "phase": "Begleitsymptome & vegetative Anamnese",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie noch andere Beschwerden bemerkt, zum Beispiel Fieber, Übelkeit, Gewichtsverlust oder Probleme beim Stuhlgang oder Wasserlassen?",
+            "isOptimal": true,
+            "feedback": "Exzellent! Begleitsymptome und vegetative Anamnese in Patientensprache abgefragt."
+          },
+          {
+            "text": "Bestehen B-Symptomatik, Nausea, Emesis oder Miktionsbeschwerden?",
+            "isOptimal": false,
+            "feedback": "Fachjargon! Sagen Sie „Fieber, Nachtschweiß, Gewichtsverlust“, „Übelkeit“, „Erbrechen“ und „Probleme beim Wasserlassen“."
+          }
+        ],
+        "patientResponse": "Die Zehen kann ich bewegen und spüren. Sonst tut mir nichts weh. Nein. Normal. Gefrühstückt hab ich vor vier Stunden, seitdem nur Wasser."
+      },
+      {
+        "id": "osg-fraktur-weber-b-q5",
+        "phase": "Vorerkrankungen, Operationen & Medikamente",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie Vorerkrankungen oder wurden Sie schon einmal operiert? Welche Medikamente nehmen Sie regelmäßig ein, und haben Sie Allergien?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorerkrankungen, Operationen, Medikation und Allergien vollständig erfragt."
+          },
+          {
+            "text": "Welche Komorbiditäten, Voroperationen und Dauermedikation bestehen? Gibt es Unverträglichkeiten?",
+            "isOptimal": false,
+            "feedback": "„Komorbiditäten“ versteht kaum ein Patient. Sagen Sie „andere Erkrankungen“."
+          }
+        ],
+        "patientResponse": "Ich hab Hashimoto, die Schilddrüse. Mandeln als Kind, sonst nichts. L-Thyroxin 75 morgens nüchtern und die Pille. Ja, Penicillin. Da hatte ich Nesselsucht am ganzen Körper."
+      },
+      {
+        "id": "osg-fraktur-weber-b-q6",
+        "phase": "Sozial- & Familienanamnese",
+        "doctorOptions": [
+          {
+            "text": "Darf ich Sie noch etwas Persönliches fragen: Rauchen Sie, trinken Sie Alkohol, was machen Sie beruflich, wie wohnen Sie, und gibt es Krankheiten in Ihrer Familie?",
+            "isOptimal": true,
+            "feedback": "Sehr empathisch! Sie kündigen die persönlichen Fragen an und decken Noxen, Beruf, Wohnsituation und Familie ab."
+          },
+          {
+            "text": "Wie ist Ihr Noxenabusus und gibt es eine familiäre Belastung?",
+            "isOptimal": false,
+            "feedback": "Vermeiden Sie „Noxenabusus“. Fragen Sie direkt nach Rauchen, Alkohol und Drogen."
+          }
+        ],
+        "patientResponse": "Nein, ich rauche nicht. Am Wochenende mal ein Glas Wein. Ich bin Erzieherin im Kindergarten. Da muss ich viel stehen und auch mal rennen. Mit meinem Freund im dritten Stock, ohne Aufzug. Meine Mutter hat Osteoporose. Meine letzte Periode war vor drei Wochen. Ich nehme die Pille, schwanger bin ich nicht. Tetanus wurde vor drei Jahren aufgefrischt, das steht im Impfpass."
+      },
+      {
+        "id": "osg-fraktur-weber-b-q7",
+        "phase": "Sorgen des Patienten & Gesprächsabschluss",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie selbst eine Vermutung oder machen Sie sich über etwas besonders Sorgen? Haben Sie noch Fragen an mich?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Sorgen des Patienten zu erfragen gehört zu einem patientenzentrierten FSP-Gespräch."
+          },
+          {
+            "text": "Gut, das war's. Sie hören dann von uns.",
+            "isOptimal": false,
+            "feedback": "Zu abrupt. Fragen Sie nach Sorgen und offenen Fragen und erklären Sie das weitere Vorgehen."
+          }
+        ],
+        "patientResponse": "Ist der Knöchel gebrochen? Muss das operiert werden, und wie lange kann ich nicht arbeiten?"
+      }
+    ],
+    "arztbriefTemplate": {
+      "prompt": "Verfassen Sie die Anamnese und Epikrise für Frau Julia Braun (34 J.) mit Verdacht auf Distale Fibulafraktur Typ Weber B rechts (Supinationstrauma) im C1-Fachstil.",
+      "requiredTerms": [
+        "Distale Fibulafraktur Typ Weber B rechts (Supinationstrauma)",
+        "Hashimoto-Thyreoiditis",
+        "Außenbandruptur (OSG-Distorsion)",
+        "Anamnese",
+        "Vitalparameter"
+      ],
+      "sampleSolution": "Frau Julia Braun (34 J., Erzieherin) stellte sich mit folgender aktueller Anamnese vor: Vor ca. 2 Stunden beim Joggen auf unebenem Waldweg mit dem rechten Fuß nach außen umgeknickt (Supinationstrauma), hörbares Knacken. Sofortige Schwellung und Schmerzen am Außenknöchel, Belastung nicht möglich. Kein Kopfanprall, keine Bewusstlosigkeit. An Vorerkrankungen seien bekannt: Hashimoto-Thyreoiditis. Die Dauermedikation umfasse: L-Thyroxin 75 µg 1-0-0 (nüchtern), Orale Kontrazeption (Levonorgestrel/Ethinylestradiol). Allergien: Penicillin (Urtikaria). Sozial- und Familienanamnese: Nichtraucherin, Alkohol gelegentlich. In fester Partnerschaft, keine Kinder. Wohnt im 3. Stock ohne Aufzug. Letzte Mahlzeit vor 4 Stunden. Tetanusimpfung vor 3 Jahren. Mutter mit Osteoporose. Klinische Untersuchung: Deutliche Schwellung und Hämatom am rechten Außenknöchel, Druckschmerz über der distalen Fibula (Ottawa-Kriterien positiv). Kein Druckschmerz am proximalen Wadenbein und an der MT-V-Basis. Durchblutung, Motorik und Sensibilität distal intakt. Röntgen OSG in 2 Ebenen: Schrägfraktur der Fibula auf Höhe der Syndesmose. Zusammenfassend ergibt sich der dringende Verdacht auf: Distale Fibulafraktur Typ Weber B rechts (Supinationstrauma) (Differenzialdiagnosen: Außenbandruptur (OSG-Distorsion), Maisonneuve-Fraktur, Basisfraktur Os metatarsale V)."
+    },
+    "isbarSteps": [
+      {
+        "step": "I",
+        "label": "Identify (Identifikation)",
+        "guidance": "Nennen Sie Name, Alter und aktuellen Bereich des Patienten / der Patientin.",
+        "sampleSpeech": "Ich übergebe Frau Julia Braun, 34 Jahre alt, aktuell in der Aufnahme (Unfallchirurgie)."
+      },
+      {
+        "step": "S",
+        "label": "Situation (Aktuelle Situation)",
+        "guidance": "Benennen Sie Leitsymptom und Hauptverdachtsdiagnose.",
+        "sampleSpeech": "Vorstellungsgrund: Vor ca. 2 Stunden beim Joggen auf unebenem Waldweg mit dem rechten Fuß nach außen umgeknickt (Supinationstrauma), hörbares Knacken. Sofortige Schwellung und Schmerzen am Außenknöchel, Belastung nicht möglich. Kein Kopfanprall, keine Bewusstlosigkeit. Es besteht der dringende Verdacht auf Distale Fibulafraktur Typ Weber B rechts (Supinationstrauma)."
+      },
+      {
+        "step": "B",
+        "label": "Background (Klinischer Hintergrund)",
+        "guidance": "Fassen Sie Vorerkrankungen, Dauermedikation und Allergien zusammen.",
+        "sampleSpeech": "Anamnestisch bekannt sind: Hashimoto-Thyreoiditis. Medikation: L-Thyroxin 75 µg 1-0-0 (nüchtern), Orale Kontrazeption (Levonorgestrel/Ethinylestradiol). Allergien: Penicillin (Urtikaria)."
+      },
+      {
+        "step": "A",
+        "label": "Assessment (Aktuelle Einschätzung & Vitalparameter)",
+        "guidance": "Berichten Sie über Vitalparameter, Untersuchungsbefund und Labor.",
+        "sampleSpeech": "Vitalparameter: RR 125/80 mmHg, HF 88 /min, Temp 36,7 °C, SpO₂ 99 % (Raumluft). Deutliche Schwellung und Hämatom am rechten Außenknöchel, Druckschmerz über der distalen Fibula (Ottawa-Kriterien positiv). Kein Druckschmerz am proximalen Wadenbein und an der MT-V-Basis. Durchblutung, Motorik und Sensibilität distal intakt. Röntgen OSG in 2 Ebenen: Schrägfraktur der Fibula auf Höhe der Syndesmose. Labor: Quick: 98 %, Hb: 13,4 g/dl, β-HCG: negativ"
+      },
+      {
+        "step": "R",
+        "label": "Recommendation (Empfehlung & weiteres Vorgehen)",
+        "guidance": "Schlagen Sie die weitere Diagnostik und Therapie unter Berücksichtigung der Differenzialdiagnosen vor.",
+        "sampleSpeech": "Ich empfehle die zielgerichtete Weiterbehandlung bezüglich Distale Fibulafraktur Typ Weber B rechts (Supinationstrauma) sowie den Ausschluss der wichtigsten Differenzialdiagnosen (Außenbandruptur (OSG-Distorsion), Maisonneuve-Fraktur, Basisfraktur Os metatarsale V)."
+      }
+    ]
+  },
+  {
+    "id": "herpes-zoster-thorakal",
+    "title": "Herpes zoster (thorakal)",
+    "specialty": "Dermatologie",
+    "category": "Dermatologie",
+    "difficulty": "B1",
+    "patientName": "Frau Gisela Krüger",
+    "patientAge": 71,
+    "chiefComplaint": "Ich hab seit ein paar Tagen so ein Brennen auf der rechten Seite, wie Feuer unter der Haut. Und seit gestern sind da so kleine Bläschen wie ein Gürtel.",
+    "patient": {
+      "name": "Frau Gisela Krüger",
+      "age": 71,
+      "gender": "w",
+      "occupation": "Rentnerin (ehem. Lehrerin)",
+      "chiefComplaint": "Ich hab seit ein paar Tagen so ein Brennen auf der rechten Seite, wie Feuer unter der Haut. Und seit gestern sind da so kleine Bläschen wie ein Gürtel.",
+      "vitalSigns": {
+        "bp": "140/85 mmHg",
+        "hr": "82 /min",
+        "temp": "37,6 °C",
+        "spo2": "98 % (Raumluft)"
+      },
+      "historyDetails": "Seit 4 Tagen brennende, einschießende Schmerzen am rechten Brustkorb, seit gestern gruppierte Bläschen auf gerötetem Grund, gürtelförmig von der Wirbelsäule bis unter die Brust. Leichtes Krankheitsgefühl. Schlafstörung wegen Schmerzen (NRS 7/10). Vorerkrankungen: Rheumatoide Arthritis, Osteoporose, Windpocken in der Kindheit. Medikation: Methotrexat 15 mg 1x wöchentlich (montags), Folsäure 5 mg 1x wöchentlich (dienstags), Prednisolon 5 mg 1-0-0, Alendronsäure 70 mg 1x wöchentlich. Allergien: Keine bekannt. Sozialanamnese: Nichtraucherin, kein Alkohol. Verwitwet, lebt allein, Enkelkinder kommen regelmäßig zu Besuch (jüngstes 4 Monate alt). Keine Gürtelrose-Impfung. Familienanamnese: Unauffällig. Körperliche Untersuchung: Gruppierte Bläschen auf erythematösem Grund im Dermatom Th6 rechts, streng einseitig, Mittellinie nicht überschreitend. Keine Beteiligung von Auge oder Gesicht. Kein disseminierter Befall. Labor: Leukozyten: 6,1 /nl, CRP: 14 mg/l (leicht erhöht), Kreatinin: 0,9 mg/dl."
+    },
+    "patientDialogue": {
+      "beschwerden": "Ich hab seit ein paar Tagen so ein Brennen auf der rechten Seite, wie Feuer unter der Haut. Und seit gestern sind da so kleine Bläschen wie ein Gürtel.",
+      "beginn": "Das Brennen fing vor vier Tagen an. Ich dachte erst, ich hab mich verlegen. Die Bläschen sind seit gestern da.",
+      "lokalisation": "Rechts, vom Rücken neben der Wirbelsäule um die Seite herum bis unter die Brust. Nur auf der rechten Seite.",
+      "charakter": "Brennend, und manchmal schießt es so ein wie ein Stromschlag. Schon die Bluse auf der Haut tut weh.",
+      "intensitaet": "Sieben von zehn, nachts noch schlimmer.",
+      "verlauf": "Erst nur das Brennen, dann kam der Ausschlag dazu. Es breitet sich ein bisschen aus.",
+      "ausloeser": "Berührung macht es schlimmer. Atmen oder Bewegen eigentlich nicht.",
+      "begleitsymptome": "Ich fühl mich ein bisschen grippig und schlapp. Am Auge oder im Gesicht hab ich nichts.",
+      "fieber": "Leicht erhöht, so 37,6.",
+      "appetit_gewicht": "Normal.",
+      "verdauung": "Normal.",
+      "wasserlassen": "Normal.",
+      "schlaf": "Ich kann kaum schlafen, weil es so brennt.",
+      "vorerkrankungen": "Ich hab Rheuma, also rheumatoide Arthritis, und Osteoporose. Windpocken hatte ich als Kind.",
+      "operationen": "Galle vor 15 Jahren.",
+      "medikamente": "Methotrexat 15 Milligramm einmal die Woche, immer montags, und dienstags die Folsäure. Kortison, Prednisolon 5 morgens. Und einmal die Woche die Knochentablette, Alendronsäure.",
+      "allergien": "Keine Allergien.",
+      "impfungen": "Gegen Gürtelrose bin ich nicht geimpft. Grippe und Corona ja.",
+      "rauchen": "Nein, nie.",
+      "alkohol": "Nein, wegen dem Methotrexat trinke ich gar nichts.",
+      "beruf": "Ich war Lehrerin, jetzt bin ich in Rente.",
+      "wohnen": "Ich bin Witwe und wohne allein. Meine Tochter kommt oft mit den Enkeln vorbei, der Kleinste ist erst vier Monate alt.",
+      "familie": "Da ist nichts Besonderes.",
+      "sorgen": "Ist das ansteckend für das Baby? Und hört das Brennen wieder auf? Meine Nachbarin hatte danach monatelang Schmerzen."
+    },
+    "anamneseQuestions": [
+      {
+        "id": "herpes-zoster-thorakal-q1",
+        "phase": "Gesprächseinstieg & Leitsymptom",
+        "doctorOptions": [
+          {
+            "text": "Guten Tag, mein Name ist … , ich bin hier die Ärztin / der Arzt. Was führt Sie heute zu uns?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorstellung mit Namen und Funktion, dann eine offene Einstiegsfrage."
+          },
+          {
+            "text": "Liegt bei Ihnen die typische Symptomatik für Herpes zoster im Dermatom Th6 rechts vor?",
+            "isOptimal": false,
+            "feedback": "FSP-Fehler: Keine geschlossene Diagnose-Frage zu Beginn. Lassen Sie den Patienten zuerst frei erzählen."
+          }
+        ],
+        "patientResponse": "Ich hab seit ein paar Tagen so ein Brennen auf der rechten Seite, wie Feuer unter der Haut. Und seit gestern sind da so kleine Bläschen wie ein Gürtel."
+      },
+      {
+        "id": "herpes-zoster-thorakal-q2",
+        "phase": "Beginn, Ort & Art der Beschwerden",
+        "doctorOptions": [
+          {
+            "text": "Seit wann haben Sie die Beschwerden genau, wo spüren Sie sie und wie fühlen sie sich an? Strahlen sie irgendwohin aus?",
+            "isOptimal": true,
+            "feedback": "Gut strukturiert: Beginn, Lokalisation, Qualität und Ausstrahlung in verständlichen Worten erfragt."
+          },
+          {
+            "text": "Beschreiben Sie Onset, Lokalisation, Qualität und Irradiation der Symptomatik.",
+            "isOptimal": false,
+            "feedback": "Zu viel Fachjargon. „Ausstrahlen“ statt „Irradiation“, „Seit wann?“ statt „Onset“."
+          }
+        ],
+        "patientResponse": "Das Brennen fing vor vier Tagen an. Ich dachte erst, ich hab mich verlegen. Die Bläschen sind seit gestern da. Rechts, vom Rücken neben der Wirbelsäule um die Seite herum bis unter die Brust. Nur auf der rechten Seite. Brennend, und manchmal schießt es so ein wie ein Stromschlag. Schon die Bluse auf der Haut tut weh."
+      },
+      {
+        "id": "herpes-zoster-thorakal-q3",
+        "phase": "Intensität, Verlauf & Auslöser",
+        "doctorOptions": [
+          {
+            "text": "Wie stark sind die Beschwerden auf einer Skala von 0 bis 10? Sind sie besser oder schlimmer geworden, und gibt es etwas, das sie auslöst oder lindert?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Schmerzskala 0–10 ist im deutschen Klinikalltag Standard."
+          },
+          {
+            "text": "Ist es sehr schlimm?",
+            "isOptimal": false,
+            "feedback": "Zu unpräzise. Fragen Sie nach der Stärke auf einer Skala von 0 bis 10 und nach dem Verlauf."
+          }
+        ],
+        "patientResponse": "Sieben von zehn, nachts noch schlimmer. Erst nur das Brennen, dann kam der Ausschlag dazu. Es breitet sich ein bisschen aus. Berührung macht es schlimmer. Atmen oder Bewegen eigentlich nicht."
+      },
+      {
+        "id": "herpes-zoster-thorakal-q4",
+        "phase": "Begleitsymptome & vegetative Anamnese",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie noch andere Beschwerden bemerkt, zum Beispiel Fieber, Übelkeit, Gewichtsverlust oder Probleme beim Stuhlgang oder Wasserlassen?",
+            "isOptimal": true,
+            "feedback": "Exzellent! Begleitsymptome und vegetative Anamnese in Patientensprache abgefragt."
+          },
+          {
+            "text": "Bestehen B-Symptomatik, Nausea, Emesis oder Miktionsbeschwerden?",
+            "isOptimal": false,
+            "feedback": "Fachjargon! Sagen Sie „Fieber, Nachtschweiß, Gewichtsverlust“, „Übelkeit“, „Erbrechen“ und „Probleme beim Wasserlassen“."
+          }
+        ],
+        "patientResponse": "Ich fühl mich ein bisschen grippig und schlapp. Am Auge oder im Gesicht hab ich nichts. Leicht erhöht, so 37,6. Normal. Normal. Normal. Ich kann kaum schlafen, weil es so brennt."
+      },
+      {
+        "id": "herpes-zoster-thorakal-q5",
+        "phase": "Vorerkrankungen, Operationen & Medikamente",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie Vorerkrankungen oder wurden Sie schon einmal operiert? Welche Medikamente nehmen Sie regelmäßig ein, und haben Sie Allergien?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorerkrankungen, Operationen, Medikation und Allergien vollständig erfragt."
+          },
+          {
+            "text": "Welche Komorbiditäten, Voroperationen und Dauermedikation bestehen? Gibt es Unverträglichkeiten?",
+            "isOptimal": false,
+            "feedback": "„Komorbiditäten“ versteht kaum ein Patient. Sagen Sie „andere Erkrankungen“."
+          }
+        ],
+        "patientResponse": "Ich hab Rheuma, also rheumatoide Arthritis, und Osteoporose. Windpocken hatte ich als Kind. Galle vor 15 Jahren. Methotrexat 15 Milligramm einmal die Woche, immer montags, und dienstags die Folsäure. Kortison, Prednisolon 5 morgens. Und einmal die Woche die Knochentablette, Alendronsäure. Keine Allergien."
+      },
+      {
+        "id": "herpes-zoster-thorakal-q6",
+        "phase": "Sozial- & Familienanamnese",
+        "doctorOptions": [
+          {
+            "text": "Darf ich Sie noch etwas Persönliches fragen: Rauchen Sie, trinken Sie Alkohol, was machen Sie beruflich, wie wohnen Sie, und gibt es Krankheiten in Ihrer Familie?",
+            "isOptimal": true,
+            "feedback": "Sehr empathisch! Sie kündigen die persönlichen Fragen an und decken Noxen, Beruf, Wohnsituation und Familie ab."
+          },
+          {
+            "text": "Wie ist Ihr Noxenabusus und gibt es eine familiäre Belastung?",
+            "isOptimal": false,
+            "feedback": "Vermeiden Sie „Noxenabusus“. Fragen Sie direkt nach Rauchen, Alkohol und Drogen."
+          }
+        ],
+        "patientResponse": "Nein, nie. Nein, wegen dem Methotrexat trinke ich gar nichts. Ich war Lehrerin, jetzt bin ich in Rente. Ich bin Witwe und wohne allein. Meine Tochter kommt oft mit den Enkeln vorbei, der Kleinste ist erst vier Monate alt. Da ist nichts Besonderes. Gegen Gürtelrose bin ich nicht geimpft. Grippe und Corona ja."
+      },
+      {
+        "id": "herpes-zoster-thorakal-q7",
+        "phase": "Sorgen des Patienten & Gesprächsabschluss",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie selbst eine Vermutung oder machen Sie sich über etwas besonders Sorgen? Haben Sie noch Fragen an mich?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Sorgen des Patienten zu erfragen gehört zu einem patientenzentrierten FSP-Gespräch."
+          },
+          {
+            "text": "Gut, das war's. Sie hören dann von uns.",
+            "isOptimal": false,
+            "feedback": "Zu abrupt. Fragen Sie nach Sorgen und offenen Fragen und erklären Sie das weitere Vorgehen."
+          }
+        ],
+        "patientResponse": "Ist das ansteckend für das Baby? Und hört das Brennen wieder auf? Meine Nachbarin hatte danach monatelang Schmerzen."
+      }
+    ],
+    "arztbriefTemplate": {
+      "prompt": "Verfassen Sie die Anamnese und Epikrise für Frau Gisela Krüger (71 J.) mit Verdacht auf Herpes zoster im Dermatom Th6 rechts im C1-Fachstil.",
+      "requiredTerms": [
+        "Herpes zoster im Dermatom Th6 rechts",
+        "Rheumatoide",
+        "Herpes simplex (zosteriform)",
+        "Anamnese",
+        "Vitalparameter"
+      ],
+      "sampleSolution": "Frau Gisela Krüger (71 J., Rentnerin (ehem. Lehrerin)) stellte sich mit folgender aktueller Anamnese vor: Seit 4 Tagen brennende, einschießende Schmerzen am rechten Brustkorb, seit gestern gruppierte Bläschen auf gerötetem Grund, gürtelförmig von der Wirbelsäule bis unter die Brust. Leichtes Krankheitsgefühl. Schlafstörung wegen Schmerzen (NRS 7/10). An Vorerkrankungen seien bekannt: Rheumatoide Arthritis, Osteoporose, Windpocken in der Kindheit. Die Dauermedikation umfasse: Methotrexat 15 mg 1x wöchentlich (montags), Folsäure 5 mg 1x wöchentlich (dienstags), Prednisolon 5 mg 1-0-0, Alendronsäure 70 mg 1x wöchentlich. Allergien: Keine bekannt. Sozial- und Familienanamnese: Nichtraucherin, kein Alkohol. Verwitwet, lebt allein, Enkelkinder kommen regelmäßig zu Besuch (jüngstes 4 Monate alt). Keine Gürtelrose-Impfung. Unauffällig. Klinische Untersuchung: Gruppierte Bläschen auf erythematösem Grund im Dermatom Th6 rechts, streng einseitig, Mittellinie nicht überschreitend. Keine Beteiligung von Auge oder Gesicht. Kein disseminierter Befall. Zusammenfassend ergibt sich der dringende Verdacht auf: Herpes zoster im Dermatom Th6 rechts (Differenzialdiagnosen: Herpes simplex (zosteriform), Kontaktdermatitis, Interkostalneuralgie)."
+    },
+    "isbarSteps": [
+      {
+        "step": "I",
+        "label": "Identify (Identifikation)",
+        "guidance": "Nennen Sie Name, Alter und aktuellen Bereich des Patienten / der Patientin.",
+        "sampleSpeech": "Ich übergebe Frau Gisela Krüger, 71 Jahre alt, aktuell in der Aufnahme (Dermatologie)."
+      },
+      {
+        "step": "S",
+        "label": "Situation (Aktuelle Situation)",
+        "guidance": "Benennen Sie Leitsymptom und Hauptverdachtsdiagnose.",
+        "sampleSpeech": "Vorstellungsgrund: Seit 4 Tagen brennende, einschießende Schmerzen am rechten Brustkorb, seit gestern gruppierte Bläschen auf gerötetem Grund, gürtelförmig von der Wirbelsäule bis unter die Brust. Leichtes Krankheitsgefühl. Schlafstörung wegen Schmerzen (NRS 7/10). Es besteht der dringende Verdacht auf Herpes zoster im Dermatom Th6 rechts."
+      },
+      {
+        "step": "B",
+        "label": "Background (Klinischer Hintergrund)",
+        "guidance": "Fassen Sie Vorerkrankungen, Dauermedikation und Allergien zusammen.",
+        "sampleSpeech": "Anamnestisch bekannt sind: Rheumatoide Arthritis, Osteoporose, Windpocken in der Kindheit. Medikation: Methotrexat 15 mg 1x wöchentlich (montags), Folsäure 5 mg 1x wöchentlich (dienstags), Prednisolon 5 mg 1-0-0, Alendronsäure 70 mg 1x wöchentlich. Allergien: Keine bekannt."
+      },
+      {
+        "step": "A",
+        "label": "Assessment (Aktuelle Einschätzung & Vitalparameter)",
+        "guidance": "Berichten Sie über Vitalparameter, Untersuchungsbefund und Labor.",
+        "sampleSpeech": "Vitalparameter: RR 140/85 mmHg, HF 82 /min, Temp 37,6 °C, SpO₂ 98 % (Raumluft). Gruppierte Bläschen auf erythematösem Grund im Dermatom Th6 rechts, streng einseitig, Mittellinie nicht überschreitend. Keine Beteiligung von Auge oder Gesicht. Kein disseminierter Befall. Labor: Leukozyten: 6,1 /nl, CRP: 14 mg/l (leicht erhöht), Kreatinin: 0,9 mg/dl"
+      },
+      {
+        "step": "R",
+        "label": "Recommendation (Empfehlung & weiteres Vorgehen)",
+        "guidance": "Schlagen Sie die weitere Diagnostik und Therapie unter Berücksichtigung der Differenzialdiagnosen vor.",
+        "sampleSpeech": "Ich empfehle die zielgerichtete Weiterbehandlung bezüglich Herpes zoster im Dermatom Th6 rechts sowie den Ausschluss der wichtigsten Differenzialdiagnosen (Herpes simplex (zosteriform), Kontaktdermatitis, Interkostalneuralgie)."
+      }
+    ]
+  },
+  {
+    "id": "arteriitis-temporalis",
+    "title": "Riesenzellarteriitis (Arteriitis temporalis)",
+    "specialty": "Rheumatologie",
+    "category": "Rheumatologie",
+    "difficulty": "C1",
+    "patientName": "Frau Hildegard Vogel",
+    "patientAge": 74,
+    "chiefComplaint": "Ich hab seit zwei Wochen so schlimme Kopfschmerzen an der Schläfe, das kenn ich gar nicht von mir. Beim Kauen tut mir der Kiefer weh, und heute Morgen hab ich auf dem rechten Auge kurz alles verschwommen gesehen.",
+    "patient": {
+      "name": "Frau Hildegard Vogel",
+      "age": 74,
+      "gender": "w",
+      "occupation": "Rentnerin (ehem. Schneiderin)",
+      "chiefComplaint": "Ich hab seit zwei Wochen so schlimme Kopfschmerzen an der Schläfe, das kenn ich gar nicht von mir. Beim Kauen tut mir der Kiefer weh, und heute Morgen hab ich auf dem rechten Auge kurz alles verschwommen gesehen.",
+      "vitalSigns": {
+        "bp": "145/80 mmHg",
+        "hr": "84 /min",
+        "temp": "37,5 °C",
+        "spo2": "97 % (Raumluft)"
+      },
+      "historyDetails": "Seit 2 Wochen neu aufgetretene, bohrende Kopfschmerzen temporal rechts, Kopfhaut beim Kämmen schmerzempfindlich, Kauschmerzen (Claudicatio masticatoria). Heute Morgen für ca. 5 Minuten verschwommenes Sehen rechts. Seit 6 Wochen Morgensteifigkeit und Schmerzen in Schultern und Nacken, Abgeschlagenheit, 3 kg Gewichtsverlust, Nachtschweiß. Vorerkrankungen: Arterielle Hypertonie, Gonarthrose beidseits. Medikation: Amlodipin 5 mg 1-0-0, Ibuprofen 400 mg bei Bedarf. Allergien: Sulfonamide (Exanthem). Sozialanamnese: Nichtraucherin, Alkohol selten. Verwitwet, lebt mit Hund allein in einer Wohnung, fährt noch Auto. Familienanamnese: Schwester mit Diabetes mellitus Typ 2. Körperliche Untersuchung: A. temporalis rechts verhärtet, geschlängelt, druckschmerzhaft, Pulsation abgeschwächt. Visus rechts 0,8, links 1,0. Neurologisch sonst unauffällig. Schulterbeweglichkeit schmerzhaft eingeschränkt. Labor: BSG: 86 mm/h (erhöht), CRP: 74 mg/l (erhöht), Hb: 11,2 g/dl (erniedrigt), Thrombozyten: 480 /nl (erhöht)."
+    },
+    "patientDialogue": {
+      "beschwerden": "Ich hab seit zwei Wochen so schlimme Kopfschmerzen an der Schläfe, das kenn ich gar nicht von mir. Beim Kauen tut mir der Kiefer weh, und heute Morgen hab ich auf dem rechten Auge kurz alles verschwommen gesehen.",
+      "beginn": "Die Kopfschmerzen seit ungefähr zwei Wochen. Das mit dem Auge war heute Morgen beim Frühstück, so fünf Minuten lang.",
+      "lokalisation": "Rechts an der Schläfe. Da ist so eine Ader, die ist ganz dick und tut weh, wenn ich drauf drücke.",
+      "charakter": "Bohrend, dauerhaft. Sogar beim Haarekämmen tut die Kopfhaut weh.",
+      "intensitaet": "Sechs bis sieben von zehn. Ibuprofen hilft kaum.",
+      "verlauf": "Es wird eher schlimmer. Und heute die Sache mit dem Auge, da hab ich richtig Angst bekommen.",
+      "ausloeser": "Beim Kauen, vor allem bei Brot oder Fleisch, krieg ich nach einer Weile Schmerzen im Kiefer und muss eine Pause machen.",
+      "begleitsymptome": "Seit ungefähr sechs Wochen sind meine Schultern und der Nacken morgens ganz steif, ich komm kaum aus dem Bett, das dauert eine Stunde, bis es besser wird. Ich bin dauernd müde.",
+      "fieber": "Leicht erhöht manchmal, und nachts schwitze ich, dass ich das Nachthemd wechseln muss.",
+      "appetit_gewicht": "Ich hab keinen richtigen Appetit und drei Kilo abgenommen, ohne es zu wollen.",
+      "verdauung": "Normal.",
+      "wasserlassen": "Normal.",
+      "vorerkrankungen": "Bluthochdruck und Arthrose in beiden Knien.",
+      "operationen": "Am grauen Star links vor zwei Jahren.",
+      "medikamente": "Amlodipin 5 morgens. Für die Knie und jetzt für den Kopf Ibuprofen 400, wenn's nötig ist.",
+      "allergien": "Ja, gegen Sulfonamide, also so ein Antibiotikum. Da hatte ich Ausschlag.",
+      "rauchen": "Nie geraucht.",
+      "alkohol": "Ganz selten mal ein Glas.",
+      "beruf": "Ich war Schneiderin, jetzt seit vielen Jahren Rentnerin.",
+      "wohnen": "Ich wohne allein mit meinem Hund. Ich fahre noch selbst Auto, zum Einkaufen.",
+      "familie": "Meine Schwester hat Zucker. Sonst nichts.",
+      "sorgen": "Werde ich blind? Und darf ich jetzt noch Auto fahren?"
+    },
+    "anamneseQuestions": [
+      {
+        "id": "arteriitis-temporalis-q1",
+        "phase": "Gesprächseinstieg & Leitsymptom",
+        "doctorOptions": [
+          {
+            "text": "Guten Tag, mein Name ist … , ich bin hier die Ärztin / der Arzt. Was führt Sie heute zu uns?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorstellung mit Namen und Funktion, dann eine offene Einstiegsfrage."
+          },
+          {
+            "text": "Liegt bei Ihnen die typische Symptomatik für Riesenzellarteriitis (Arteriitis temporalis) mit Amaurosis fugax rechts vor?",
+            "isOptimal": false,
+            "feedback": "FSP-Fehler: Keine geschlossene Diagnose-Frage zu Beginn. Lassen Sie den Patienten zuerst frei erzählen."
+          }
+        ],
+        "patientResponse": "Ich hab seit zwei Wochen so schlimme Kopfschmerzen an der Schläfe, das kenn ich gar nicht von mir. Beim Kauen tut mir der Kiefer weh, und heute Morgen hab ich auf dem rechten Auge kurz alles verschwommen gesehen."
+      },
+      {
+        "id": "arteriitis-temporalis-q2",
+        "phase": "Beginn, Ort & Art der Beschwerden",
+        "doctorOptions": [
+          {
+            "text": "Seit wann haben Sie die Beschwerden genau, wo spüren Sie sie und wie fühlen sie sich an? Strahlen sie irgendwohin aus?",
+            "isOptimal": true,
+            "feedback": "Gut strukturiert: Beginn, Lokalisation, Qualität und Ausstrahlung in verständlichen Worten erfragt."
+          },
+          {
+            "text": "Beschreiben Sie Onset, Lokalisation, Qualität und Irradiation der Symptomatik.",
+            "isOptimal": false,
+            "feedback": "Zu viel Fachjargon. „Ausstrahlen“ statt „Irradiation“, „Seit wann?“ statt „Onset“."
+          }
+        ],
+        "patientResponse": "Die Kopfschmerzen seit ungefähr zwei Wochen. Das mit dem Auge war heute Morgen beim Frühstück, so fünf Minuten lang. Rechts an der Schläfe. Da ist so eine Ader, die ist ganz dick und tut weh, wenn ich drauf drücke. Bohrend, dauerhaft. Sogar beim Haarekämmen tut die Kopfhaut weh."
+      },
+      {
+        "id": "arteriitis-temporalis-q3",
+        "phase": "Intensität, Verlauf & Auslöser",
+        "doctorOptions": [
+          {
+            "text": "Wie stark sind die Beschwerden auf einer Skala von 0 bis 10? Sind sie besser oder schlimmer geworden, und gibt es etwas, das sie auslöst oder lindert?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Schmerzskala 0–10 ist im deutschen Klinikalltag Standard."
+          },
+          {
+            "text": "Ist es sehr schlimm?",
+            "isOptimal": false,
+            "feedback": "Zu unpräzise. Fragen Sie nach der Stärke auf einer Skala von 0 bis 10 und nach dem Verlauf."
+          }
+        ],
+        "patientResponse": "Sechs bis sieben von zehn. Ibuprofen hilft kaum. Es wird eher schlimmer. Und heute die Sache mit dem Auge, da hab ich richtig Angst bekommen. Beim Kauen, vor allem bei Brot oder Fleisch, krieg ich nach einer Weile Schmerzen im Kiefer und muss eine Pause machen."
+      },
+      {
+        "id": "arteriitis-temporalis-q4",
+        "phase": "Begleitsymptome & vegetative Anamnese",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie noch andere Beschwerden bemerkt, zum Beispiel Fieber, Übelkeit, Gewichtsverlust oder Probleme beim Stuhlgang oder Wasserlassen?",
+            "isOptimal": true,
+            "feedback": "Exzellent! Begleitsymptome und vegetative Anamnese in Patientensprache abgefragt."
+          },
+          {
+            "text": "Bestehen B-Symptomatik, Nausea, Emesis oder Miktionsbeschwerden?",
+            "isOptimal": false,
+            "feedback": "Fachjargon! Sagen Sie „Fieber, Nachtschweiß, Gewichtsverlust“, „Übelkeit“, „Erbrechen“ und „Probleme beim Wasserlassen“."
+          }
+        ],
+        "patientResponse": "Seit ungefähr sechs Wochen sind meine Schultern und der Nacken morgens ganz steif, ich komm kaum aus dem Bett, das dauert eine Stunde, bis es besser wird. Ich bin dauernd müde. Leicht erhöht manchmal, und nachts schwitze ich, dass ich das Nachthemd wechseln muss. Ich hab keinen richtigen Appetit und drei Kilo abgenommen, ohne es zu wollen. Normal. Normal."
+      },
+      {
+        "id": "arteriitis-temporalis-q5",
+        "phase": "Vorerkrankungen, Operationen & Medikamente",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie Vorerkrankungen oder wurden Sie schon einmal operiert? Welche Medikamente nehmen Sie regelmäßig ein, und haben Sie Allergien?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorerkrankungen, Operationen, Medikation und Allergien vollständig erfragt."
+          },
+          {
+            "text": "Welche Komorbiditäten, Voroperationen und Dauermedikation bestehen? Gibt es Unverträglichkeiten?",
+            "isOptimal": false,
+            "feedback": "„Komorbiditäten“ versteht kaum ein Patient. Sagen Sie „andere Erkrankungen“."
+          }
+        ],
+        "patientResponse": "Bluthochdruck und Arthrose in beiden Knien. Am grauen Star links vor zwei Jahren. Amlodipin 5 morgens. Für die Knie und jetzt für den Kopf Ibuprofen 400, wenn's nötig ist. Ja, gegen Sulfonamide, also so ein Antibiotikum. Da hatte ich Ausschlag."
+      },
+      {
+        "id": "arteriitis-temporalis-q6",
+        "phase": "Sozial- & Familienanamnese",
+        "doctorOptions": [
+          {
+            "text": "Darf ich Sie noch etwas Persönliches fragen: Rauchen Sie, trinken Sie Alkohol, was machen Sie beruflich, wie wohnen Sie, und gibt es Krankheiten in Ihrer Familie?",
+            "isOptimal": true,
+            "feedback": "Sehr empathisch! Sie kündigen die persönlichen Fragen an und decken Noxen, Beruf, Wohnsituation und Familie ab."
+          },
+          {
+            "text": "Wie ist Ihr Noxenabusus und gibt es eine familiäre Belastung?",
+            "isOptimal": false,
+            "feedback": "Vermeiden Sie „Noxenabusus“. Fragen Sie direkt nach Rauchen, Alkohol und Drogen."
+          }
+        ],
+        "patientResponse": "Nie geraucht. Ganz selten mal ein Glas. Ich war Schneiderin, jetzt seit vielen Jahren Rentnerin. Ich wohne allein mit meinem Hund. Ich fahre noch selbst Auto, zum Einkaufen. Meine Schwester hat Zucker. Sonst nichts."
+      },
+      {
+        "id": "arteriitis-temporalis-q7",
+        "phase": "Sorgen des Patienten & Gesprächsabschluss",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie selbst eine Vermutung oder machen Sie sich über etwas besonders Sorgen? Haben Sie noch Fragen an mich?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Sorgen des Patienten zu erfragen gehört zu einem patientenzentrierten FSP-Gespräch."
+          },
+          {
+            "text": "Gut, das war's. Sie hören dann von uns.",
+            "isOptimal": false,
+            "feedback": "Zu abrupt. Fragen Sie nach Sorgen und offenen Fragen und erklären Sie das weitere Vorgehen."
+          }
+        ],
+        "patientResponse": "Werde ich blind? Und darf ich jetzt noch Auto fahren?"
+      }
+    ],
+    "arztbriefTemplate": {
+      "prompt": "Verfassen Sie die Anamnese und Epikrise für Frau Hildegard Vogel (74 J.) mit Verdacht auf Riesenzellarteriitis (Arteriitis temporalis) mit Amaurosis fugax rechts im C1-Fachstil.",
+      "requiredTerms": [
+        "Riesenzellarteriitis (Arteriitis temporalis) mit Amaurosis fugax rechts",
+        "Arterielle",
+        "Polymyalgia rheumatica (isoliert)",
+        "Anamnese",
+        "Vitalparameter"
+      ],
+      "sampleSolution": "Frau Hildegard Vogel (74 J., Rentnerin (ehem. Schneiderin)) stellte sich mit folgender aktueller Anamnese vor: Seit 2 Wochen neu aufgetretene, bohrende Kopfschmerzen temporal rechts, Kopfhaut beim Kämmen schmerzempfindlich, Kauschmerzen (Claudicatio masticatoria). Heute Morgen für ca. 5 Minuten verschwommenes Sehen rechts. Seit 6 Wochen Morgensteifigkeit und Schmerzen in Schultern und Nacken, Abgeschlagenheit, 3 kg Gewichtsverlust, Nachtschweiß. An Vorerkrankungen seien bekannt: Arterielle Hypertonie, Gonarthrose beidseits. Die Dauermedikation umfasse: Amlodipin 5 mg 1-0-0, Ibuprofen 400 mg bei Bedarf. Allergien: Sulfonamide (Exanthem). Sozial- und Familienanamnese: Nichtraucherin, Alkohol selten. Verwitwet, lebt mit Hund allein in einer Wohnung, fährt noch Auto. Schwester mit Diabetes mellitus Typ 2. Klinische Untersuchung: A. temporalis rechts verhärtet, geschlängelt, druckschmerzhaft, Pulsation abgeschwächt. Visus rechts 0,8, links 1,0. Neurologisch sonst unauffällig. Schulterbeweglichkeit schmerzhaft eingeschränkt. Zusammenfassend ergibt sich der dringende Verdacht auf: Riesenzellarteriitis (Arteriitis temporalis) mit Amaurosis fugax rechts (Differenzialdiagnosen: Polymyalgia rheumatica (isoliert), Glaukomanfall, Trigeminusneuralgie)."
+    },
+    "isbarSteps": [
+      {
+        "step": "I",
+        "label": "Identify (Identifikation)",
+        "guidance": "Nennen Sie Name, Alter und aktuellen Bereich des Patienten / der Patientin.",
+        "sampleSpeech": "Ich übergebe Frau Hildegard Vogel, 74 Jahre alt, aktuell in der Aufnahme (Rheumatologie)."
+      },
+      {
+        "step": "S",
+        "label": "Situation (Aktuelle Situation)",
+        "guidance": "Benennen Sie Leitsymptom und Hauptverdachtsdiagnose.",
+        "sampleSpeech": "Vorstellungsgrund: Seit 2 Wochen neu aufgetretene, bohrende Kopfschmerzen temporal rechts, Kopfhaut beim Kämmen schmerzempfindlich, Kauschmerzen (Claudicatio masticatoria). Heute Morgen für ca. 5 Minuten verschwommenes Sehen rechts. Seit 6 Wochen Morgensteifigkeit und Schmerzen in Schultern und Nacken, Abgeschlagenheit, 3 kg Gewichtsverlust, Nachtschweiß. Es besteht der dringende Verdacht auf Riesenzellarteriitis (Arteriitis temporalis) mit Amaurosis fugax rechts."
+      },
+      {
+        "step": "B",
+        "label": "Background (Klinischer Hintergrund)",
+        "guidance": "Fassen Sie Vorerkrankungen, Dauermedikation und Allergien zusammen.",
+        "sampleSpeech": "Anamnestisch bekannt sind: Arterielle Hypertonie, Gonarthrose beidseits. Medikation: Amlodipin 5 mg 1-0-0, Ibuprofen 400 mg bei Bedarf. Allergien: Sulfonamide (Exanthem)."
+      },
+      {
+        "step": "A",
+        "label": "Assessment (Aktuelle Einschätzung & Vitalparameter)",
+        "guidance": "Berichten Sie über Vitalparameter, Untersuchungsbefund und Labor.",
+        "sampleSpeech": "Vitalparameter: RR 145/80 mmHg, HF 84 /min, Temp 37,5 °C, SpO₂ 97 % (Raumluft). A. temporalis rechts verhärtet, geschlängelt, druckschmerzhaft, Pulsation abgeschwächt. Visus rechts 0,8, links 1,0. Neurologisch sonst unauffällig. Schulterbeweglichkeit schmerzhaft eingeschränkt. Labor: BSG: 86 mm/h (erhöht), CRP: 74 mg/l (erhöht), Hb: 11,2 g/dl (erniedrigt), Thrombozyten: 480 /nl (erhöht)"
+      },
+      {
+        "step": "R",
+        "label": "Recommendation (Empfehlung & weiteres Vorgehen)",
+        "guidance": "Schlagen Sie die weitere Diagnostik und Therapie unter Berücksichtigung der Differenzialdiagnosen vor.",
+        "sampleSpeech": "Ich empfehle die zielgerichtete Weiterbehandlung bezüglich Riesenzellarteriitis (Arteriitis temporalis) mit Amaurosis fugax rechts sowie den Ausschluss der wichtigsten Differenzialdiagnosen (Polymyalgia rheumatica (isoliert), Glaukomanfall, Trigeminusneuralgie)."
+      }
+    ]
+  },
+  {
+    "id": "akuter-arterieller-extremitaetenverschluss",
+    "title": "Akuter arterieller Verschluss des Beins",
+    "specialty": "Gefäßchirurgie",
+    "category": "Gefäßchirurgie",
+    "difficulty": "B2",
+    "patientName": "Herr Manfred Schröder",
+    "patientAge": 79,
+    "chiefComplaint": "Mein linkes Bein ist seit dem Mittagessen auf einmal eiskalt und tut höllisch weh. Es fühlt sich ganz taub an, ich kann die Zehen kaum bewegen.",
+    "patient": {
+      "name": "Herr Manfred Schröder",
+      "age": 79,
+      "gender": "m",
+      "occupation": "Rentner (ehem. Landwirt)",
+      "chiefComplaint": "Mein linkes Bein ist seit dem Mittagessen auf einmal eiskalt und tut höllisch weh. Es fühlt sich ganz taub an, ich kann die Zehen kaum bewegen.",
+      "vitalSigns": {
+        "bp": "150/85 mmHg",
+        "hr": "118 /min",
+        "temp": "36,5 °C",
+        "spo2": "95 % (Raumluft)"
+      },
+      "historyDetails": "Seit ca. 3 Stunden plötzlich einsetzende, starke Schmerzen im linken Bein, Kältegefühl, Blässe, Taubheitsgefühl und Schwäche im Fuß. Vorher keine Schmerzen beim Gehen. Vor 4 Wochen Neueinstellung auf einen Blutverdünner empfohlen, Rezept nicht eingelöst. Vorerkrankungen: Vorhofflimmern (Erstdiagnose vor 4 Wochen), Arterielle Hypertonie, Chronische Niereninsuffizienz Stadium 3a. Medikation: Bisoprolol 2,5 mg 1-0-0, Ramipril 2,5 mg 1-0-0, Apixaban 5 mg 1-0-1 (verordnet, nie eingenommen). Allergien: Kontrastmittel (Urtikaria). Sozialanamnese: Ex-Raucher (40 pack years, seit 10 Jahren rauchfrei). Alkohol: ein Schnaps am Abend. Verheiratet, lebt mit Ehefrau auf dem eigenen Hof. Familienanamnese: Mutter mit Schlaganfall. Körperliche Untersuchung: Linkes Bein ab Oberschenkelmitte blass und kalt, Pulse ab Leiste links nicht tastbar, rechts tastbar. Sensibilität am Fuß vermindert, Zehenhebung abgeschwächt (6 P nach Pratt: Pain, Pallor, Paresthesia, Pulselessness, Paralysis, Prostration). Herz: absolute Arrhythmie. Labor: Kreatinin: 1,5 mg/dl (erhöht), eGFR: 44 ml/min/1,73 m² (erniedrigt), CK: 420 U/l (erhöht), Laktat: 2,8 mmol/l (erhöht), Kalium: 4,8 mmol/l."
+    },
+    "patientDialogue": {
+      "beschwerden": "Mein linkes Bein ist seit dem Mittagessen auf einmal eiskalt und tut höllisch weh. Es fühlt sich ganz taub an, ich kann die Zehen kaum bewegen.",
+      "beginn": "Ganz plötzlich, so um zwölf beim Mittagessen. Jetzt ist es drei, also seit drei Stunden.",
+      "lokalisation": "Das ganze linke Bein ab dem Oberschenkel, am schlimmsten unten am Fuß.",
+      "charakter": "Wie ein Peitschenhieb ging's los, jetzt ein heftiger Dauerschmerz. Und es kribbelt und ist taub.",
+      "intensitaet": "Acht von zehn.",
+      "verlauf": "Es wird nicht besser, der Fuß wird immer kälter und ganz weiß.",
+      "ausloeser": "Ich hab einfach am Tisch gesessen. Vorher hatte ich nie Schmerzen beim Laufen, ich lauf jeden Tag über den Hof.",
+      "begleitsymptome": "Das Herz rast manchmal so unregelmäßig. Brustschmerzen hab ich keine.",
+      "fieber": "Nein.",
+      "appetit_gewicht": "Normal.",
+      "verdauung": "Normal.",
+      "wasserlassen": "Normal, nur nachts einmal.",
+      "vorerkrankungen": "Vor vier Wochen hat der Hausarzt Vorhofflimmern festgestellt. Dann Bluthochdruck, und die Nieren sind nicht mehr so gut.",
+      "operationen": "Blinddarm als Junge.",
+      "medikamente": "Bisoprolol 2,5 und Ramipril 2,5, beides morgens. Der Arzt hat mir auch so einen Blutverdünner aufgeschrieben, Apixaban, aber ehrlich gesagt hab ich das Rezept nicht eingelöst. Ich hatte Angst vor Blutungen.",
+      "allergien": "Beim Kontrastmittel hatte ich mal Quaddeln, beim CT vor ein paar Jahren.",
+      "rauchen": "Ich hab vor zehn Jahren aufgehört. Vorher 40 Jahre, eine Schachtel am Tag.",
+      "alkohol": "Abends einen Schnaps.",
+      "beruf": "Landwirt, jetzt in Rente, aber ich helf noch auf dem Hof.",
+      "wohnen": "Mit meiner Frau auf unserem Hof. Der Sohn hat den Betrieb übernommen.",
+      "familie": "Meine Mutter hatte einen Schlaganfall.",
+      "sorgen": "Muss das Bein ab? Das wäre das Schlimmste für mich."
+    },
+    "anamneseQuestions": [
+      {
+        "id": "akuter-arterieller-extremitaetenverschluss-q1",
+        "phase": "Gesprächseinstieg & Leitsymptom",
+        "doctorOptions": [
+          {
+            "text": "Guten Tag, mein Name ist … , ich bin hier die Ärztin / der Arzt. Was führt Sie heute zu uns?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorstellung mit Namen und Funktion, dann eine offene Einstiegsfrage."
+          },
+          {
+            "text": "Liegt bei Ihnen die typische Symptomatik für Akuter embolischer Verschluss der A. femoralis communis links bei Vorhofflimmern ohne Antikoagulation vor?",
+            "isOptimal": false,
+            "feedback": "FSP-Fehler: Keine geschlossene Diagnose-Frage zu Beginn. Lassen Sie den Patienten zuerst frei erzählen."
+          }
+        ],
+        "patientResponse": "Mein linkes Bein ist seit dem Mittagessen auf einmal eiskalt und tut höllisch weh. Es fühlt sich ganz taub an, ich kann die Zehen kaum bewegen."
+      },
+      {
+        "id": "akuter-arterieller-extremitaetenverschluss-q2",
+        "phase": "Beginn, Ort & Art der Beschwerden",
+        "doctorOptions": [
+          {
+            "text": "Seit wann haben Sie die Beschwerden genau, wo spüren Sie sie und wie fühlen sie sich an? Strahlen sie irgendwohin aus?",
+            "isOptimal": true,
+            "feedback": "Gut strukturiert: Beginn, Lokalisation, Qualität und Ausstrahlung in verständlichen Worten erfragt."
+          },
+          {
+            "text": "Beschreiben Sie Onset, Lokalisation, Qualität und Irradiation der Symptomatik.",
+            "isOptimal": false,
+            "feedback": "Zu viel Fachjargon. „Ausstrahlen“ statt „Irradiation“, „Seit wann?“ statt „Onset“."
+          }
+        ],
+        "patientResponse": "Ganz plötzlich, so um zwölf beim Mittagessen. Jetzt ist es drei, also seit drei Stunden. Das ganze linke Bein ab dem Oberschenkel, am schlimmsten unten am Fuß. Wie ein Peitschenhieb ging's los, jetzt ein heftiger Dauerschmerz. Und es kribbelt und ist taub."
+      },
+      {
+        "id": "akuter-arterieller-extremitaetenverschluss-q3",
+        "phase": "Intensität, Verlauf & Auslöser",
+        "doctorOptions": [
+          {
+            "text": "Wie stark sind die Beschwerden auf einer Skala von 0 bis 10? Sind sie besser oder schlimmer geworden, und gibt es etwas, das sie auslöst oder lindert?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Schmerzskala 0–10 ist im deutschen Klinikalltag Standard."
+          },
+          {
+            "text": "Ist es sehr schlimm?",
+            "isOptimal": false,
+            "feedback": "Zu unpräzise. Fragen Sie nach der Stärke auf einer Skala von 0 bis 10 und nach dem Verlauf."
+          }
+        ],
+        "patientResponse": "Acht von zehn. Es wird nicht besser, der Fuß wird immer kälter und ganz weiß. Ich hab einfach am Tisch gesessen. Vorher hatte ich nie Schmerzen beim Laufen, ich lauf jeden Tag über den Hof."
+      },
+      {
+        "id": "akuter-arterieller-extremitaetenverschluss-q4",
+        "phase": "Begleitsymptome & vegetative Anamnese",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie noch andere Beschwerden bemerkt, zum Beispiel Fieber, Übelkeit, Gewichtsverlust oder Probleme beim Stuhlgang oder Wasserlassen?",
+            "isOptimal": true,
+            "feedback": "Exzellent! Begleitsymptome und vegetative Anamnese in Patientensprache abgefragt."
+          },
+          {
+            "text": "Bestehen B-Symptomatik, Nausea, Emesis oder Miktionsbeschwerden?",
+            "isOptimal": false,
+            "feedback": "Fachjargon! Sagen Sie „Fieber, Nachtschweiß, Gewichtsverlust“, „Übelkeit“, „Erbrechen“ und „Probleme beim Wasserlassen“."
+          }
+        ],
+        "patientResponse": "Das Herz rast manchmal so unregelmäßig. Brustschmerzen hab ich keine. Nein. Normal. Normal. Normal, nur nachts einmal."
+      },
+      {
+        "id": "akuter-arterieller-extremitaetenverschluss-q5",
+        "phase": "Vorerkrankungen, Operationen & Medikamente",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie Vorerkrankungen oder wurden Sie schon einmal operiert? Welche Medikamente nehmen Sie regelmäßig ein, und haben Sie Allergien?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorerkrankungen, Operationen, Medikation und Allergien vollständig erfragt."
+          },
+          {
+            "text": "Welche Komorbiditäten, Voroperationen und Dauermedikation bestehen? Gibt es Unverträglichkeiten?",
+            "isOptimal": false,
+            "feedback": "„Komorbiditäten“ versteht kaum ein Patient. Sagen Sie „andere Erkrankungen“."
+          }
+        ],
+        "patientResponse": "Vor vier Wochen hat der Hausarzt Vorhofflimmern festgestellt. Dann Bluthochdruck, und die Nieren sind nicht mehr so gut. Blinddarm als Junge. Bisoprolol 2,5 und Ramipril 2,5, beides morgens. Der Arzt hat mir auch so einen Blutverdünner aufgeschrieben, Apixaban, aber ehrlich gesagt hab ich das Rezept nicht eingelöst. Ich hatte Angst vor Blutungen. Beim Kontrastmittel hatte ich mal Quaddeln, beim CT vor ein paar Jahren."
+      },
+      {
+        "id": "akuter-arterieller-extremitaetenverschluss-q6",
+        "phase": "Sozial- & Familienanamnese",
+        "doctorOptions": [
+          {
+            "text": "Darf ich Sie noch etwas Persönliches fragen: Rauchen Sie, trinken Sie Alkohol, was machen Sie beruflich, wie wohnen Sie, und gibt es Krankheiten in Ihrer Familie?",
+            "isOptimal": true,
+            "feedback": "Sehr empathisch! Sie kündigen die persönlichen Fragen an und decken Noxen, Beruf, Wohnsituation und Familie ab."
+          },
+          {
+            "text": "Wie ist Ihr Noxenabusus und gibt es eine familiäre Belastung?",
+            "isOptimal": false,
+            "feedback": "Vermeiden Sie „Noxenabusus“. Fragen Sie direkt nach Rauchen, Alkohol und Drogen."
+          }
+        ],
+        "patientResponse": "Ich hab vor zehn Jahren aufgehört. Vorher 40 Jahre, eine Schachtel am Tag. Abends einen Schnaps. Landwirt, jetzt in Rente, aber ich helf noch auf dem Hof. Mit meiner Frau auf unserem Hof. Der Sohn hat den Betrieb übernommen. Meine Mutter hatte einen Schlaganfall."
+      },
+      {
+        "id": "akuter-arterieller-extremitaetenverschluss-q7",
+        "phase": "Sorgen des Patienten & Gesprächsabschluss",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie selbst eine Vermutung oder machen Sie sich über etwas besonders Sorgen? Haben Sie noch Fragen an mich?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Sorgen des Patienten zu erfragen gehört zu einem patientenzentrierten FSP-Gespräch."
+          },
+          {
+            "text": "Gut, das war's. Sie hören dann von uns.",
+            "isOptimal": false,
+            "feedback": "Zu abrupt. Fragen Sie nach Sorgen und offenen Fragen und erklären Sie das weitere Vorgehen."
+          }
+        ],
+        "patientResponse": "Muss das Bein ab? Das wäre das Schlimmste für mich."
+      }
+    ],
+    "arztbriefTemplate": {
+      "prompt": "Verfassen Sie die Anamnese und Epikrise für Herr Manfred Schröder (79 J.) mit Verdacht auf Akuter embolischer Verschluss der A. femoralis communis links bei Vorhofflimmern ohne Antikoagulation im C1-Fachstil.",
+      "requiredTerms": [
+        "Akuter embolischer Verschluss der A. femoralis communis links bei Vorhofflimmern ohne Antikoagulation",
+        "Vorhofflimmern",
+        "Arterielle Thrombose bei vorbestehender pAVK",
+        "Anamnese",
+        "Vitalparameter"
+      ],
+      "sampleSolution": "Herr Manfred Schröder (79 J., Rentner (ehem. Landwirt)) stellte sich mit folgender aktueller Anamnese vor: Seit ca. 3 Stunden plötzlich einsetzende, starke Schmerzen im linken Bein, Kältegefühl, Blässe, Taubheitsgefühl und Schwäche im Fuß. Vorher keine Schmerzen beim Gehen. Vor 4 Wochen Neueinstellung auf einen Blutverdünner empfohlen, Rezept nicht eingelöst. An Vorerkrankungen seien bekannt: Vorhofflimmern (Erstdiagnose vor 4 Wochen), Arterielle Hypertonie, Chronische Niereninsuffizienz Stadium 3a. Die Dauermedikation umfasse: Bisoprolol 2,5 mg 1-0-0, Ramipril 2,5 mg 1-0-0, Apixaban 5 mg 1-0-1 (verordnet, nie eingenommen). Allergien: Kontrastmittel (Urtikaria). Sozial- und Familienanamnese: Ex-Raucher (40 pack years, seit 10 Jahren rauchfrei). Alkohol: ein Schnaps am Abend. Verheiratet, lebt mit Ehefrau auf dem eigenen Hof. Mutter mit Schlaganfall. Klinische Untersuchung: Linkes Bein ab Oberschenkelmitte blass und kalt, Pulse ab Leiste links nicht tastbar, rechts tastbar. Sensibilität am Fuß vermindert, Zehenhebung abgeschwächt (6 P nach Pratt: Pain, Pallor, Paresthesia, Pulselessness, Paralysis, Prostration). Herz: absolute Arrhythmie. Zusammenfassend ergibt sich der dringende Verdacht auf: Akuter embolischer Verschluss der A. femoralis communis links bei Vorhofflimmern ohne Antikoagulation (Differenzialdiagnosen: Arterielle Thrombose bei vorbestehender pAVK, Phlegmasia coerulea dolens, Aortendissektion mit Beinischämie)."
+    },
+    "isbarSteps": [
+      {
+        "step": "I",
+        "label": "Identify (Identifikation)",
+        "guidance": "Nennen Sie Name, Alter und aktuellen Bereich des Patienten / der Patientin.",
+        "sampleSpeech": "Ich übergebe Herr Manfred Schröder, 79 Jahre alt, aktuell in der Aufnahme (Gefäßchirurgie)."
+      },
+      {
+        "step": "S",
+        "label": "Situation (Aktuelle Situation)",
+        "guidance": "Benennen Sie Leitsymptom und Hauptverdachtsdiagnose.",
+        "sampleSpeech": "Vorstellungsgrund: Seit ca. 3 Stunden plötzlich einsetzende, starke Schmerzen im linken Bein, Kältegefühl, Blässe, Taubheitsgefühl und Schwäche im Fuß. Vorher keine Schmerzen beim Gehen. Vor 4 Wochen Neueinstellung auf einen Blutverdünner empfohlen, Rezept nicht eingelöst. Es besteht der dringende Verdacht auf Akuter embolischer Verschluss der A. femoralis communis links bei Vorhofflimmern ohne Antikoagulation."
+      },
+      {
+        "step": "B",
+        "label": "Background (Klinischer Hintergrund)",
+        "guidance": "Fassen Sie Vorerkrankungen, Dauermedikation und Allergien zusammen.",
+        "sampleSpeech": "Anamnestisch bekannt sind: Vorhofflimmern (Erstdiagnose vor 4 Wochen), Arterielle Hypertonie, Chronische Niereninsuffizienz Stadium 3a. Medikation: Bisoprolol 2,5 mg 1-0-0, Ramipril 2,5 mg 1-0-0, Apixaban 5 mg 1-0-1 (verordnet, nie eingenommen). Allergien: Kontrastmittel (Urtikaria)."
+      },
+      {
+        "step": "A",
+        "label": "Assessment (Aktuelle Einschätzung & Vitalparameter)",
+        "guidance": "Berichten Sie über Vitalparameter, Untersuchungsbefund und Labor.",
+        "sampleSpeech": "Vitalparameter: RR 150/85 mmHg, HF 118 /min, Temp 36,5 °C, SpO₂ 95 % (Raumluft). Linkes Bein ab Oberschenkelmitte blass und kalt, Pulse ab Leiste links nicht tastbar, rechts tastbar. Sensibilität am Fuß vermindert, Zehenhebung abgeschwächt (6 P nach Pratt: Pain, Pallor, Paresthesia, Pulselessness, Paralysis, Prostration). Herz: absolute Arrhythmie. Labor: Kreatinin: 1,5 mg/dl (erhöht), eGFR: 44 ml/min/1,73 m² (erniedrigt), CK: 420 U/l (erhöht), Laktat: 2,8 mmol/l (erhöht), Kalium: 4,8 mmol/l"
+      },
+      {
+        "step": "R",
+        "label": "Recommendation (Empfehlung & weiteres Vorgehen)",
+        "guidance": "Schlagen Sie die weitere Diagnostik und Therapie unter Berücksichtigung der Differenzialdiagnosen vor.",
+        "sampleSpeech": "Ich empfehle die zielgerichtete Weiterbehandlung bezüglich Akuter embolischer Verschluss der A. femoralis communis links bei Vorhofflimmern ohne Antikoagulation sowie den Ausschluss der wichtigsten Differenzialdiagnosen (Arterielle Thrombose bei vorbestehender pAVK, Phlegmasia coerulea dolens, Aortendissektion mit Beinischämie)."
+      }
+    ]
+  },
+  {
+    "id": "multiple-sklerose-optikusneuritis",
+    "title": "Multiple Sklerose (Erstmanifestation als Optikusneuritis)",
+    "specialty": "Neurologie",
+    "category": "Neurologie",
+    "difficulty": "C1",
+    "patientName": "Frau Anna Richter",
+    "patientAge": 28,
+    "chiefComplaint": "Ich sehe seit vier Tagen auf dem linken Auge wie durch Milchglas, und wenn ich die Augen bewege, tut es dahinter weh. Die Farben sind irgendwie so blass.",
+    "patient": {
+      "name": "Frau Anna Richter",
+      "age": 28,
+      "gender": "w",
+      "occupation": "Grafikdesignerin",
+      "chiefComplaint": "Ich sehe seit vier Tagen auf dem linken Auge wie durch Milchglas, und wenn ich die Augen bewege, tut es dahinter weh. Die Farben sind irgendwie so blass.",
+      "vitalSigns": {
+        "bp": "115/70 mmHg",
+        "hr": "72 /min",
+        "temp": "36,6 °C",
+        "spo2": "99 % (Raumluft)"
+      },
+      "historyDetails": "Seit 4 Tagen subakute Sehverschlechterung links mit Schmerzen bei Augenbewegung, Farbentsättigung (Rot wirkt blass). Vor einem Jahr für ca. 3 Wochen Kribbeln und Taubheit im rechten Bein, damals nicht ärztlich abgeklärt. Bei heißem Duschen Verschlechterung des Sehens (Uhthoff-Phänomen). Vorerkrankungen: Keine. Medikation: Orale Kontrazeption (Desogestrel). Allergien: Hausstaubmilben. Sozialanamnese: Nichtraucherin, Alkohol gelegentlich. Lebt mit Partner zusammen, Kinderwunsch in den nächsten 2 Jahren. Arbeitet viel am Bildschirm. Familienanamnese: Cousine mit Multipler Sklerose. Körperliche Untersuchung: Visus links 0,3, rechts 1,0. Relatives afferentes Pupillendefizit links. Fundoskopie: Papille links unauffällig. Neurologisch: gesteigerte Muskeleigenreflexe rechts betont, Babinski negativ. Labor: CRP: < 5 mg/l, Aquaporin-4-Antikörper: ausstehend, Liquor: geplant (oligoklonale Banden)."
+    },
+    "patientDialogue": {
+      "beschwerden": "Ich sehe seit vier Tagen auf dem linken Auge wie durch Milchglas, und wenn ich die Augen bewege, tut es dahinter weh. Die Farben sind irgendwie so blass.",
+      "beginn": "Vor vier Tagen, beim Arbeiten am Bildschirm hab ich gemerkt, dass links alles verschwommen ist. Das kam über einen Tag.",
+      "lokalisation": "Nur das linke Auge. Der Schmerz ist hinter dem Auge.",
+      "charakter": "Ein dumpfer Schmerz, wenn ich nach links oder rechts schaue. Und Rot sieht auf dem linken Auge so verwaschen aus.",
+      "intensitaet": "Der Schmerz so drei, vier von zehn. Das Sehen ist schlimmer, ich kann links kaum noch lesen.",
+      "verlauf": "In den ersten zwei Tagen schlechter geworden, seitdem gleich.",
+      "ausloeser": "Nach dem heißen Duschen oder beim Sport ist es noch schlechter, dann wird es wieder etwas besser.",
+      "begleitsymptome": "Doppelbilder hab ich nicht. Vor einem Jahr hatte ich mal drei Wochen lang so ein Kribbeln und Taubheit im rechten Bein. Ich war damals nicht beim Arzt, das ging von allein weg. Ich bin auch schneller müde als früher.",
+      "fieber": "Nein.",
+      "appetit_gewicht": "Normal.",
+      "verdauung": "Normal.",
+      "wasserlassen": "Manchmal muss ich ganz plötzlich und dringend aufs Klo, das hab ich seit ein paar Monaten. Brennen nicht.",
+      "gyn": "Ich nehm die Pille, Desogestrel. Wir wollen aber in ein, zwei Jahren Kinder.",
+      "vorerkrankungen": "Nein, ich war eigentlich immer gesund.",
+      "operationen": "Keine.",
+      "medikamente": "Nur die Pille.",
+      "allergien": "Hausstaubmilben, sonst nichts.",
+      "rauchen": "Nein.",
+      "alkohol": "Am Wochenende ein Glas Wein.",
+      "drogen": "Nein.",
+      "beruf": "Ich bin Grafikdesignerin, den ganzen Tag am Bildschirm. Gerade kann ich kaum arbeiten.",
+      "wohnen": "Mit meinem Freund zusammen.",
+      "familie": "Meine Cousine hat MS.",
+      "sorgen": "Ehrlich gesagt hab ich schon gegoogelt. Hab ich auch MS wie meine Cousine? Kann ich dann noch Kinder kriegen?"
+    },
+    "anamneseQuestions": [
+      {
+        "id": "multiple-sklerose-optikusneuritis-q1",
+        "phase": "Gesprächseinstieg & Leitsymptom",
+        "doctorOptions": [
+          {
+            "text": "Guten Tag, mein Name ist … , ich bin hier die Ärztin / der Arzt. Was führt Sie heute zu uns?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorstellung mit Namen und Funktion, dann eine offene Einstiegsfrage."
+          },
+          {
+            "text": "Liegt bei Ihnen die typische Symptomatik für Retrobulbärneuritis links, V. a. Erstmanifestation einer schubförmig remittierenden Multiplen Sklerose vor?",
+            "isOptimal": false,
+            "feedback": "FSP-Fehler: Keine geschlossene Diagnose-Frage zu Beginn. Lassen Sie den Patienten zuerst frei erzählen."
+          }
+        ],
+        "patientResponse": "Ich sehe seit vier Tagen auf dem linken Auge wie durch Milchglas, und wenn ich die Augen bewege, tut es dahinter weh. Die Farben sind irgendwie so blass."
+      },
+      {
+        "id": "multiple-sklerose-optikusneuritis-q2",
+        "phase": "Beginn, Ort & Art der Beschwerden",
+        "doctorOptions": [
+          {
+            "text": "Seit wann haben Sie die Beschwerden genau, wo spüren Sie sie und wie fühlen sie sich an? Strahlen sie irgendwohin aus?",
+            "isOptimal": true,
+            "feedback": "Gut strukturiert: Beginn, Lokalisation, Qualität und Ausstrahlung in verständlichen Worten erfragt."
+          },
+          {
+            "text": "Beschreiben Sie Onset, Lokalisation, Qualität und Irradiation der Symptomatik.",
+            "isOptimal": false,
+            "feedback": "Zu viel Fachjargon. „Ausstrahlen“ statt „Irradiation“, „Seit wann?“ statt „Onset“."
+          }
+        ],
+        "patientResponse": "Vor vier Tagen, beim Arbeiten am Bildschirm hab ich gemerkt, dass links alles verschwommen ist. Das kam über einen Tag. Nur das linke Auge. Der Schmerz ist hinter dem Auge. Ein dumpfer Schmerz, wenn ich nach links oder rechts schaue. Und Rot sieht auf dem linken Auge so verwaschen aus."
+      },
+      {
+        "id": "multiple-sklerose-optikusneuritis-q3",
+        "phase": "Intensität, Verlauf & Auslöser",
+        "doctorOptions": [
+          {
+            "text": "Wie stark sind die Beschwerden auf einer Skala von 0 bis 10? Sind sie besser oder schlimmer geworden, und gibt es etwas, das sie auslöst oder lindert?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Schmerzskala 0–10 ist im deutschen Klinikalltag Standard."
+          },
+          {
+            "text": "Ist es sehr schlimm?",
+            "isOptimal": false,
+            "feedback": "Zu unpräzise. Fragen Sie nach der Stärke auf einer Skala von 0 bis 10 und nach dem Verlauf."
+          }
+        ],
+        "patientResponse": "Der Schmerz so drei, vier von zehn. Das Sehen ist schlimmer, ich kann links kaum noch lesen. In den ersten zwei Tagen schlechter geworden, seitdem gleich. Nach dem heißen Duschen oder beim Sport ist es noch schlechter, dann wird es wieder etwas besser."
+      },
+      {
+        "id": "multiple-sklerose-optikusneuritis-q4",
+        "phase": "Begleitsymptome & vegetative Anamnese",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie noch andere Beschwerden bemerkt, zum Beispiel Fieber, Übelkeit, Gewichtsverlust oder Probleme beim Stuhlgang oder Wasserlassen?",
+            "isOptimal": true,
+            "feedback": "Exzellent! Begleitsymptome und vegetative Anamnese in Patientensprache abgefragt."
+          },
+          {
+            "text": "Bestehen B-Symptomatik, Nausea, Emesis oder Miktionsbeschwerden?",
+            "isOptimal": false,
+            "feedback": "Fachjargon! Sagen Sie „Fieber, Nachtschweiß, Gewichtsverlust“, „Übelkeit“, „Erbrechen“ und „Probleme beim Wasserlassen“."
+          }
+        ],
+        "patientResponse": "Doppelbilder hab ich nicht. Vor einem Jahr hatte ich mal drei Wochen lang so ein Kribbeln und Taubheit im rechten Bein. Ich war damals nicht beim Arzt, das ging von allein weg. Ich bin auch schneller müde als früher. Nein. Normal. Normal. Manchmal muss ich ganz plötzlich und dringend aufs Klo, das hab ich seit ein paar Monaten. Brennen nicht."
+      },
+      {
+        "id": "multiple-sklerose-optikusneuritis-q5",
+        "phase": "Vorerkrankungen, Operationen & Medikamente",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie Vorerkrankungen oder wurden Sie schon einmal operiert? Welche Medikamente nehmen Sie regelmäßig ein, und haben Sie Allergien?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorerkrankungen, Operationen, Medikation und Allergien vollständig erfragt."
+          },
+          {
+            "text": "Welche Komorbiditäten, Voroperationen und Dauermedikation bestehen? Gibt es Unverträglichkeiten?",
+            "isOptimal": false,
+            "feedback": "„Komorbiditäten“ versteht kaum ein Patient. Sagen Sie „andere Erkrankungen“."
+          }
+        ],
+        "patientResponse": "Nein, ich war eigentlich immer gesund. Keine. Nur die Pille. Hausstaubmilben, sonst nichts."
+      },
+      {
+        "id": "multiple-sklerose-optikusneuritis-q6",
+        "phase": "Sozial- & Familienanamnese",
+        "doctorOptions": [
+          {
+            "text": "Darf ich Sie noch etwas Persönliches fragen: Rauchen Sie, trinken Sie Alkohol, was machen Sie beruflich, wie wohnen Sie, und gibt es Krankheiten in Ihrer Familie?",
+            "isOptimal": true,
+            "feedback": "Sehr empathisch! Sie kündigen die persönlichen Fragen an und decken Noxen, Beruf, Wohnsituation und Familie ab."
+          },
+          {
+            "text": "Wie ist Ihr Noxenabusus und gibt es eine familiäre Belastung?",
+            "isOptimal": false,
+            "feedback": "Vermeiden Sie „Noxenabusus“. Fragen Sie direkt nach Rauchen, Alkohol und Drogen."
+          }
+        ],
+        "patientResponse": "Nein. Am Wochenende ein Glas Wein. Nein. Ich bin Grafikdesignerin, den ganzen Tag am Bildschirm. Gerade kann ich kaum arbeiten. Mit meinem Freund zusammen. Meine Cousine hat MS. Ich nehm die Pille, Desogestrel. Wir wollen aber in ein, zwei Jahren Kinder."
+      },
+      {
+        "id": "multiple-sklerose-optikusneuritis-q7",
+        "phase": "Sorgen des Patienten & Gesprächsabschluss",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie selbst eine Vermutung oder machen Sie sich über etwas besonders Sorgen? Haben Sie noch Fragen an mich?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Sorgen des Patienten zu erfragen gehört zu einem patientenzentrierten FSP-Gespräch."
+          },
+          {
+            "text": "Gut, das war's. Sie hören dann von uns.",
+            "isOptimal": false,
+            "feedback": "Zu abrupt. Fragen Sie nach Sorgen und offenen Fragen und erklären Sie das weitere Vorgehen."
+          }
+        ],
+        "patientResponse": "Ehrlich gesagt hab ich schon gegoogelt. Hab ich auch MS wie meine Cousine? Kann ich dann noch Kinder kriegen?"
+      }
+    ],
+    "arztbriefTemplate": {
+      "prompt": "Verfassen Sie die Anamnese und Epikrise für Frau Anna Richter (28 J.) mit Verdacht auf Retrobulbärneuritis links, V. a. Erstmanifestation einer schubförmig remittierenden Multiplen Sklerose im C1-Fachstil.",
+      "requiredTerms": [
+        "Retrobulbärneuritis links, V. a. Erstmanifestation einer schubförmig remittierenden Multiplen Sklerose",
+        "Keine",
+        "Neuromyelitis-optica-Spektrum-Erkrankung",
+        "Anamnese",
+        "Vitalparameter"
+      ],
+      "sampleSolution": "Frau Anna Richter (28 J., Grafikdesignerin) stellte sich mit folgender aktueller Anamnese vor: Seit 4 Tagen subakute Sehverschlechterung links mit Schmerzen bei Augenbewegung, Farbentsättigung (Rot wirkt blass). Vor einem Jahr für ca. 3 Wochen Kribbeln und Taubheit im rechten Bein, damals nicht ärztlich abgeklärt. Bei heißem Duschen Verschlechterung des Sehens (Uhthoff-Phänomen). An Vorerkrankungen seien bekannt: Keine. Die Dauermedikation umfasse: Orale Kontrazeption (Desogestrel). Allergien: Hausstaubmilben. Sozial- und Familienanamnese: Nichtraucherin, Alkohol gelegentlich. Lebt mit Partner zusammen, Kinderwunsch in den nächsten 2 Jahren. Arbeitet viel am Bildschirm. Cousine mit Multipler Sklerose. Klinische Untersuchung: Visus links 0,3, rechts 1,0. Relatives afferentes Pupillendefizit links. Fundoskopie: Papille links unauffällig. Neurologisch: gesteigerte Muskeleigenreflexe rechts betont, Babinski negativ. Zusammenfassend ergibt sich der dringende Verdacht auf: Retrobulbärneuritis links, V. a. Erstmanifestation einer schubförmig remittierenden Multiplen Sklerose (Differenzialdiagnosen: Neuromyelitis-optica-Spektrum-Erkrankung, Anteriore ischämische Optikusneuropathie, Raumforderung im Bereich des N. opticus)."
+    },
+    "isbarSteps": [
+      {
+        "step": "I",
+        "label": "Identify (Identifikation)",
+        "guidance": "Nennen Sie Name, Alter und aktuellen Bereich des Patienten / der Patientin.",
+        "sampleSpeech": "Ich übergebe Frau Anna Richter, 28 Jahre alt, aktuell in der Aufnahme (Neurologie)."
+      },
+      {
+        "step": "S",
+        "label": "Situation (Aktuelle Situation)",
+        "guidance": "Benennen Sie Leitsymptom und Hauptverdachtsdiagnose.",
+        "sampleSpeech": "Vorstellungsgrund: Seit 4 Tagen subakute Sehverschlechterung links mit Schmerzen bei Augenbewegung, Farbentsättigung (Rot wirkt blass). Vor einem Jahr für ca. 3 Wochen Kribbeln und Taubheit im rechten Bein, damals nicht ärztlich abgeklärt. Bei heißem Duschen Verschlechterung des Sehens (Uhthoff-Phänomen). Es besteht der dringende Verdacht auf Retrobulbärneuritis links, V. a. Erstmanifestation einer schubförmig remittierenden Multiplen Sklerose."
+      },
+      {
+        "step": "B",
+        "label": "Background (Klinischer Hintergrund)",
+        "guidance": "Fassen Sie Vorerkrankungen, Dauermedikation und Allergien zusammen.",
+        "sampleSpeech": "Anamnestisch bekannt sind: Keine. Medikation: Orale Kontrazeption (Desogestrel). Allergien: Hausstaubmilben."
+      },
+      {
+        "step": "A",
+        "label": "Assessment (Aktuelle Einschätzung & Vitalparameter)",
+        "guidance": "Berichten Sie über Vitalparameter, Untersuchungsbefund und Labor.",
+        "sampleSpeech": "Vitalparameter: RR 115/70 mmHg, HF 72 /min, Temp 36,6 °C, SpO₂ 99 % (Raumluft). Visus links 0,3, rechts 1,0. Relatives afferentes Pupillendefizit links. Fundoskopie: Papille links unauffällig. Neurologisch: gesteigerte Muskeleigenreflexe rechts betont, Babinski negativ. Labor: CRP: < 5 mg/l, Aquaporin-4-Antikörper: ausstehend, Liquor: geplant (oligoklonale Banden)"
+      },
+      {
+        "step": "R",
+        "label": "Recommendation (Empfehlung & weiteres Vorgehen)",
+        "guidance": "Schlagen Sie die weitere Diagnostik und Therapie unter Berücksichtigung der Differenzialdiagnosen vor.",
+        "sampleSpeech": "Ich empfehle die zielgerichtete Weiterbehandlung bezüglich Retrobulbärneuritis links, V. a. Erstmanifestation einer schubförmig remittierenden Multiplen Sklerose sowie den Ausschluss der wichtigsten Differenzialdiagnosen (Neuromyelitis-optica-Spektrum-Erkrankung, Anteriore ischämische Optikusneuropathie, Raumforderung im Bereich des N. opticus)."
+      }
+    ]
+  },
+  {
+    "id": "alkoholentzugsdelir",
+    "title": "Alkoholentzugsdelir (Fremdanamnese)",
+    "specialty": "Innere Medizin",
+    "category": "Innere Medizin",
+    "difficulty": "C1",
+    "patientName": "Herr Stefan Koch",
+    "patientAge": 52,
+    "chiefComplaint": "Mein Mann ist seit heute Nacht total durcheinander. Er zittert am ganzen Körper, schwitzt wie verrückt und sieht Käfer an der Wand, die gar nicht da sind.",
+    "patient": {
+      "name": "Herr Stefan Koch",
+      "age": 52,
+      "gender": "m",
+      "occupation": "Vertriebsleiter",
+      "chiefComplaint": "Mein Mann ist seit heute Nacht total durcheinander. Er zittert am ganzen Körper, schwitzt wie verrückt und sieht Käfer an der Wand, die gar nicht da sind.",
+      "vitalSigns": {
+        "bp": "175/100 mmHg",
+        "hr": "124 /min",
+        "temp": "38,2 °C",
+        "spo2": "96 % (Raumluft)"
+      },
+      "historyDetails": "Laut Ehefrau seit 3 Tagen abrupter Alkoholverzicht („er wollte aufhören“). Seit gestern Abend zunehmende Unruhe, Tremor, starkes Schwitzen, seit der Nacht optische Halluzinationen (Käfer), zeitlich und örtlich desorientiert. Heute Morgen ein kurzer Krampfanfall (ca. 1 Minute, Zuckungen am ganzen Körper). Kein Sturz bemerkt. Vorerkrankungen: Alkoholabhängigkeit (ca. 1 Flasche Wein + 3–4 Bier täglich seit Jahren), Arterielle Hypertonie, Fettleber. Medikation: Ramipril 5 mg 1-0-0, Pantoprazol 20 mg 1-0-0. Allergien: Keine bekannt. Sozialanamnese: Raucher, 20 Zigaretten/Tag. Verheiratet, zwei erwachsene Kinder. Beruflich viel unterwegs, Geschäftsessen. Kein Drogenkonsum bekannt. Hat im letzten Jahr deutlich abgenommen und isst unregelmäßig. Familienanamnese: Vater war alkoholkrank, an Leberzirrhose verstorben. Körperliche Untersuchung: Agitiert, zeitlich, örtlich und situativ desorientiert, nestelnde Bewegungen, grobschlägiger Tremor, profuses Schwitzen. Kein Meningismus. Keine äußeren Verletzungszeichen am Kopf. Leber 3 cm unter dem Rippenbogen tastbar. Labor: Blutzucker: 92 mg/dl, Natrium: 131 mmol/l (erniedrigt), Kalium: 3,2 mmol/l (erniedrigt), Magnesium: 0,6 mmol/l (erniedrigt), γ-GT: 312 U/l (erhöht), MCV: 102 fl (erhöht), Ethanol im Serum: 0 ‰."
+    },
+    "speaker": "Ehefrau (Fremdanamnese)",
+    "patientDialogue": {
+      "beschwerden": "Mein Mann ist seit heute Nacht total durcheinander. Er zittert am ganzen Körper, schwitzt wie verrückt und sieht Käfer an der Wand, die gar nicht da sind.",
+      "beginn": "Gestern Abend war er schon unruhig und hat gezittert. Seit heute Nacht so gegen zwei weiß er nicht mehr, wo er ist.",
+      "verlauf": "Es wird schlimmer. Heute Morgen hat er mich kurz nicht erkannt. Und so um sieben hatte er einen Krampfanfall, er hat am ganzen Körper gezuckt, ungefähr eine Minute.",
+      "ausloeser": "Er trinkt seit Jahren viel, ehrlich gesagt. Vor drei Tagen hat er gesagt, er hört jetzt auf, von einem Tag auf den anderen. Seitdem hat er nichts mehr getrunken, glaub ich.",
+      "begleitsymptome": "Er schwitzt, das Herz rast, er zittert, er ist total unruhig und will dauernd aufstehen. Er redet mit Leuten, die nicht da sind. Hingefallen ist er nicht, soweit ich weiß, mit dem Kopf ist nichts.",
+      "fieber": "Er fühlt sich heiß an, gemessen hab ich nicht.",
+      "appetit_gewicht": "Er isst seit Monaten schlecht und unregelmäßig, er hat sicher acht Kilo abgenommen im letzten Jahr.",
+      "verdauung": "Da weiß ich nichts Genaues.",
+      "schlaf": "Die letzten zwei Nächte hat er gar nicht geschlafen.",
+      "vorerkrankungen": "Er hat hohen Blutdruck, und der Hausarzt hat gesagt, er hat eine Fettleber.",
+      "operationen": "Nicht, dass ich wüsste.",
+      "medikamente": "Ramipril morgens und was für den Magen, Pantoprazol, glaub ich. Gegen den Entzug hat er nichts genommen, er war nicht beim Arzt.",
+      "allergien": "Keine bekannt.",
+      "rauchen": "Er raucht eine Schachtel am Tag.",
+      "alkohol": "Jeden Abend eine Flasche Wein und noch drei, vier Bier. Auf Geschäftsreisen wahrscheinlich mehr. Er hat das immer runtergespielt.",
+      "drogen": "Drogen, nein, das glaub ich nicht.",
+      "beruf": "Er ist Vertriebsleiter, viel unterwegs, viele Geschäftsessen.",
+      "wohnen": "Wir sind seit 25 Jahren verheiratet und haben zwei erwachsene Kinder, die wohnen nicht mehr bei uns.",
+      "familie": "Sein Vater war auch Alkoholiker und ist an einer Leberzirrhose gestorben.",
+      "sorgen": "Wird er wieder normal? Ich hab Angst, dass er stirbt. Und ich hab das Gefühl, ich hätte früher was merken müssen."
+    },
+    "anamneseQuestions": [
+      {
+        "id": "alkoholentzugsdelir-q1",
+        "phase": "Gesprächseinstieg & Leitsymptom",
+        "doctorOptions": [
+          {
+            "text": "Guten Tag, mein Name ist … , ich bin hier die Ärztin / der Arzt. Was führt Sie heute zu uns?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorstellung mit Namen und Funktion, dann eine offene Einstiegsfrage."
+          },
+          {
+            "text": "Liegt bei Ihnen die typische Symptomatik für Alkoholentzugsdelir (Delirium tremens) am 3. Tag nach Trinkstopp vor?",
+            "isOptimal": false,
+            "feedback": "FSP-Fehler: Keine geschlossene Diagnose-Frage zu Beginn. Lassen Sie den Patienten zuerst frei erzählen."
+          }
+        ],
+        "patientResponse": "Mein Mann ist seit heute Nacht total durcheinander. Er zittert am ganzen Körper, schwitzt wie verrückt und sieht Käfer an der Wand, die gar nicht da sind."
+      },
+      {
+        "id": "alkoholentzugsdelir-q2",
+        "phase": "Beginn, Ort & Art der Beschwerden",
+        "doctorOptions": [
+          {
+            "text": "Seit wann haben Sie die Beschwerden genau, wo spüren Sie sie und wie fühlen sie sich an? Strahlen sie irgendwohin aus?",
+            "isOptimal": true,
+            "feedback": "Gut strukturiert: Beginn, Lokalisation, Qualität und Ausstrahlung in verständlichen Worten erfragt."
+          },
+          {
+            "text": "Beschreiben Sie Onset, Lokalisation, Qualität und Irradiation der Symptomatik.",
+            "isOptimal": false,
+            "feedback": "Zu viel Fachjargon. „Ausstrahlen“ statt „Irradiation“, „Seit wann?“ statt „Onset“."
+          }
+        ],
+        "patientResponse": "Gestern Abend war er schon unruhig und hat gezittert. Seit heute Nacht so gegen zwei weiß er nicht mehr, wo er ist."
+      },
+      {
+        "id": "alkoholentzugsdelir-q3",
+        "phase": "Intensität, Verlauf & Auslöser",
+        "doctorOptions": [
+          {
+            "text": "Wie stark sind die Beschwerden auf einer Skala von 0 bis 10? Sind sie besser oder schlimmer geworden, und gibt es etwas, das sie auslöst oder lindert?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Schmerzskala 0–10 ist im deutschen Klinikalltag Standard."
+          },
+          {
+            "text": "Ist es sehr schlimm?",
+            "isOptimal": false,
+            "feedback": "Zu unpräzise. Fragen Sie nach der Stärke auf einer Skala von 0 bis 10 und nach dem Verlauf."
+          }
+        ],
+        "patientResponse": "Es wird schlimmer. Heute Morgen hat er mich kurz nicht erkannt. Und so um sieben hatte er einen Krampfanfall, er hat am ganzen Körper gezuckt, ungefähr eine Minute. Er trinkt seit Jahren viel, ehrlich gesagt. Vor drei Tagen hat er gesagt, er hört jetzt auf, von einem Tag auf den anderen. Seitdem hat er nichts mehr getrunken, glaub ich."
+      },
+      {
+        "id": "alkoholentzugsdelir-q4",
+        "phase": "Begleitsymptome & vegetative Anamnese",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie noch andere Beschwerden bemerkt, zum Beispiel Fieber, Übelkeit, Gewichtsverlust oder Probleme beim Stuhlgang oder Wasserlassen?",
+            "isOptimal": true,
+            "feedback": "Exzellent! Begleitsymptome und vegetative Anamnese in Patientensprache abgefragt."
+          },
+          {
+            "text": "Bestehen B-Symptomatik, Nausea, Emesis oder Miktionsbeschwerden?",
+            "isOptimal": false,
+            "feedback": "Fachjargon! Sagen Sie „Fieber, Nachtschweiß, Gewichtsverlust“, „Übelkeit“, „Erbrechen“ und „Probleme beim Wasserlassen“."
+          }
+        ],
+        "patientResponse": "Er schwitzt, das Herz rast, er zittert, er ist total unruhig und will dauernd aufstehen. Er redet mit Leuten, die nicht da sind. Hingefallen ist er nicht, soweit ich weiß, mit dem Kopf ist nichts. Er fühlt sich heiß an, gemessen hab ich nicht. Er isst seit Monaten schlecht und unregelmäßig, er hat sicher acht Kilo abgenommen im letzten Jahr. Da weiß ich nichts Genaues. Die letzten zwei Nächte hat er gar nicht geschlafen."
+      },
+      {
+        "id": "alkoholentzugsdelir-q5",
+        "phase": "Vorerkrankungen, Operationen & Medikamente",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie Vorerkrankungen oder wurden Sie schon einmal operiert? Welche Medikamente nehmen Sie regelmäßig ein, und haben Sie Allergien?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorerkrankungen, Operationen, Medikation und Allergien vollständig erfragt."
+          },
+          {
+            "text": "Welche Komorbiditäten, Voroperationen und Dauermedikation bestehen? Gibt es Unverträglichkeiten?",
+            "isOptimal": false,
+            "feedback": "„Komorbiditäten“ versteht kaum ein Patient. Sagen Sie „andere Erkrankungen“."
+          }
+        ],
+        "patientResponse": "Er hat hohen Blutdruck, und der Hausarzt hat gesagt, er hat eine Fettleber. Nicht, dass ich wüsste. Ramipril morgens und was für den Magen, Pantoprazol, glaub ich. Gegen den Entzug hat er nichts genommen, er war nicht beim Arzt. Keine bekannt."
+      },
+      {
+        "id": "alkoholentzugsdelir-q6",
+        "phase": "Sozial- & Familienanamnese",
+        "doctorOptions": [
+          {
+            "text": "Darf ich Sie noch etwas Persönliches fragen: Rauchen Sie, trinken Sie Alkohol, was machen Sie beruflich, wie wohnen Sie, und gibt es Krankheiten in Ihrer Familie?",
+            "isOptimal": true,
+            "feedback": "Sehr empathisch! Sie kündigen die persönlichen Fragen an und decken Noxen, Beruf, Wohnsituation und Familie ab."
+          },
+          {
+            "text": "Wie ist Ihr Noxenabusus und gibt es eine familiäre Belastung?",
+            "isOptimal": false,
+            "feedback": "Vermeiden Sie „Noxenabusus“. Fragen Sie direkt nach Rauchen, Alkohol und Drogen."
+          }
+        ],
+        "patientResponse": "Er raucht eine Schachtel am Tag. Jeden Abend eine Flasche Wein und noch drei, vier Bier. Auf Geschäftsreisen wahrscheinlich mehr. Er hat das immer runtergespielt. Drogen, nein, das glaub ich nicht. Er ist Vertriebsleiter, viel unterwegs, viele Geschäftsessen. Wir sind seit 25 Jahren verheiratet und haben zwei erwachsene Kinder, die wohnen nicht mehr bei uns. Sein Vater war auch Alkoholiker und ist an einer Leberzirrhose gestorben."
+      },
+      {
+        "id": "alkoholentzugsdelir-q7",
+        "phase": "Sorgen des Patienten & Gesprächsabschluss",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie selbst eine Vermutung oder machen Sie sich über etwas besonders Sorgen? Haben Sie noch Fragen an mich?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Sorgen des Patienten zu erfragen gehört zu einem patientenzentrierten FSP-Gespräch."
+          },
+          {
+            "text": "Gut, das war's. Sie hören dann von uns.",
+            "isOptimal": false,
+            "feedback": "Zu abrupt. Fragen Sie nach Sorgen und offenen Fragen und erklären Sie das weitere Vorgehen."
+          }
+        ],
+        "patientResponse": "Wird er wieder normal? Ich hab Angst, dass er stirbt. Und ich hab das Gefühl, ich hätte früher was merken müssen."
+      }
+    ],
+    "arztbriefTemplate": {
+      "prompt": "Verfassen Sie die Anamnese und Epikrise für Herr Stefan Koch (52 J.) mit Verdacht auf Alkoholentzugsdelir (Delirium tremens) am 3. Tag nach Trinkstopp im C1-Fachstil.",
+      "requiredTerms": [
+        "Alkoholentzugsdelir (Delirium tremens) am 3. Tag nach Trinkstopp",
+        "Alkoholabhängigkeit",
+        "Wernicke-Enzephalopathie",
+        "Anamnese",
+        "Vitalparameter"
+      ],
+      "sampleSolution": "Herr Stefan Koch (52 J., Vertriebsleiter) stellte sich mit folgender aktueller Anamnese vor: Laut Ehefrau seit 3 Tagen abrupter Alkoholverzicht („er wollte aufhören“). Seit gestern Abend zunehmende Unruhe, Tremor, starkes Schwitzen, seit der Nacht optische Halluzinationen (Käfer), zeitlich und örtlich desorientiert. Heute Morgen ein kurzer Krampfanfall (ca. 1 Minute, Zuckungen am ganzen Körper). Kein Sturz bemerkt. An Vorerkrankungen seien bekannt: Alkoholabhängigkeit (ca. 1 Flasche Wein + 3–4 Bier täglich seit Jahren), Arterielle Hypertonie, Fettleber. Die Dauermedikation umfasse: Ramipril 5 mg 1-0-0, Pantoprazol 20 mg 1-0-0. Allergien: Keine bekannt. Sozial- und Familienanamnese: Raucher, 20 Zigaretten/Tag. Verheiratet, zwei erwachsene Kinder. Beruflich viel unterwegs, Geschäftsessen. Kein Drogenkonsum bekannt. Hat im letzten Jahr deutlich abgenommen und isst unregelmäßig. Vater war alkoholkrank, an Leberzirrhose verstorben. Klinische Untersuchung: Agitiert, zeitlich, örtlich und situativ desorientiert, nestelnde Bewegungen, grobschlägiger Tremor, profuses Schwitzen. Kein Meningismus. Keine äußeren Verletzungszeichen am Kopf. Leber 3 cm unter dem Rippenbogen tastbar. Zusammenfassend ergibt sich der dringende Verdacht auf: Alkoholentzugsdelir (Delirium tremens) am 3. Tag nach Trinkstopp (Differenzialdiagnosen: Wernicke-Enzephalopathie, Hypoglykämie, Hepatische Enzephalopathie)."
+    },
+    "isbarSteps": [
+      {
+        "step": "I",
+        "label": "Identify (Identifikation)",
+        "guidance": "Nennen Sie Name, Alter und aktuellen Bereich des Patienten / der Patientin.",
+        "sampleSpeech": "Ich übergebe Herr Stefan Koch, 52 Jahre alt, aktuell in der Aufnahme (Innere Medizin)."
+      },
+      {
+        "step": "S",
+        "label": "Situation (Aktuelle Situation)",
+        "guidance": "Benennen Sie Leitsymptom und Hauptverdachtsdiagnose.",
+        "sampleSpeech": "Vorstellungsgrund: Laut Ehefrau seit 3 Tagen abrupter Alkoholverzicht („er wollte aufhören“). Seit gestern Abend zunehmende Unruhe, Tremor, starkes Schwitzen, seit der Nacht optische Halluzinationen (Käfer), zeitlich und örtlich desorientiert. Heute Morgen ein kurzer Krampfanfall (ca. 1 Minute, Zuckungen am ganzen Körper). Kein Sturz bemerkt. Es besteht der dringende Verdacht auf Alkoholentzugsdelir (Delirium tremens) am 3. Tag nach Trinkstopp."
+      },
+      {
+        "step": "B",
+        "label": "Background (Klinischer Hintergrund)",
+        "guidance": "Fassen Sie Vorerkrankungen, Dauermedikation und Allergien zusammen.",
+        "sampleSpeech": "Anamnestisch bekannt sind: Alkoholabhängigkeit (ca. 1 Flasche Wein + 3–4 Bier täglich seit Jahren), Arterielle Hypertonie, Fettleber. Medikation: Ramipril 5 mg 1-0-0, Pantoprazol 20 mg 1-0-0. Allergien: Keine bekannt."
+      },
+      {
+        "step": "A",
+        "label": "Assessment (Aktuelle Einschätzung & Vitalparameter)",
+        "guidance": "Berichten Sie über Vitalparameter, Untersuchungsbefund und Labor.",
+        "sampleSpeech": "Vitalparameter: RR 175/100 mmHg, HF 124 /min, Temp 38,2 °C, SpO₂ 96 % (Raumluft). Agitiert, zeitlich, örtlich und situativ desorientiert, nestelnde Bewegungen, grobschlägiger Tremor, profuses Schwitzen. Kein Meningismus. Keine äußeren Verletzungszeichen am Kopf. Leber 3 cm unter dem Rippenbogen tastbar. Labor: Blutzucker: 92 mg/dl, Natrium: 131 mmol/l (erniedrigt), Kalium: 3,2 mmol/l (erniedrigt), Magnesium: 0,6 mmol/l (erniedrigt), γ-GT: 312 U/l (erhöht), MCV: 102 fl (erhöht), Ethanol im Serum: 0 ‰"
+      },
+      {
+        "step": "R",
+        "label": "Recommendation (Empfehlung & weiteres Vorgehen)",
+        "guidance": "Schlagen Sie die weitere Diagnostik und Therapie unter Berücksichtigung der Differenzialdiagnosen vor.",
+        "sampleSpeech": "Ich empfehle die zielgerichtete Weiterbehandlung bezüglich Alkoholentzugsdelir (Delirium tremens) am 3. Tag nach Trinkstopp sowie den Ausschluss der wichtigsten Differenzialdiagnosen (Wernicke-Enzephalopathie, Hypoglykämie, Hepatische Enzephalopathie)."
+      }
+    ]
+  },
+  {
+    "id": "pseudokrupp",
+    "title": "Pseudokrupp (Fremdanamnese)",
+    "specialty": "Pädiatrie",
+    "category": "Pädiatrie",
+    "difficulty": "B2",
+    "patientName": "Ben Schäfer",
+    "patientAge": 2,
+    "chiefComplaint": "Mein Sohn hat heute Nacht plötzlich so bellend gehustet, wie ein Seehund. Und beim Einatmen pfeift es ganz komisch. Ich hab mich total erschrocken.",
+    "patient": {
+      "name": "Ben Schäfer",
+      "age": 2,
+      "gender": "m",
+      "occupation": "Kleinkind (Kita)",
+      "chiefComplaint": "Mein Sohn hat heute Nacht plötzlich so bellend gehustet, wie ein Seehund. Und beim Einatmen pfeift es ganz komisch. Ich hab mich total erschrocken.",
+      "vitalSigns": {
+        "bp": "95/60 mmHg",
+        "hr": "140 /min",
+        "temp": "38,3 °C",
+        "spo2": "94 % (Raumluft)"
+      },
+      "historyDetails": "Seit 2 Tagen Schnupfen und leichtes Fieber. Heute Nacht gegen 23 Uhr plötzlich bellender Husten, Heiserkeit und inspiratorischer Stridor. In der kalten Nachtluft auf dem Weg in die Klinik etwas besser. Trinkt, speichelt nicht, kann schlucken. Kein Hinweis auf verschluckten Gegenstand. Vorerkrankungen: Termingeboren, unauffällige Entwicklung, Einmal Pseudokrupp vor einem Jahr (ambulant behandelt). Medikation: Ibuprofen-Saft 100 mg/5 ml, gestern 1x 5 ml. Allergien: Keine bekannt. Sozialanamnese: Besucht die Kita, dort aktuell viele Erkältungen. Lebt mit Eltern und älterer Schwester (5 J.). Vater raucht auf dem Balkon. Impfungen laut Impfpass vollständig (inkl. Hib). Familienanamnese: Mutter hat Asthma bronchiale. Körperliche Untersuchung: Wach, ängstlich auf dem Arm der Mutter, inspiratorischer Stridor in Ruhe, leichte juguläre und subkostale Einziehungen, bellender Husten, heisere Stimme. Kein Speichelfluss, keine kloßige Sprache. Rachen gerötet (Untersuchung schonend, ohne Spatel). Labor: Kapilläre BGA: nicht erforderlich, Blutzucker: 98 mg/dl."
+    },
+    "speaker": "Mutter (Fremdanamnese)",
+    "patientDialogue": {
+      "beschwerden": "Mein Sohn hat heute Nacht plötzlich so bellend gehustet, wie ein Seehund. Und beim Einatmen pfeift es ganz komisch. Ich hab mich total erschrocken.",
+      "beginn": "So gegen elf Uhr nachts ist er aufgewacht und hat so gehustet. Erkältet ist er schon seit zwei Tagen, mit Schnupfen.",
+      "verlauf": "Auf dem Weg hierher an der kalten Luft wurde es ein bisschen besser. Aber das Pfeifen ist immer noch da.",
+      "ausloeser": "Wenn er weint oder sich aufregt, wird das Pfeifen schlimmer.",
+      "begleitsymptome": "Er ist heiser, die Stimme klingt ganz rau. Speichel läuft ihm nicht aus dem Mund, und er kann schlucken. Er hat nichts in den Mund gesteckt, er hat ganz normal geschlafen.",
+      "fieber": "Seit gestern hat er 38,3 Grad. Ich hab ihm gestern Abend einmal Ibuprofen-Saft gegeben.",
+      "appetit_gewicht": "Er trinkt, aber isst seit gestern weniger.",
+      "verdauung": "Die Windeln sind normal, kein Durchfall.",
+      "wasserlassen": "Die Windel war heute Nacht nass, ganz normal.",
+      "schlaf": "Er ist heute Nacht ständig wach geworden.",
+      "vorerkrankungen": "Er war termingerecht, die Entwicklung ist ganz normal. Vor einem Jahr hatte er das schon mal, da hat der Kinderarzt ein Zäpfchen gegeben.",
+      "operationen": "Nein.",
+      "medikamente": "Nur gestern den Ibuprofen-Saft, 5 Milliliter.",
+      "allergien": "Nichts bekannt.",
+      "impfungen": "Er hat alle Impfungen, wie es im Impfpass steht, auch die gegen Haemophilus. Ich hab den Impfpass dabei.",
+      "rauchen": "Mein Mann raucht, aber nur auf dem Balkon.",
+      "beruf": "Er geht in die Kita, da sind gerade alle erkältet.",
+      "wohnen": "Wir wohnen zu viert, mein Mann, ich, Ben und seine Schwester, sie ist fünf.",
+      "familie": "Ich hab Asthma.",
+      "sorgen": "Kann er ersticken? Und muss er hierbleiben?"
+    },
+    "anamneseQuestions": [
+      {
+        "id": "pseudokrupp-q1",
+        "phase": "Gesprächseinstieg & Leitsymptom",
+        "doctorOptions": [
+          {
+            "text": "Guten Tag, mein Name ist … , ich bin hier die Ärztin / der Arzt. Was führt Sie heute zu uns?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorstellung mit Namen und Funktion, dann eine offene Einstiegsfrage."
+          },
+          {
+            "text": "Liegt bei Ihnen die typische Symptomatik für Viraler Krupp (Pseudokrupp), mittelschwer vor?",
+            "isOptimal": false,
+            "feedback": "FSP-Fehler: Keine geschlossene Diagnose-Frage zu Beginn. Lassen Sie den Patienten zuerst frei erzählen."
+          }
+        ],
+        "patientResponse": "Mein Sohn hat heute Nacht plötzlich so bellend gehustet, wie ein Seehund. Und beim Einatmen pfeift es ganz komisch. Ich hab mich total erschrocken."
+      },
+      {
+        "id": "pseudokrupp-q2",
+        "phase": "Beginn, Ort & Art der Beschwerden",
+        "doctorOptions": [
+          {
+            "text": "Seit wann haben Sie die Beschwerden genau, wo spüren Sie sie und wie fühlen sie sich an? Strahlen sie irgendwohin aus?",
+            "isOptimal": true,
+            "feedback": "Gut strukturiert: Beginn, Lokalisation, Qualität und Ausstrahlung in verständlichen Worten erfragt."
+          },
+          {
+            "text": "Beschreiben Sie Onset, Lokalisation, Qualität und Irradiation der Symptomatik.",
+            "isOptimal": false,
+            "feedback": "Zu viel Fachjargon. „Ausstrahlen“ statt „Irradiation“, „Seit wann?“ statt „Onset“."
+          }
+        ],
+        "patientResponse": "So gegen elf Uhr nachts ist er aufgewacht und hat so gehustet. Erkältet ist er schon seit zwei Tagen, mit Schnupfen."
+      },
+      {
+        "id": "pseudokrupp-q3",
+        "phase": "Intensität, Verlauf & Auslöser",
+        "doctorOptions": [
+          {
+            "text": "Wie stark sind die Beschwerden auf einer Skala von 0 bis 10? Sind sie besser oder schlimmer geworden, und gibt es etwas, das sie auslöst oder lindert?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Schmerzskala 0–10 ist im deutschen Klinikalltag Standard."
+          },
+          {
+            "text": "Ist es sehr schlimm?",
+            "isOptimal": false,
+            "feedback": "Zu unpräzise. Fragen Sie nach der Stärke auf einer Skala von 0 bis 10 und nach dem Verlauf."
+          }
+        ],
+        "patientResponse": "Auf dem Weg hierher an der kalten Luft wurde es ein bisschen besser. Aber das Pfeifen ist immer noch da. Wenn er weint oder sich aufregt, wird das Pfeifen schlimmer."
+      },
+      {
+        "id": "pseudokrupp-q4",
+        "phase": "Begleitsymptome & vegetative Anamnese",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie noch andere Beschwerden bemerkt, zum Beispiel Fieber, Übelkeit, Gewichtsverlust oder Probleme beim Stuhlgang oder Wasserlassen?",
+            "isOptimal": true,
+            "feedback": "Exzellent! Begleitsymptome und vegetative Anamnese in Patientensprache abgefragt."
+          },
+          {
+            "text": "Bestehen B-Symptomatik, Nausea, Emesis oder Miktionsbeschwerden?",
+            "isOptimal": false,
+            "feedback": "Fachjargon! Sagen Sie „Fieber, Nachtschweiß, Gewichtsverlust“, „Übelkeit“, „Erbrechen“ und „Probleme beim Wasserlassen“."
+          }
+        ],
+        "patientResponse": "Er ist heiser, die Stimme klingt ganz rau. Speichel läuft ihm nicht aus dem Mund, und er kann schlucken. Er hat nichts in den Mund gesteckt, er hat ganz normal geschlafen. Seit gestern hat er 38,3 Grad. Ich hab ihm gestern Abend einmal Ibuprofen-Saft gegeben. Er trinkt, aber isst seit gestern weniger. Die Windeln sind normal, kein Durchfall. Die Windel war heute Nacht nass, ganz normal. Er ist heute Nacht ständig wach geworden."
+      },
+      {
+        "id": "pseudokrupp-q5",
+        "phase": "Vorerkrankungen, Operationen & Medikamente",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie Vorerkrankungen oder wurden Sie schon einmal operiert? Welche Medikamente nehmen Sie regelmäßig ein, und haben Sie Allergien?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorerkrankungen, Operationen, Medikation und Allergien vollständig erfragt."
+          },
+          {
+            "text": "Welche Komorbiditäten, Voroperationen und Dauermedikation bestehen? Gibt es Unverträglichkeiten?",
+            "isOptimal": false,
+            "feedback": "„Komorbiditäten“ versteht kaum ein Patient. Sagen Sie „andere Erkrankungen“."
+          }
+        ],
+        "patientResponse": "Er war termingerecht, die Entwicklung ist ganz normal. Vor einem Jahr hatte er das schon mal, da hat der Kinderarzt ein Zäpfchen gegeben. Nein. Nur gestern den Ibuprofen-Saft, 5 Milliliter. Nichts bekannt."
+      },
+      {
+        "id": "pseudokrupp-q6",
+        "phase": "Sozial- & Familienanamnese",
+        "doctorOptions": [
+          {
+            "text": "Darf ich Sie noch etwas Persönliches fragen: Rauchen Sie, trinken Sie Alkohol, was machen Sie beruflich, wie wohnen Sie, und gibt es Krankheiten in Ihrer Familie?",
+            "isOptimal": true,
+            "feedback": "Sehr empathisch! Sie kündigen die persönlichen Fragen an und decken Noxen, Beruf, Wohnsituation und Familie ab."
+          },
+          {
+            "text": "Wie ist Ihr Noxenabusus und gibt es eine familiäre Belastung?",
+            "isOptimal": false,
+            "feedback": "Vermeiden Sie „Noxenabusus“. Fragen Sie direkt nach Rauchen, Alkohol und Drogen."
+          }
+        ],
+        "patientResponse": "Mein Mann raucht, aber nur auf dem Balkon. Er geht in die Kita, da sind gerade alle erkältet. Wir wohnen zu viert, mein Mann, ich, Ben und seine Schwester, sie ist fünf. Ich hab Asthma. Er hat alle Impfungen, wie es im Impfpass steht, auch die gegen Haemophilus. Ich hab den Impfpass dabei."
+      },
+      {
+        "id": "pseudokrupp-q7",
+        "phase": "Sorgen des Patienten & Gesprächsabschluss",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie selbst eine Vermutung oder machen Sie sich über etwas besonders Sorgen? Haben Sie noch Fragen an mich?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Sorgen des Patienten zu erfragen gehört zu einem patientenzentrierten FSP-Gespräch."
+          },
+          {
+            "text": "Gut, das war's. Sie hören dann von uns.",
+            "isOptimal": false,
+            "feedback": "Zu abrupt. Fragen Sie nach Sorgen und offenen Fragen und erklären Sie das weitere Vorgehen."
+          }
+        ],
+        "patientResponse": "Kann er ersticken? Und muss er hierbleiben?"
+      }
+    ],
+    "arztbriefTemplate": {
+      "prompt": "Verfassen Sie die Anamnese und Epikrise für Ben Schäfer (2 J.) mit Verdacht auf Viraler Krupp (Pseudokrupp), mittelschwer im C1-Fachstil.",
+      "requiredTerms": [
+        "Viraler Krupp (Pseudokrupp), mittelschwer",
+        "Termingeboren,",
+        "Epiglottitis",
+        "Anamnese",
+        "Vitalparameter"
+      ],
+      "sampleSolution": "Ben Schäfer (2 J., Kleinkind (Kita)) stellte sich mit folgender aktueller Anamnese vor: Seit 2 Tagen Schnupfen und leichtes Fieber. Heute Nacht gegen 23 Uhr plötzlich bellender Husten, Heiserkeit und inspiratorischer Stridor. In der kalten Nachtluft auf dem Weg in die Klinik etwas besser. Trinkt, speichelt nicht, kann schlucken. Kein Hinweis auf verschluckten Gegenstand. An Vorerkrankungen seien bekannt: Termingeboren, unauffällige Entwicklung, Einmal Pseudokrupp vor einem Jahr (ambulant behandelt). Die Dauermedikation umfasse: Ibuprofen-Saft 100 mg/5 ml, gestern 1x 5 ml. Allergien: Keine bekannt. Sozial- und Familienanamnese: Besucht die Kita, dort aktuell viele Erkältungen. Lebt mit Eltern und älterer Schwester (5 J.). Vater raucht auf dem Balkon. Impfungen laut Impfpass vollständig (inkl. Hib). Mutter hat Asthma bronchiale. Klinische Untersuchung: Wach, ängstlich auf dem Arm der Mutter, inspiratorischer Stridor in Ruhe, leichte juguläre und subkostale Einziehungen, bellender Husten, heisere Stimme. Kein Speichelfluss, keine kloßige Sprache. Rachen gerötet (Untersuchung schonend, ohne Spatel). Zusammenfassend ergibt sich der dringende Verdacht auf: Viraler Krupp (Pseudokrupp), mittelschwer (Differenzialdiagnosen: Epiglottitis, Fremdkörperaspiration, Bakterielle Tracheitis)."
+    },
+    "isbarSteps": [
+      {
+        "step": "I",
+        "label": "Identify (Identifikation)",
+        "guidance": "Nennen Sie Name, Alter und aktuellen Bereich des Patienten / der Patientin.",
+        "sampleSpeech": "Ich übergebe Ben Schäfer, 2 Jahre alt, aktuell in der Aufnahme (Pädiatrie)."
+      },
+      {
+        "step": "S",
+        "label": "Situation (Aktuelle Situation)",
+        "guidance": "Benennen Sie Leitsymptom und Hauptverdachtsdiagnose.",
+        "sampleSpeech": "Vorstellungsgrund: Seit 2 Tagen Schnupfen und leichtes Fieber. Heute Nacht gegen 23 Uhr plötzlich bellender Husten, Heiserkeit und inspiratorischer Stridor. In der kalten Nachtluft auf dem Weg in die Klinik etwas besser. Trinkt, speichelt nicht, kann schlucken. Kein Hinweis auf verschluckten Gegenstand. Es besteht der dringende Verdacht auf Viraler Krupp (Pseudokrupp), mittelschwer."
+      },
+      {
+        "step": "B",
+        "label": "Background (Klinischer Hintergrund)",
+        "guidance": "Fassen Sie Vorerkrankungen, Dauermedikation und Allergien zusammen.",
+        "sampleSpeech": "Anamnestisch bekannt sind: Termingeboren, unauffällige Entwicklung, Einmal Pseudokrupp vor einem Jahr (ambulant behandelt). Medikation: Ibuprofen-Saft 100 mg/5 ml, gestern 1x 5 ml. Allergien: Keine bekannt."
+      },
+      {
+        "step": "A",
+        "label": "Assessment (Aktuelle Einschätzung & Vitalparameter)",
+        "guidance": "Berichten Sie über Vitalparameter, Untersuchungsbefund und Labor.",
+        "sampleSpeech": "Vitalparameter: RR 95/60 mmHg, HF 140 /min, Temp 38,3 °C, SpO₂ 94 % (Raumluft). Wach, ängstlich auf dem Arm der Mutter, inspiratorischer Stridor in Ruhe, leichte juguläre und subkostale Einziehungen, bellender Husten, heisere Stimme. Kein Speichelfluss, keine kloßige Sprache. Rachen gerötet (Untersuchung schonend, ohne Spatel). Labor: Kapilläre BGA: nicht erforderlich, Blutzucker: 98 mg/dl"
+      },
+      {
+        "step": "R",
+        "label": "Recommendation (Empfehlung & weiteres Vorgehen)",
+        "guidance": "Schlagen Sie die weitere Diagnostik und Therapie unter Berücksichtigung der Differenzialdiagnosen vor.",
+        "sampleSpeech": "Ich empfehle die zielgerichtete Weiterbehandlung bezüglich Viraler Krupp (Pseudokrupp), mittelschwer sowie den Ausschluss der wichtigsten Differenzialdiagnosen (Epiglottitis, Fremdkörperaspiration, Bakterielle Tracheitis)."
+      }
+    ]
+  },
+  {
+    "id": "pflege-postoperative-schmerzen-ponv",
+    "title": "Postoperative Schmerzen und Übelkeit nach Hüft-TEP (Pflege)",
+    "specialty": "Orthopädie",
+    "category": "Orthopädie",
+    "difficulty": "B1",
+    "patientName": "Frau Renate Hartmann",
+    "patientAge": 72,
+    "chiefComplaint": "Schwester, mir ist so furchtbar schlecht, und meine Hüfte tut so weh, ich kann mich gar nicht bewegen. Ich hab schon einmal gebrochen.",
+    "patient": {
+      "name": "Frau Renate Hartmann",
+      "age": 72,
+      "gender": "w",
+      "occupation": "Rentnerin (ehem. Verkäuferin)",
+      "chiefComplaint": "Schwester, mir ist so furchtbar schlecht, und meine Hüfte tut so weh, ich kann mich gar nicht bewegen. Ich hab schon einmal gebrochen.",
+      "vitalSigns": {
+        "bp": "105/65 mmHg",
+        "hr": "96 /min",
+        "temp": "37,4 °C",
+        "spo2": "94 % (Raumluft)"
+      },
+      "historyDetails": "Seit 3 Stunden zurück aus dem Aufwachraum nach elektiver Hüft-TEP rechts in Spinalanästhesie mit Sedierung. Übelkeit, einmaliges Erbrechen, Schmerz an der Hüfte NRS 7/10 in Ruhe. Hat seit der OP noch kein Wasser gelassen. Redon-Drainage: 180 ml blutig. Vorerkrankungen: Koxarthrose rechts, Arterielle Hypertonie, PONV bei früheren Narkosen (Cholezystektomie 2010), Leichte Schwerhörigkeit. Medikation: Ramipril 5 mg 1-0-0 (heute pausiert), Metamizol 1 g 1-1-1-1 (nach Anordnung), Oxycodon 10 mg retard 1-0-1 (nach Anordnung), Enoxaparin 40 mg s. c. 0-0-1, Ondansetron 4 mg i. v. bei Bedarf (angeordnet). Allergien: Tramadol (starke Übelkeit). Sozialanamnese: Verheiratet, Ehemann kommt täglich zu Besuch. Wohnt im Erdgeschoss mit Dusche ebenerdig. Vor der OP mit Gehstock mobil. Nichtraucherin. Familienanamnese: Nicht relevant. Körperliche Untersuchung: Blass, kaltschweißig, liegt flach im Bett. Verband trocken, Redon gefördert. Bein in Neutralstellung, keine Beinverkürzung oder Außenrotation. Fußpulse tastbar, Zehenbewegung und Sensibilität intakt. Blase über der Symphyse tastbar. Labor: Hb (postoperativ): 10,1 g/dl (erniedrigt, präoperativ 12,8 g/dl), Blutzucker: 134 mg/dl, Blasenscan: 620 ml Restharn."
+    },
+    "patientDialogue": {
+      "beschwerden": "Schwester, mir ist so furchtbar schlecht, und meine Hüfte tut so weh, ich kann mich gar nicht bewegen. Ich hab schon einmal gebrochen.",
+      "beginn": "Die Übelkeit kam, als ich aus dem Aufwachraum hochgefahren wurde. Die Schmerzen sind stärker geworden, seit das Bein wieder Gefühl hat.",
+      "lokalisation": "Die rechte Hüfte, wo operiert wurde. Und unten im Bauch drückt es so.",
+      "charakter": "Die Hüfte pocht und brennt. Im Bauch ist es so ein Druck.",
+      "intensitaet": "Die Hüfte sieben von zehn, wenn ich still liege. Wenn ich mich bewege, noch mehr.",
+      "verlauf": "Es wird schlimmer, seit die Betäubung nachlässt.",
+      "ausloeser": "Schon wenn ich mich ein bisschen im Bett drehe.",
+      "begleitsymptome": "Mir ist schwindelig, wenn ich den Kopf hebe. Und ich schwitze so.",
+      "fieber": "Mir ist eher kalt, ich fühl mich klamm.",
+      "appetit_gewicht": "Ich hab einen Schluck Tee getrunken, dann musste ich brechen.",
+      "wasserlassen": "Ich war seit heute Morgen nicht auf Toilette. Ich muss eigentlich dringend, aber es kommt nichts.",
+      "vorerkrankungen": "Arthrose in der Hüfte, deswegen die neue Hüfte. Bluthochdruck. Und ich hör auf dem rechten Ohr schlecht, bitte sprechen Sie ein bisschen lauter.",
+      "operationen": "Galle 2010, da war mir nach der Narkose auch tagelang schlecht.",
+      "medikamente": "Zu Hause nehm ich Ramipril 5 morgens, das sollte ich heute weglassen. Hier hab ich noch nichts gegen die Übelkeit bekommen.",
+      "allergien": "Tramadol vertrag ich nicht, davon muss ich furchtbar brechen. Das steht hoffentlich in meiner Akte.",
+      "rauchen": "Nein.",
+      "alkohol": "Kaum.",
+      "beruf": "Ich war Verkäuferin, jetzt Rentnerin.",
+      "wohnen": "Mit meinem Mann, im Erdgeschoss, die Dusche ist ebenerdig. Vor der OP bin ich mit dem Stock gelaufen.",
+      "familie": "Mein Mann kommt heute Nachmittag.",
+      "sorgen": "Ist mit der neuen Hüfte alles in Ordnung? Ich hab Angst, dass sie rausspringt, wenn ich mich bewege."
+    },
+    "anamneseQuestions": [
+      {
+        "id": "pflege-postoperative-schmerzen-ponv-q1",
+        "phase": "Gesprächseinstieg & Leitsymptom",
+        "doctorOptions": [
+          {
+            "text": "Guten Tag, mein Name ist … , ich bin hier die Ärztin / der Arzt. Was führt Sie heute zu uns?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorstellung mit Namen und Funktion, dann eine offene Einstiegsfrage."
+          },
+          {
+            "text": "Liegt bei Ihnen die typische Symptomatik für Postoperative Schmerzen und postoperative Übelkeit und Erbrechen (PONV) am OP-Tag nach Hüft-TEP rechts vor?",
+            "isOptimal": false,
+            "feedback": "FSP-Fehler: Keine geschlossene Diagnose-Frage zu Beginn. Lassen Sie den Patienten zuerst frei erzählen."
+          }
+        ],
+        "patientResponse": "Schwester, mir ist so furchtbar schlecht, und meine Hüfte tut so weh, ich kann mich gar nicht bewegen. Ich hab schon einmal gebrochen."
+      },
+      {
+        "id": "pflege-postoperative-schmerzen-ponv-q2",
+        "phase": "Beginn, Ort & Art der Beschwerden",
+        "doctorOptions": [
+          {
+            "text": "Seit wann haben Sie die Beschwerden genau, wo spüren Sie sie und wie fühlen sie sich an? Strahlen sie irgendwohin aus?",
+            "isOptimal": true,
+            "feedback": "Gut strukturiert: Beginn, Lokalisation, Qualität und Ausstrahlung in verständlichen Worten erfragt."
+          },
+          {
+            "text": "Beschreiben Sie Onset, Lokalisation, Qualität und Irradiation der Symptomatik.",
+            "isOptimal": false,
+            "feedback": "Zu viel Fachjargon. „Ausstrahlen“ statt „Irradiation“, „Seit wann?“ statt „Onset“."
+          }
+        ],
+        "patientResponse": "Die Übelkeit kam, als ich aus dem Aufwachraum hochgefahren wurde. Die Schmerzen sind stärker geworden, seit das Bein wieder Gefühl hat. Die rechte Hüfte, wo operiert wurde. Und unten im Bauch drückt es so. Die Hüfte pocht und brennt. Im Bauch ist es so ein Druck."
+      },
+      {
+        "id": "pflege-postoperative-schmerzen-ponv-q3",
+        "phase": "Intensität, Verlauf & Auslöser",
+        "doctorOptions": [
+          {
+            "text": "Wie stark sind die Beschwerden auf einer Skala von 0 bis 10? Sind sie besser oder schlimmer geworden, und gibt es etwas, das sie auslöst oder lindert?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Schmerzskala 0–10 ist im deutschen Klinikalltag Standard."
+          },
+          {
+            "text": "Ist es sehr schlimm?",
+            "isOptimal": false,
+            "feedback": "Zu unpräzise. Fragen Sie nach der Stärke auf einer Skala von 0 bis 10 und nach dem Verlauf."
+          }
+        ],
+        "patientResponse": "Die Hüfte sieben von zehn, wenn ich still liege. Wenn ich mich bewege, noch mehr. Es wird schlimmer, seit die Betäubung nachlässt. Schon wenn ich mich ein bisschen im Bett drehe."
+      },
+      {
+        "id": "pflege-postoperative-schmerzen-ponv-q4",
+        "phase": "Begleitsymptome & vegetative Anamnese",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie noch andere Beschwerden bemerkt, zum Beispiel Fieber, Übelkeit, Gewichtsverlust oder Probleme beim Stuhlgang oder Wasserlassen?",
+            "isOptimal": true,
+            "feedback": "Exzellent! Begleitsymptome und vegetative Anamnese in Patientensprache abgefragt."
+          },
+          {
+            "text": "Bestehen B-Symptomatik, Nausea, Emesis oder Miktionsbeschwerden?",
+            "isOptimal": false,
+            "feedback": "Fachjargon! Sagen Sie „Fieber, Nachtschweiß, Gewichtsverlust“, „Übelkeit“, „Erbrechen“ und „Probleme beim Wasserlassen“."
+          }
+        ],
+        "patientResponse": "Mir ist schwindelig, wenn ich den Kopf hebe. Und ich schwitze so. Mir ist eher kalt, ich fühl mich klamm. Ich hab einen Schluck Tee getrunken, dann musste ich brechen. Ich war seit heute Morgen nicht auf Toilette. Ich muss eigentlich dringend, aber es kommt nichts."
+      },
+      {
+        "id": "pflege-postoperative-schmerzen-ponv-q5",
+        "phase": "Vorerkrankungen, Operationen & Medikamente",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie Vorerkrankungen oder wurden Sie schon einmal operiert? Welche Medikamente nehmen Sie regelmäßig ein, und haben Sie Allergien?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Vorerkrankungen, Operationen, Medikation und Allergien vollständig erfragt."
+          },
+          {
+            "text": "Welche Komorbiditäten, Voroperationen und Dauermedikation bestehen? Gibt es Unverträglichkeiten?",
+            "isOptimal": false,
+            "feedback": "„Komorbiditäten“ versteht kaum ein Patient. Sagen Sie „andere Erkrankungen“."
+          }
+        ],
+        "patientResponse": "Arthrose in der Hüfte, deswegen die neue Hüfte. Bluthochdruck. Und ich hör auf dem rechten Ohr schlecht, bitte sprechen Sie ein bisschen lauter. Galle 2010, da war mir nach der Narkose auch tagelang schlecht. Zu Hause nehm ich Ramipril 5 morgens, das sollte ich heute weglassen. Hier hab ich noch nichts gegen die Übelkeit bekommen. Tramadol vertrag ich nicht, davon muss ich furchtbar brechen. Das steht hoffentlich in meiner Akte."
+      },
+      {
+        "id": "pflege-postoperative-schmerzen-ponv-q6",
+        "phase": "Sozial- & Familienanamnese",
+        "doctorOptions": [
+          {
+            "text": "Darf ich Sie noch etwas Persönliches fragen: Rauchen Sie, trinken Sie Alkohol, was machen Sie beruflich, wie wohnen Sie, und gibt es Krankheiten in Ihrer Familie?",
+            "isOptimal": true,
+            "feedback": "Sehr empathisch! Sie kündigen die persönlichen Fragen an und decken Noxen, Beruf, Wohnsituation und Familie ab."
+          },
+          {
+            "text": "Wie ist Ihr Noxenabusus und gibt es eine familiäre Belastung?",
+            "isOptimal": false,
+            "feedback": "Vermeiden Sie „Noxenabusus“. Fragen Sie direkt nach Rauchen, Alkohol und Drogen."
+          }
+        ],
+        "patientResponse": "Nein. Kaum. Ich war Verkäuferin, jetzt Rentnerin. Mit meinem Mann, im Erdgeschoss, die Dusche ist ebenerdig. Vor der OP bin ich mit dem Stock gelaufen. Mein Mann kommt heute Nachmittag."
+      },
+      {
+        "id": "pflege-postoperative-schmerzen-ponv-q7",
+        "phase": "Sorgen des Patienten & Gesprächsabschluss",
+        "doctorOptions": [
+          {
+            "text": "Haben Sie selbst eine Vermutung oder machen Sie sich über etwas besonders Sorgen? Haben Sie noch Fragen an mich?",
+            "isOptimal": true,
+            "feedback": "Sehr gut! Die Sorgen des Patienten zu erfragen gehört zu einem patientenzentrierten FSP-Gespräch."
+          },
+          {
+            "text": "Gut, das war's. Sie hören dann von uns.",
+            "isOptimal": false,
+            "feedback": "Zu abrupt. Fragen Sie nach Sorgen und offenen Fragen und erklären Sie das weitere Vorgehen."
+          }
+        ],
+        "patientResponse": "Ist mit der neuen Hüfte alles in Ordnung? Ich hab Angst, dass sie rausspringt, wenn ich mich bewege."
+      }
+    ],
+    "arztbriefTemplate": {
+      "prompt": "Verfassen Sie die Anamnese und Epikrise für Frau Renate Hartmann (72 J.) mit Verdacht auf Postoperative Schmerzen und postoperative Übelkeit und Erbrechen (PONV) am OP-Tag nach Hüft-TEP rechts im C1-Fachstil.",
+      "requiredTerms": [
+        "Postoperative Schmerzen und postoperative Übelkeit und Erbrechen (PONV) am OP-Tag nach Hüft-TEP rechts",
+        "Koxarthrose",
+        "Nachblutung / Wundhämatom",
+        "Anamnese",
+        "Vitalparameter"
+      ],
+      "sampleSolution": "Frau Renate Hartmann (72 J., Rentnerin (ehem. Verkäuferin)) stellte sich mit folgender aktueller Anamnese vor: Seit 3 Stunden zurück aus dem Aufwachraum nach elektiver Hüft-TEP rechts in Spinalanästhesie mit Sedierung. Übelkeit, einmaliges Erbrechen, Schmerz an der Hüfte NRS 7/10 in Ruhe. Hat seit der OP noch kein Wasser gelassen. Redon-Drainage: 180 ml blutig. An Vorerkrankungen seien bekannt: Koxarthrose rechts, Arterielle Hypertonie, PONV bei früheren Narkosen (Cholezystektomie 2010), Leichte Schwerhörigkeit. Die Dauermedikation umfasse: Ramipril 5 mg 1-0-0 (heute pausiert), Metamizol 1 g 1-1-1-1 (nach Anordnung), Oxycodon 10 mg retard 1-0-1 (nach Anordnung), Enoxaparin 40 mg s. c. 0-0-1, Ondansetron 4 mg i. v. bei Bedarf (angeordnet). Allergien: Tramadol (starke Übelkeit). Sozial- und Familienanamnese: Verheiratet, Ehemann kommt täglich zu Besuch. Wohnt im Erdgeschoss mit Dusche ebenerdig. Vor der OP mit Gehstock mobil. Nichtraucherin. Nicht relevant. Klinische Untersuchung: Blass, kaltschweißig, liegt flach im Bett. Verband trocken, Redon gefördert. Bein in Neutralstellung, keine Beinverkürzung oder Außenrotation. Fußpulse tastbar, Zehenbewegung und Sensibilität intakt. Blase über der Symphyse tastbar. Zusammenfassend ergibt sich der dringende Verdacht auf: Postoperative Schmerzen und postoperative Übelkeit und Erbrechen (PONV) am OP-Tag nach Hüft-TEP rechts (Differenzialdiagnosen: Nachblutung / Wundhämatom, Luxation der Hüftprothese, Opioid-Nebenwirkung)."
+    },
+    "isbarSteps": [
+      {
+        "step": "I",
+        "label": "Identify (Identifikation)",
+        "guidance": "Nennen Sie Name, Alter und aktuellen Bereich des Patienten / der Patientin.",
+        "sampleSpeech": "Ich übergebe Frau Renate Hartmann, 72 Jahre alt, aktuell in der Aufnahme (Orthopädie)."
+      },
+      {
+        "step": "S",
+        "label": "Situation (Aktuelle Situation)",
+        "guidance": "Benennen Sie Leitsymptom und Hauptverdachtsdiagnose.",
+        "sampleSpeech": "Vorstellungsgrund: Seit 3 Stunden zurück aus dem Aufwachraum nach elektiver Hüft-TEP rechts in Spinalanästhesie mit Sedierung. Übelkeit, einmaliges Erbrechen, Schmerz an der Hüfte NRS 7/10 in Ruhe. Hat seit der OP noch kein Wasser gelassen. Redon-Drainage: 180 ml blutig. Es besteht der dringende Verdacht auf Postoperative Schmerzen und postoperative Übelkeit und Erbrechen (PONV) am OP-Tag nach Hüft-TEP rechts."
+      },
+      {
+        "step": "B",
+        "label": "Background (Klinischer Hintergrund)",
+        "guidance": "Fassen Sie Vorerkrankungen, Dauermedikation und Allergien zusammen.",
+        "sampleSpeech": "Anamnestisch bekannt sind: Koxarthrose rechts, Arterielle Hypertonie, PONV bei früheren Narkosen (Cholezystektomie 2010), Leichte Schwerhörigkeit. Medikation: Ramipril 5 mg 1-0-0 (heute pausiert), Metamizol 1 g 1-1-1-1 (nach Anordnung), Oxycodon 10 mg retard 1-0-1 (nach Anordnung), Enoxaparin 40 mg s. c. 0-0-1, Ondansetron 4 mg i. v. bei Bedarf (angeordnet). Allergien: Tramadol (starke Übelkeit)."
+      },
+      {
+        "step": "A",
+        "label": "Assessment (Aktuelle Einschätzung & Vitalparameter)",
+        "guidance": "Berichten Sie über Vitalparameter, Untersuchungsbefund und Labor.",
+        "sampleSpeech": "Vitalparameter: RR 105/65 mmHg, HF 96 /min, Temp 37,4 °C, SpO₂ 94 % (Raumluft). Blass, kaltschweißig, liegt flach im Bett. Verband trocken, Redon gefördert. Bein in Neutralstellung, keine Beinverkürzung oder Außenrotation. Fußpulse tastbar, Zehenbewegung und Sensibilität intakt. Blase über der Symphyse tastbar. Labor: Hb (postoperativ): 10,1 g/dl (erniedrigt, präoperativ 12,8 g/dl), Blutzucker: 134 mg/dl, Blasenscan: 620 ml Restharn"
+      },
+      {
+        "step": "R",
+        "label": "Recommendation (Empfehlung & weiteres Vorgehen)",
+        "guidance": "Schlagen Sie die weitere Diagnostik und Therapie unter Berücksichtigung der Differenzialdiagnosen vor.",
+        "sampleSpeech": "Ich empfehle die zielgerichtete Weiterbehandlung bezüglich Postoperative Schmerzen und postoperative Übelkeit und Erbrechen (PONV) am OP-Tag nach Hüft-TEP rechts sowie den Ausschluss der wichtigsten Differenzialdiagnosen (Nachblutung / Wundhämatom, Luxation der Hüftprothese, Opioid-Nebenwirkung)."
       }
     ]
   },

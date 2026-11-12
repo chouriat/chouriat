@@ -74,7 +74,7 @@ def seed_terms() -> tuple[set[str], set[str]]:
     vocab = text.split("vocabulary_dictionary", 1)[1] if "vocabulary_dictionary" in text else ""
     for m in re.finditer(r"^\(\s*\n\s*'((?:[^']|'')*)'", scen, re.M):
         titles.add(norm(m.group(1).replace("''", "'")))
-    for m in re.finditer(r"^\('((?:[^']|'')*)'", vocab, re.M):
+    for m in re.finditer(r"^\s*\('((?:[^']|'')*)'", vocab, re.M):
         terms.add(norm(m.group(1).replace("''", "'")))
     return titles, terms
 

@@ -32,6 +32,10 @@ function parseJsonReply(rawText: string): { patientReply: string; feedback: stri
 }
 
 /** Turns a provider HTTP error into a clear German message for the user. */
+// Tried in order; later entries are fallbacks when Google is overloaded.
+const GEMINI_MODELS = ['gemini-3.8-flash', 'gemini-3.6-flash', 'gemini-3.5-flash-lite'];
+const GEMINI_RETRY_STATUSES = new Set([404, 500, 503, 504]);
+
 function providerError(status: number, providerName: string): ProviderResult {
   if (status === 400 || status === 401 || status === 403) {
     return {
@@ -59,35 +63,47 @@ async function callProvider(
   message: string
 ): Promise<ProviderResult> {
   if (provider === 'gemini') {
-    const res = await fetch(
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          // Header instead of ?key= so the key never ends up in URL logs.
-          'x-goog-api-key': apiKey,
-        },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: systemPrompt }] },
-          contents: [
-            ...history.map((m) => ({
-              role: m.role === 'doctor' ? 'user' : 'model',
-              parts: [{ text: m.text }],
-            })),
-            { role: 'user', parts: [{ text: message }] },
-          ],
-          generationConfig: {
-            temperature: 0.5,
-            responseMimeType: 'application/json',
+    const body = JSON.stringify({
+      systemInstruction: { parts: [{ text: systemPrompt }] },
+      contents: [
+        ...history.map((m) => ({
+          role: m.role === 'doctor' ? 'user' : 'model',
+          parts: [{ text: m.text }],
+        })),
+        { role: 'user', parts: [{ text: message }] },
+      ],
+      generationConfig: {
+        temperature: 0.5,
+        responseMimeType: 'application/json',
+      },
+    });
+
+    // Google often answers 503 ("model overloaded") at peak times, and older
+    // models return 404 for new keys. Try the next model in that case.
+    let lastStatus = 503;
+    for (const model of GEMINI_MODELS) {
+      const res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            // Header instead of ?key= so the key never ends up in URL logs.
+            'x-goog-api-key': apiKey,
           },
-        }),
+          body,
+        }
+      );
+      if (!res.ok) {
+        lastStatus = res.status;
+        if (GEMINI_RETRY_STATUSES.has(res.status)) continue;
+        return providerError(res.status, 'Gemini');
       }
-    );
-    if (!res.ok) return providerError(res.status, 'Gemini');
-    const data = await res.json();
-    const parsed = parseJsonReply(data.candidates?.[0]?.content?.parts?.[0]?.text || '');
-    return parsed ?? { error: 'Die KI-Antwort war unvollständig. Bitte erneut senden.', status: 502 };
+      const data = await res.json();
+      const parsed = parseJsonReply(data.candidates?.[0]?.content?.parts?.[0]?.text || '');
+      return parsed ?? { error: 'Die KI-Antwort war unvollständig. Bitte erneut senden.', status: 502 };
+    }
+    return providerError(lastStatus, 'Gemini');
   }
 
   if (provider === 'openai') {

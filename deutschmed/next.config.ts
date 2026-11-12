@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Bundle a minimal self-contained server in .next/standalone for Docker
+  // hosting (OVHcloud + Coolify). Vercel ignores this setting.
+  output: "standalone",
 };
 
 export default nextConfig;

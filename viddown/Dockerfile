@@ -3,7 +3,7 @@ FROM node:22-bookworm-slim
 # yt-dlp does the extraction, ffmpeg merges video+audio and converts to MP3
 RUN apt-get update \
  && apt-get install -y --no-install-recommends ffmpeg python3 ca-certificates curl \
- && curl -fsSL https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp \
+ && ARCH="$(dpkg --print-architecture)" && if [ "$ARCH" = "arm64" ]; then YTDLP_ASSET=yt-dlp_linux_aarch64; else YTDLP_ASSET=yt-dlp_linux; fi && curl -fsSL "https://github.com/yt-dlp/yt-dlp/releases/latest/download/$YTDLP_ASSET" -o /usr/local/bin/yt-dlp \
  && chmod +x /usr/local/bin/yt-dlp \
  && apt-get purge -y curl && apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
 

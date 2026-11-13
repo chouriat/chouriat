@@ -16,7 +16,7 @@ const compression = require('compression');
 const rateLimit = require('express-rate-limit');
 
 const { detectPlatform, normalizeUrl } = require('./lib/platforms');
-const { resolveMedia } = require('./lib/extractor');
+const { resolveMedia, authArgs } = require('./lib/extractor');
 
 const PORT = Number(process.env.PORT || 3000);
 const YTDLP = process.env.YTDLP_PATH || 'yt-dlp';
@@ -161,8 +161,7 @@ app.get('/api/download', downloadLimiter, async (req, res) => {
   args.push(...(data.idx ? ['--playlist-items', String(data.idx)] : ['--no-playlist']));
   if (data.kind === 'audio') args.push('-x', '--audio-format', 'mp3', '--audio-quality', '192K');
   else args.push('--merge-output-format', 'mp4', '--remux-video', 'mp4');
-  if (process.env.YTDLP_COOKIES) args.push('--cookies', process.env.YTDLP_COOKIES);
-  if (process.env.YTDLP_PROXY) args.push('--proxy', process.env.YTDLP_PROXY);
+  args.push(...authArgs(detectPlatform(data.src)?.id));
   args.push('--', data.src);
 
   const child = spawn(YTDLP, args, { stdio: ['ignore', 'ignore', 'pipe'] });

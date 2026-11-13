@@ -18,10 +18,28 @@ function formatSelectors(platformId) {
   };
 }
 
-function runJson(url) {
-  const args = ['-J', '--no-warnings', '--socket-timeout', '15', '--playlist-end', '20'];
+/**
+ * Cookie and proxy flags for yt-dlp. A residential proxy is billed per GB, so
+ * YTDLP_PROXY_PLATFORMS (comma-separated platform ids, e.g. "tiktok,facebook")
+ * limits it to the platforms that block the server. Unset or empty means all.
+ */
+function authArgs(platformId) {
+  const args = [];
   if (process.env.YTDLP_COOKIES) args.push('--cookies', process.env.YTDLP_COOKIES);
-  if (process.env.YTDLP_PROXY) args.push('--proxy', process.env.YTDLP_PROXY);
+  const proxy = process.env.YTDLP_PROXY;
+  if (proxy) {
+    const only = (process.env.YTDLP_PROXY_PLATFORMS || '')
+      .split(',')
+      .map((s) => s.trim().toLowerCase())
+      .filter(Boolean);
+    if (!only.length || only.includes(platformId)) args.push('--proxy', proxy);
+  }
+  return args;
+}
+
+function runJson(url, platformId) {
+  const args = ['-J', '--no-warnings', '--socket-timeout', '15', '--playlist-end', '20'];
+  args.push(...authArgs(platformId));
   args.push('--', url);
   return new Promise((resolve, reject) => {
     execFile(YTDLP, args, { timeout: TIMEOUT_MS, maxBuffer: 64 * 1024 * 1024 }, (err, stdout, stderr) => {
@@ -109,7 +127,7 @@ function itemFrom(info, platform, sourceUrl, index) {
 }
 
 async function resolveMedia(url, platform) {
-  const info = await runJson(url);
+  const info = await runJson(url, platform.id);
   const author = info.uploader || info.channel || info.creator || info.uploader_id || null;
   let items;
   if (Array.isArray(info.entries) && info.entries.length) {
@@ -129,4 +147,4 @@ async function resolveMedia(url, platform) {
   return { author, items };
 }
 
-module.exports = { resolveMedia, formatSelectors };
+module.exports = { resolveMedia, formatSelectors, authArgs };

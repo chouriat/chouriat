@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { MEDICAL_CASES } from '@/lib/medical-cases';
 import { useProgressStore } from '@/lib/store';
+import { onExerciseCompleted } from '@/lib/ads';
 import { CaseSelector } from '@/components/case-selector';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -122,7 +123,10 @@ export default function ArztbriefPage() {
               <Button variant="outline" onClick={() => setShowSolution(!showSolution)}>
                 {showSolution ? 'Musterlösung ausblenden' : 'C1-Musterlösung anzeigen'}
               </Button>
-              <Button onClick={() => markArztbriefCompleted(currentCase.id)}>
+              <Button onClick={() => {
+                if (!isCompleted) void onExerciseCompleted();
+                markArztbriefCompleted(currentCase.id);
+              }}>
                 {isCompleted ? 'Erneut speichern' : 'Arztbrief abschließen (+75 XP)'}
               </Button>
             </div>

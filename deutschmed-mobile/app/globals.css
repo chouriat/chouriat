@@ -89,5 +89,7 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
+    /* Room for the native AdMob banner; set by lib/ads.ts, 0 on the web. */
+    padding-bottom: var(--ad-banner-height, 0px);
   }
 }

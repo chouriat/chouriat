@@ -14,8 +14,14 @@ const ROOT = path.join(__dirname, '..');
 const OUT = path.join(ROOT, 'public');
 const SITE = (process.env.SITE_URL || 'https://vid-down.com').replace(/\/$/, '');
 const EMAIL = process.env.CONTACT_EMAIL || 'hello@vid-down.com';
+// Accepts "ca-pub-123…", "pub-123…" or just the digits, with stray quotes or
+// spaces from copy-pasting, and normalises to "ca-pub-123…".
+function adsenseClient(raw) {
+  const digits = String(raw || '').replace(/["'\s]/g, '').replace(/^(ca-)?pub-/i, '');
+  return /^\d{10,}$/.test(digits) ? `ca-pub-${digits}` : '';
+}
 const ADS = {
-  client: /^ca-pub-\d{10,}$/.test(process.env.ADSENSE_CLIENT || '') ? process.env.ADSENSE_CLIENT : '',
+  client: adsenseClient(process.env.ADSENSE_CLIENT),
   slots: {
     hero: process.env.ADSENSE_SLOT_HERO,
     result: process.env.ADSENSE_SLOT_RESULT,
@@ -107,7 +113,7 @@ const NAV = [
 function layout(page, body) {
   const url = `${SITE}${page.path === '/' ? '/' : page.path}`;
   const adsHead = ADS.client
-    ? `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADS.client}" crossorigin="anonymous"></script>`
+    ? `<meta name="google-adsense-account" content="${ADS.client}">\n<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADS.client}" crossorigin="anonymous"></script>`
     : '<!-- Google AdSense: set ADSENSE_CLIENT in .env and rebuild to load ads -->';
   const ld = page.jsonld ? page.jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n') : '';
   return `<!doctype html>
@@ -313,4 +319,7 @@ fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\nDisallo
 const pub = ADS.client ? ADS.client.replace('ca-', '') : 'pub-XXXXXXXXXXXXXXXX';
 fs.writeFileSync(path.join(OUT, 'ads.txt'), `google.com, ${pub}, DIRECT, f08c47fec0942fa0\n`);
 
+if (process.env.ADSENSE_CLIENT && !ADS.client) {
+  console.warn(`[build] ADSENSE_CLIENT is set but is not a valid publisher ID (expected ca-pub- followed by digits); ads stay off.`);
+}
 console.log(`[build] ${pages.length} pages → public/ (ads: ${ADS.client ? 'live ' + ADS.client : 'placeholders'})`);

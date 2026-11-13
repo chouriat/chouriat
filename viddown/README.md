@@ -81,7 +81,7 @@ Put it behind HTTPS (Caddy, Nginx or Cloudflare) and set `SITE_URL` to the publi
 Things to know in production:
 
 - **Keep yt-dlp fresh.** Networks change often. Rebuild the image (or run `yt-dlp -U`) every week or two.
-- **Datacenter IPs get blocked.** TikTok and especially Instagram may refuse requests from cloud IPs. If links start failing, set `YTDLP_COOKIES` to a cookies file from a throwaway account, or set `YTDLP_PROXY` to route yt-dlp through a residential proxy. Residential proxies bill per GB and every download passes through them, so set `YTDLP_PROXY_PLATFORMS=tiktok,facebook` to use the proxy only where it is needed.
+- **Datacenter IPs get blocked.** TikTok and especially Instagram may refuse requests from cloud IPs. If links start failing, set `YTDLP_COOKIES` to a cookies file from a throwaway account, or set `YTDLP_PROXY` to route yt-dlp through a residential proxy. Residential proxies bill per GB and every download passes through them, so set `YTDLP_PROXY_PLATFORMS=tiktok,facebook` to use the proxy only where it is needed. For those platforms only the lookup goes through the proxy: the metadata is cached for 30 minutes and the file is fetched straight from the platform's CDN, falling back to the proxy only if the CDN refuses. The log line `[download] <platform> via direct|proxy <size>` shows which path was used.
 - **Bandwidth.** Every download passes through your server. Watch your host's traffic allowance.
 - `TOKEN_SECRET` must be set to a long random value so download links survive restarts.
 

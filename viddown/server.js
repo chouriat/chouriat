@@ -16,7 +16,8 @@ const compression = require('compression');
 const rateLimit = require('express-rate-limit');
 
 const { detectPlatform, normalizeUrl } = require('./lib/platforms');
-const { resolveMedia, authArgs } = require('./lib/extractor');
+const { resolveMedia, authArgs, proxyApplies } = require('./lib/extractor');
+const infocache = require('./lib/infocache');
 
 const PORT = Number(process.env.PORT || 3000);
 const YTDLP = process.env.YTDLP_PATH || 'yt-dlp';
@@ -130,7 +131,11 @@ app.post('/api/resolve', apiLimiter, async (req, res) => {
   if (isBlocked(url)) return res.status(451).json({ error: 'This content is unavailable at the request of the rights holder.' });
   try {
     const media = await resolveMedia(url, platform);
-    const items = media.items.map((item) => ({
+    // Only proxied platforms need the cached metadata (see /api/download).
+    const cacheIds = proxyApplies(platform.id)
+      ? await Promise.all(media.items.map((item) => infocache.put(item.info).catch(() => null)))
+      : [];
+    const items = media.items.map((item, i) => ({
       title: item.title,
       thumbnail: item.thumbnail ? `/api/thumb?t=${encodeURIComponent(sign({ u: item.thumbnail }))}` : null,
       duration: item.duration,
@@ -140,7 +145,7 @@ app.post('/api/resolve', apiLimiter, async (req, res) => {
         kind: o.kind,
         ext: o.ext,
         href: `/api/download?t=${encodeURIComponent(
-          sign({ src: item.source, f: o.format, kind: o.kind, ext: o.ext, name: item.filename, idx: item.index })
+          sign({ src: item.source, f: o.format, kind: o.kind, ext: o.ext, name: item.filename, idx: item.index, c: cacheIds[i] || undefined })
         )}`,
       })),
     }));
@@ -155,48 +160,75 @@ app.get('/api/download', downloadLimiter, async (req, res) => {
   const data = verify(req.query.t);
   if (!data) return res.status(410).send('This download link has expired. Please go back and paste the link again.');
 
+  const platformId = detectPlatform(data.src)?.id;
   const dir = await fs.promises.mkdtemp(path.join(os.tmpdir(), 'vid-down-'));
   const cleanup = () => fs.promises.rm(dir, { recursive: true, force: true }).catch(() => {});
-  const args = ['--no-warnings', '--quiet', '--no-progress', '--socket-timeout', '15', '--max-filesize', process.env.MAX_FILESIZE || '700M', '-f', data.f, '-o', path.join(dir, 'media.%(ext)s')];
-  args.push(...(data.idx ? ['--playlist-items', String(data.idx)] : ['--no-playlist']));
-  if (data.kind === 'audio') args.push('-x', '--audio-format', 'mp3', '--audio-quality', '192K');
-  else args.push('--merge-output-format', 'mp4', '--remux-video', 'mp4');
-  args.push(...authArgs(detectPlatform(data.src)?.id));
-  args.push('--', data.src);
+  const base = ['--no-warnings', '--quiet', '--no-progress', '--socket-timeout', '15', '--max-filesize', process.env.MAX_FILESIZE || '700M', '-f', data.f, '-o', path.join(dir, 'media.%(ext)s')];
+  if (data.kind === 'audio') base.push('-x', '--audio-format', 'mp3', '--audio-quality', '192K');
+  else base.push('--merge-output-format', 'mp4', '--remux-video', 'mp4');
 
-  const child = spawn(YTDLP, args, { stdio: ['ignore', 'ignore', 'pipe'] });
-  let stderr = '';
-  child.stderr.on('data', (d) => (stderr = (stderr + d).slice(-4000)));
-  child.on('error', (err) => {
-    console.error('[download] could not start yt-dlp:', err.message);
-    aborted = true;
-    clearTimeout(timer);
-    cleanup();
-    if (!res.headersSent) res.status(503).send('The server is not set up yet: its video tool (yt-dlp) is missing.');
-  });
-  const timer = setTimeout(() => child.kill('SIGKILL'), Number(process.env.DOWNLOAD_TIMEOUT_MS || 180000));
+  // Plan: for proxied platforms, first fetch the file straight from the CDN
+  // using the cached metadata (no paid proxy traffic); fall back to a fresh
+  // proxied extraction if the CDN refuses.
+  const proxied = [...base, ...(data.idx ? ['--playlist-items', String(data.idx)] : ['--no-playlist']), ...authArgs(platformId), '--', data.src];
+  const attempts = [];
+  const cached = data.c ? await infocache.pathFor(data.c) : null;
+  if (cached) attempts.push({ via: 'direct', args: [...base, ...authArgs(platformId, { proxy: false }), '--load-info-json', cached] });
+  attempts.push({ via: proxyApplies(platformId) ? 'proxy' : 'direct', args: proxied });
+
   let aborted = false;
+  let child = null;
   req.on('close', () => {
     if (!res.writableEnded) {
       aborted = true;
-      child.kill('SIGKILL');
+      if (child) child.kill('SIGKILL');
     }
   });
 
-  child.on('close', async (code) => {
-    clearTimeout(timer);
+  const run = (args) =>
+    new Promise((resolve) => {
+      child = spawn(YTDLP, args, { stdio: ['ignore', 'ignore', 'pipe'] });
+      let stderr = '';
+      const timer = setTimeout(() => child.kill('SIGKILL'), Number(process.env.DOWNLOAD_TIMEOUT_MS || 180000));
+      child.stderr.on('data', (d) => (stderr = (stderr + d).slice(-4000)));
+      child.on('error', (err) => {
+        clearTimeout(timer);
+        resolve({ code: -1, stderr: err.message, missing: err.code === 'ENOENT' });
+      });
+      child.on('close', (code) => {
+        clearTimeout(timer);
+        resolve({ code, stderr });
+      });
+    });
+
+  for (const [i, attempt] of attempts.entries()) {
+    const result = await run(attempt.args);
     if (aborted) return cleanup();
-    const files = (await fs.promises.readdir(dir).catch(() => [])).filter((f) => f.startsWith('media.') && !f.endsWith('.part'));
-    if (code !== 0 || !files.length) {
-      console.error('[download] failed', code, stderr.trim().split('\n').pop());
+    if (result.missing) {
+      console.error('[download] could not start yt-dlp:', result.stderr);
       cleanup();
-      return res.status(502).send('Download failed. The post may have been removed. Please try again.');
+      return res.status(503).send('The server is not set up yet: its video tool (yt-dlp) is missing.');
     }
-    const file = path.join(dir, files[0]);
-    const ext = path.extname(file).slice(1) || data.ext;
-    const filename = `${data.name || 'vid-down'}.${ext}`;
-    res.download(file, filename, { headers: { 'Cache-Control': 'no-store' } }, () => cleanup());
-  });
+    const files = (await fs.promises.readdir(dir).catch(() => [])).filter((f) => f.startsWith('media.') && !f.endsWith('.part'));
+    if (result.code === 0 && files.length) {
+      const file = path.join(dir, files[0]);
+      const size = (await fs.promises.stat(file).catch(() => ({ size: 0 }))).size;
+      console.log(`[download] ${platformId} via ${attempt.via} ${(size / 1048576).toFixed(1)} MB`);
+      const ext = path.extname(file).slice(1) || data.ext;
+      const filename = `${data.name || 'vid-down'}.${ext}`;
+      return res.download(file, filename, { headers: { 'Cache-Control': 'no-store' } }, () => cleanup());
+    }
+    const reason = result.stderr.trim().split('\n').pop();
+    if (i < attempts.length - 1) {
+      console.warn(`[download] ${platformId} ${attempt.via} failed, retrying: ${reason}`);
+      const leftovers = await fs.promises.readdir(dir).catch(() => []);
+      await Promise.all(leftovers.map((f) => fs.promises.rm(path.join(dir, f), { force: true }).catch(() => {})));
+      continue;
+    }
+    console.error('[download] failed', result.code, reason);
+    cleanup();
+    return res.status(502).send('Download failed. The post may have been removed. Please try again.');
+  }
 });
 
 // Thumbnail proxy: many platforms block hot-linked thumbnails, so we relay

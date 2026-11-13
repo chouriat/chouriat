@@ -23,17 +23,19 @@ function formatSelectors(platformId) {
  * YTDLP_PROXY_PLATFORMS (comma-separated platform ids, e.g. "tiktok,facebook")
  * limits it to the platforms that block the server. Unset or empty means all.
  */
-function authArgs(platformId) {
+function proxyApplies(platformId) {
+  if (!process.env.YTDLP_PROXY) return false;
+  const only = (process.env.YTDLP_PROXY_PLATFORMS || '')
+    .split(',')
+    .map((s) => s.trim().toLowerCase())
+    .filter(Boolean);
+  return !only.length || only.includes(platformId);
+}
+
+function authArgs(platformId, { proxy = true } = {}) {
   const args = [];
   if (process.env.YTDLP_COOKIES) args.push('--cookies', process.env.YTDLP_COOKIES);
-  const proxy = process.env.YTDLP_PROXY;
-  if (proxy) {
-    const only = (process.env.YTDLP_PROXY_PLATFORMS || '')
-      .split(',')
-      .map((s) => s.trim().toLowerCase())
-      .filter(Boolean);
-    if (!only.length || only.includes(platformId)) args.push('--proxy', proxy);
-  }
+  if (proxy && proxyApplies(platformId)) args.push('--proxy', process.env.YTDLP_PROXY);
   return args;
 }
 
@@ -118,6 +120,7 @@ function itemFrom(info, platform, sourceUrl, index) {
   return {
     index,
     source: sourceUrl,
+    info, // raw yt-dlp metadata, cached so the download can skip the proxy
     title: title.length > 140 ? `${title.slice(0, 137)}…` : title,
     thumbnail: info.thumbnail || (info.thumbnails && info.thumbnails.length ? info.thumbnails[info.thumbnails.length - 1].url : null),
     duration: info.duration || null,
@@ -167,4 +170,4 @@ async function resolveMedia(url, platform) {
   return { author, items };
 }
 
-module.exports = { resolveMedia, formatSelectors, authArgs, isTransient };
+module.exports = { resolveMedia, formatSelectors, authArgs, proxyApplies, isTransient };

@@ -33,3 +33,14 @@ test('cookies are always passed', () =>
     assert.deepStrictEqual(authArgs('x'), ['--cookies', '/c.txt'])
   )
 );
+
+const { isTransient } = require('../lib/extractor');
+
+test('dropped proxy connections are retried, real errors are not', () => {
+  assert.ok(isTransient(new Error('ERROR: [generic] KSOR8BbwOt: Unable to download webpage: TLS/SSL connection has been closed (EOF)')));
+  assert.ok(isTransient(new Error('ProxyError: Tunnel connection failed: 502')));
+  assert.ok(!isTransient(new Error('ERROR: [facebook] 1: This video is only available for registered users.')));
+  const login = new Error('Unable to download webpage');
+  login.userMessage = 'private';
+  assert.ok(!isTransient(login));
+});

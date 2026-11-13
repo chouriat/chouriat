@@ -1,0 +1,3 @@
+# One URL fragment per line. Any submitted link containing a fragment is refused.
+# Use this to honour copyright takedown requests, e.g.:
+# tiktok.com/@someuser/video/1234567890

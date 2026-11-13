@@ -30,6 +30,8 @@ const ADS = {
   },
 };
 const YEAR = new Date().getFullYear();
+// Shown as <lastmod> in the sitemap. Bump it when page text changes.
+const CONTENT_UPDATED = '2026-11-13';
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 // ---------------------------------------------------------------------------
@@ -83,174 +85,297 @@ function mono(letter) {
 }
 
 // ---------------------------------------------------------------------------
+// Languages
+// ---------------------------------------------------------------------------
+// English is the default and lives at the root. Every other language lives
+// under /<code>/ and translates the main pages (see src/content/i18n/).
+const EN = {
+  code: 'en',
+  name: 'English',
+  locale: 'en_US',
+  dir: 'ltr',
+  ui: {
+    skip: 'Skip to content',
+    home: 'vid-down home',
+    menu: 'Menu',
+    theme: 'Switch light or dark theme',
+    videoLink: 'Video link',
+    paste: 'Paste',
+    get: 'Get video',
+    chooseNetwork: 'Choose a network',
+    more: (n) => `+ ${n} more`,
+    hints: ['No watermark', 'HD MP4 &amp; MP3', 'No account needed'],
+    savedDemo: 'Saved to your device',
+    howKicker: 'How it works',
+    whyKicker: 'Why vid-down',
+    guideKicker: 'Guide',
+    faqKicker: 'FAQ',
+    faqTitle: 'Questions, answered',
+    netKicker: (n) => `One tool, ${n} networks`,
+    netTitle: 'Pick where your clip lives',
+    openDl: 'Open downloader →',
+    ad: 'Advertisement',
+    footTagline: 'Save clips from your favourite networks in a couple of taps. Free, fast and with no sign-up.',
+    footDownloaders: 'Downloaders',
+    footMore: 'More networks',
+    footAll: (n) => `All ${n} networks →`,
+    about: 'About',
+    faq: 'FAQ',
+    contact: 'Contact',
+    guidePage: 'iPhone &amp; Android guide',
+    footLegal: 'Legal',
+    terms: 'Terms of use',
+    privacy: 'Privacy &amp; cookies',
+    copyright: 'Copyright / DMCA',
+    rights: (y) => `© ${y} vid-down. Not affiliated with any of the networks named on this site.`,
+    permission: 'Download only content you own or have permission to use.',
+    language: 'Language',
+    nav: {
+      '/tiktok-downloader': 'TikTok',
+      '/instagram-downloader': 'Instagram',
+      '/facebook-downloader': 'Facebook',
+      '/twitter-video-downloader': 'X / Twitter',
+      '/tiktok-mp3': 'TikTok MP3',
+    },
+    // Extra English-only pages listed in the footer so they are linked from every page.
+    footExtra: [
+      ['/instagram-reels-downloader', 'Instagram Reels'],
+      ['/facebook-reels-downloader', 'Facebook Reels'],
+      ['/twitter-gif-downloader', 'X / Twitter GIFs'],
+    ],
+  },
+};
+const LANGS = ['de', 'fr', 'es', 'ar'].map((c) => require(`../src/content/i18n/${c}`));
+const ALL_LANGS = [EN, ...LANGS];
+// English paths that exist in every language.
+const TRANSLATED = Object.keys(LANGS[0].pages);
+for (const L of LANGS) {
+  const missing = TRANSLATED.filter((p) => !L.pages[p]);
+  if (missing.length) throw new Error(`[build] ${L.code} is missing translations for ${missing.join(', ')}`);
+}
+/** URL path of an English page in a given language. */
+const lp = (L, p) => (L.code === 'en' ? p : p === '/' ? `/${L.code}/` : `/${L.code}${p}`);
+const toolByPath = Object.fromEntries(content.tools.map((t) => [t.path, t]));
+
+// ---------------------------------------------------------------------------
 // Partials
 // ---------------------------------------------------------------------------
-function ad(name, { hidden = false } = {}) {
+function ad(name, L, { hidden = false } = {}) {
   const id = name === 'result' ? ' id="result-ad"' : '';
   const hide = hidden ? ' hidden' : '';
   const slot = ADS.slots[name];
+  const label = L.ui.ad;
   if (ADS.client && slot && !/^0+$/.test(slot)) {
     // The result unit is pushed by app.js once it becomes visible.
     const push = name === 'result' ? '' : '<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>';
-    return `<aside class="ad wrap"${id}${hide} aria-label="Advertisement"><span class="ad-label">Advertisement</span>
+    return `<aside class="ad wrap"${id}${hide} aria-label="${label}"><span class="ad-label">${label}</span>
 <ins class="adsbygoogle" style="display:block" data-ad-client="${ADS.client}" data-ad-slot="${esc(slot)}" data-ad-format="auto" data-full-width-responsive="true"></ins>${push}</aside>`;
   }
   // Publisher ID set but no slot ID yet: show nothing (the head script still
   // verifies the site and lets Auto ads run) instead of a public placeholder.
   if (ADS.client) return '';
-  return `<aside class="ad wrap"${id}${hide} aria-label="Advertisement placeholder"><span class="ad-label">Advertisement</span>
+  return `<aside class="ad wrap"${id}${hide} aria-label="Advertisement placeholder"><span class="ad-label">${label}</span>
 <div class="ad-placeholder">Ad space · "${name}" slot · set ADSENSE_CLIENT and ADSENSE_SLOT_${name.toUpperCase()} in .env</div></aside>`;
 }
 
-const NAV = [
-  ['/tiktok-downloader', 'TikTok'],
-  ['/instagram-downloader', 'Instagram'],
-  ['/facebook-downloader', 'Facebook'],
-  ['/twitter-video-downloader', 'X / Twitter'],
-  ['/tiktok-mp3', 'TikTok MP3'],
-];
+const FONTS = 'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=DM+Sans:wght@400;500;600;700&display=swap';
+const FONTS_AR = 'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;600;700;800&display=swap';
 
 function layout(page, body) {
-  const url = `${SITE}${page.path === '/' ? '/' : page.path}`;
+  const L = page.lang;
+  const ui = L.ui;
+  const url = `${SITE}${page.path}`;
   const adsHead = ADS.client
     ? `<meta name="google-adsense-account" content="${ADS.client}">\n<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADS.client}" crossorigin="anonymous"></script>`
     : '<!-- Google AdSense: set ADSENSE_CLIENT in .env and rebuild to load ads -->';
-  const ld = page.jsonld ? page.jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n') : '';
+  const ld = page.jsonld ? page.jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j).replace(/</g, '\\u003c')}</script>`).join('\n') : '';
+  const alts = page.alternates || [];
+  const hreflang = alts.length
+    ? alts.map((a) => `<link rel="alternate" hreflang="${a.code}" href="${SITE}${a.path}">`).join('\n') +
+      `\n<link rel="alternate" hreflang="x-default" href="${SITE}${alts[0].path}">`
+    : '';
+  const ogAlt = alts.filter((a) => a.code !== L.code).map((a) => `<meta property="og:locale:alternate" content="${a.locale}">`).join('\n');
+  const fonts = L.code === 'ar' ? FONTS_AR : FONTS;
+  // Navigation: English pages link to English, translated pages stay in their language.
+  const nav = Object.entries(ui.nav).map(([p, label]) => [lp(L, p), label]);
+  // Language switcher: same page in each language when it exists, else that language's home page.
+  const langLinks = ALL_LANGS.map((X) => {
+    const target = alts.find((a) => a.code === X.code);
+    const href = target ? target.path : lp(X, '/');
+    return `<li><a href="${href}" hreflang="${X.code}" lang="${X.code}"${X.code === L.code ? ' aria-current="true"' : ''}>${X.name}</a></li>`;
+  }).join('');
+  const client = L.client ? `<script>window.VD_T=${JSON.stringify(L.client).replace(/</g, '\\u003c')};</script>\n` : '';
   return `<!doctype html>
-<html lang="en">
+<html lang="${L.code}" dir="${L.dir}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(page.title)}</title>
 <meta name="description" content="${esc(page.description)}">
-<link rel="canonical" href="${url}">
+${page.noindex ? '<meta name="robots" content="noindex">' : `<link rel="canonical" href="${url}">`}
+${hreflang}
 <meta name="theme-color" content="#ff5b3a">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="vid-down">
+<meta property="og:locale" content="${L.locale}">
+${ogAlt}
 <meta property="og:title" content="${esc(page.title)}">
 <meta property="og:description" content="${esc(page.description)}">
 <meta property="og:url" content="${url}">
 <meta property="og:image" content="${SITE}/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${esc(page.title)}">
+<meta name="twitter:description" content="${esc(page.description)}">
+<meta name="twitter:image" content="${SITE}/og.png">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/icon-192.png">
 <link rel="manifest" href="/site.webmanifest">
 <script>try{var t=localStorage.getItem('vd-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/styles.css?v=${BUILD_ID}">
+<script>(function(){var l=document.createElement('link');l.rel='stylesheet';l.href='${fonts}';document.head.appendChild(l)})()</script>
+<noscript><link rel="stylesheet" href="${fonts}"></noscript>
 ${adsHead}
 ${ld}
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
+<a class="skip" href="#main">${ui.skip}</a>
 <header class="site-header">
   <nav class="wrap nav" aria-label="Main">
-    <a class="brand" href="/" aria-label="vid-down home">${LOGO}<span>vid<b>-down</b></span></a>
-    <button class="icon-btn menu-btn" id="menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">${I.menu}</button>
+    <a class="brand" href="${lp(L, '/')}" aria-label="${ui.home}">${LOGO}<span>vid<b>-down</b></span></a>
+    <button class="icon-btn menu-btn" id="menu-btn" aria-label="${ui.menu}" aria-expanded="false" aria-controls="nav-links">${I.menu}</button>
     <ul class="nav-links" id="nav-links">
-      ${NAV.map(([href, label]) => `<li><a href="${href}"${href === page.path ? ' aria-current="page"' : ''}>${label}</a></li>`).join('')}
+      ${nav.map(([href, label]) => `<li><a href="${href}"${href === page.path ? ' aria-current="page"' : ''}>${label}</a></li>`).join('')}
     </ul>
-    <button class="icon-btn" id="theme-toggle" aria-label="Switch light or dark theme">${I.moon}</button>
+    <button class="icon-btn" id="theme-toggle" aria-label="${ui.theme}">${I.moon}</button>
   </nav>
 </header>
 <main id="main">
 ${body}
 </main>
-${ad('footer')}
+${ad('footer', L)}
 <footer class="site-footer">
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <a class="brand" href="/">${LOGO}<span>vid<b>-down</b></span></a>
-        <p style="margin-top:12px;max-width:320px">Save clips from your favourite networks in a couple of taps. Free, fast and with no sign-up.</p>
+        <a class="brand" href="${lp(L, '/')}">${LOGO}<span>vid<b>-down</b></span></a>
+        <p style="margin-top:12px;max-width:320px">${ui.footTagline}</p>
       </div>
-      <div><h4>Downloaders</h4><ul>${NAV.map(([h, l]) => `<li><a href="${h}">${l}</a></li>`).join('')}</ul></div>
-      <div><h4>More networks</h4><ul>${content.tools.filter((t) => t.platform && !PRIMARY.includes(t.platform)).slice(0, 7).map((t) => `<li><a href="${t.path}">${P[t.platform].name}</a></li>`).join('')}<li><a href="/#networks">All ${Object.keys(P).length} networks →</a></li></ul></div>
-      <div><h4>vid-down</h4><ul><li><a href="/about">About</a></li><li><a href="/faq">FAQ</a></li><li><a href="/contact">Contact</a></li></ul></div>
-      <div><h4>Legal</h4><ul><li><a href="/terms">Terms of use</a></li><li><a href="/privacy">Privacy &amp; cookies</a></li><li><a href="/copyright">Copyright / DMCA</a></li></ul></div>
+      <div><h4>${ui.footDownloaders}</h4><ul>${nav.concat(ui.footExtra || []).map(([h, l]) => `<li><a href="${h}">${l}</a></li>`).join('')}</ul></div>
+      <div><h4>${ui.footMore}</h4><ul>${content.tools.filter((t) => t.platform && !PRIMARY.includes(t.platform) && t.card).slice(0, 7).map((t) => `<li><a href="${t.path}">${P[t.platform].name}</a></li>`).join('')}<li><a href="${lp(L, '/')}#networks">${ui.footAll(Object.keys(P).length)}</a></li></ul></div>
+      <div><h4>vid-down</h4><ul><li><a href="/about">${ui.about}</a></li><li><a href="/faq">${ui.faq}</a></li><li><a href="/how-to-save-videos-iphone-android">${ui.guidePage}</a></li><li><a href="/contact">${ui.contact}</a></li></ul></div>
+      <div><h4>${ui.footLegal}</h4><ul><li><a href="/terms">${ui.terms}</a></li><li><a href="/privacy">${ui.privacy}</a></li><li><a href="/copyright">${ui.copyright}</a></li></ul></div>
+      <div><h4>${ui.language}</h4><ul class="langs">${langLinks}</ul></div>
     </div>
     <div class="disclaimer">
-      <span>© ${YEAR} vid-down. Not affiliated with any of the networks named on this site.</span>
-      <span>Download only content you own or have permission to use.</span>
+      <span>${ui.rights(YEAR)}</span>
+      <span>${ui.permission}</span>
     </div>
   </div>
 </footer>
-<script>window.VD_PLATFORMS=${JSON.stringify(PLATFORMS.map(({ id, hosts, pattern }) => ({ id, hosts, pattern })))};</script>
+${client}<script>window.VD_PLATFORMS=${JSON.stringify(PLATFORMS.map(({ id, hosts, pattern }) => ({ id, hosts, pattern })))};</script>
 <script src="/assets/app.js?v=${BUILD_ID}" defer></script>
 </body>
 </html>
 `;
 }
 
-function downloader(tool) {
+function downloader(tool, L) {
+  const ui = L.ui;
   const active = tool.platform;
   const shown = PRIMARY.includes(active) || !active ? PRIMARY : [...PRIMARY, active];
   const tabs =
     shown
-      .map((k) => `<a class="tab${k === active ? ' active' : ''}" data-platform="${k}" href="${content.platformPath[k]}">${P[k].glyph}${P[k].name}</a>`)
-      .join('') + `<a class="tab tab-more" href="#networks">+ ${Object.keys(P).length - shown.length} more</a>`;
+      .map((k) => {
+        const base = content.platformPath[k];
+        const href = TRANSLATED.includes(base) ? lp(L, base) : base;
+        return `<a class="tab${k === active ? ' active' : ''}" data-platform="${k}" href="${href}">${P[k].glyph}${P[k].name}</a>`;
+      })
+      .join('') + `<a class="tab tab-more" href="#networks">${ui.more(Object.keys(P).length - shown.length)}</a>`;
   return `<section class="hero">
   <div class="wrap hero-grid">
     <div>
       <span class="eyebrow">${I.sparkle} ${esc(tool.eyebrow)}</span>
       <h1>${tool.h1}</h1>
       <p class="lede">${esc(tool.lede)}</p>
-      <nav class="tabs" aria-label="Choose a network">${tabs}</nav>
-      <form class="grab" id="grab" action="/" method="get" novalidate>
+      <nav class="tabs" aria-label="${ui.chooseNetwork}">${tabs}</nav>
+      <form class="grab" id="grab" action="${lp(L, '/')}" method="get" novalidate>
         <label class="grab-field">
-          <span class="sr-only">Video link</span>
+          <span class="sr-only">${ui.videoLink}</span>
           ${I.link}
-          <input id="url" name="url" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="${esc(tool.placeholder)}" required>
+          <input id="url" name="url" type="url" inputmode="url" autocomplete="off" spellcheck="false" dir="ltr" placeholder="${esc(tool.placeholder)}" required>
         </label>
-        <button class="btn btn-ghost" type="button" id="paste">${I.paste} Paste</button>
-        <button class="btn btn-primary" type="submit" id="go">${I.down} Get video</button>
+        <button class="btn btn-ghost" type="button" id="paste">${I.paste} ${ui.paste}</button>
+        <button class="btn btn-primary" type="submit" id="go">${I.down} ${ui.get}</button>
       </form>
-      <div class="hint"><span>${I.check} No watermark</span><span>${I.check} HD MP4 &amp; MP3</span><span>${I.check} No account needed</span></div>
+      <div class="hint">${ui.hints.map((h) => `<span>${I.check} ${h}</span>`).join('')}</div>
       <div class="results" id="results" aria-live="polite"></div>
     </div>
     <div class="stack" aria-hidden="true">
       <div class="clip c1"><div class="play">${I.play}</div><b>@studio.moves</b><div class="bar"><i></i></div></div>
       <div class="clip c2"><div class="play">${I.play}</div><b>@late.night.eats</b><div class="bar"><i style="width:38%"></i></div></div>
-      <div class="saved"><span class="tick">${I.check}</span><div>Saved to your device<small>1080p · MP4 · 12.4 MB</small></div></div>
+      <div class="saved"><span class="tick">${I.check}</span><div>${ui.savedDemo}<small>1080p · MP4 · 12.4 MB</small></div></div>
     </div>
   </div>
 </section>
-${ad('result', { hidden: true })}
-${ad('hero')}`;
+${ad('result', L, { hidden: true })}
+${ad('hero', L)}`;
 }
 
-function steps(tool) {
+function steps(tool, L) {
   return `<section><div class="wrap">
-  <div class="section-head"><span class="kicker">How it works</span><h2>${esc(tool.stepsTitle)}</h2><p>${esc(tool.stepsLede)}</p></div>
+  <div class="section-head"><span class="kicker">${L.ui.howKicker}</span><h2>${esc(tool.stepsTitle)}</h2><p>${esc(tool.stepsLede)}</p></div>
   <ol class="steps">${tool.steps.map(([h, p]) => `<li><h3>${esc(h)}</h3><p>${esc(p)}</p></li>`).join('')}</ol>
 </div></section>`;
 }
 
-function features(tool) {
+function guide(g, L) {
+  if (!g) return '';
+  return `<section class="guide"><div class="wrap">
+  <div class="section-head"><span class="kicker">${L.ui.guideKicker}</span><h2>${esc(g.title)}</h2></div>
+  <div class="guide-body">${g.sections
+    .map(([h, ps]) => `<article><h3>${esc(h)}</h3>${ps.map((p) => `<p>${esc(p)}</p>`).join('')}</article>`)
+    .join('')}</div>
+</div></section>`;
+}
+
+function features(tool, L) {
   return `<section><div class="wrap band">
-  <div class="section-head"><span class="kicker" style="color:var(--sun)">Why vid-down</span><h2>${esc(tool.featuresTitle)}</h2></div>
+  <div class="section-head"><span class="kicker" style="color:var(--sun)">${L.ui.whyKicker}</span><h2>${esc(tool.featuresTitle)}</h2></div>
   <div class="features">${tool.features.map(([ico, h, p]) => `<div class="feature"><div class="ico">${I[ico]}</div><h3>${esc(h)}</h3><p>${esc(p)}</p></div>`).join('')}</div>
 </div></section>`;
 }
 
-function platformCards(exclude) {
-  const cards = content.tools
-    .filter((t) => t.path !== exclude && t.card)
-    .map(
-      (t) => `<a class="pcard" href="${t.path}"><span class="logo" style="background:${P[t.platform].color}">${P[t.platform].glyph}</span><h3>${esc(t.card.title)}</h3><p>${esc(t.card.text)}</p><span class="go">Open downloader →</span></a>`
-    )
-    .join('');
+function platformCards(exclude, L) {
+  const ui = L.ui;
+  const card = (href, platform, title, text) =>
+    `<a class="pcard" href="${href}"><span class="logo" style="background:${P[platform].color}">${P[platform].glyph}</span><h3>${esc(title)}</h3><p>${esc(text)}</p><span class="go">${ui.openDl}</span></a>`;
+  let cards;
+  let others = '';
+  if (L.code === 'en') {
+    cards = content.tools.filter((t) => t.path !== exclude && t.card).map((t) => card(t.path, t.platform, t.card.title, t.card.text));
+  } else {
+    cards = Object.entries(L.cards)
+      .filter(([p]) => p !== exclude)
+      .map(([p, text]) => card(lp(L, p), toolByPath[p].platform, p === '/tiktok-mp3' ? 'TikTok MP3' : P[toolByPath[p].platform].name, text));
+    // Networks without a translation link to their English page.
+    others = `<p class="other-nets"><b>${ui.otherNetworks}:</b> ${content.tools
+      .filter((t) => t.card && !PRIMARY.includes(t.platform))
+      .map((t) => `<a href="${t.path}" hreflang="en" lang="en">${P[t.platform].name}</a>`)
+      .join(' · ')}</p>`;
+  }
   return `<section id="networks"><div class="wrap">
-  <div class="section-head"><span class="kicker">One tool, ${Object.keys(P).length} networks</span><h2>Pick where your clip lives</h2></div>
-  <div class="platforms">${cards}</div>
+  <div class="section-head"><span class="kicker">${ui.netKicker(Object.keys(P).length)}</span><h2>${ui.netTitle}</h2></div>
+  <div class="platforms">${cards.join('')}</div>${others}
 </div></section>`;
 }
 
-function faq(items, title = 'Questions, answered') {
+function faq(items, L, title) {
   return `<section><div class="wrap">
-  <div class="section-head"><span class="kicker">FAQ</span><h2>${esc(title)}</h2></div>
+  <div class="section-head"><span class="kicker">${L.ui.faqKicker}</span><h2>${esc(title || L.ui.faqTitle)}</h2></div>
   <div class="faq">${items.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</div>
 </div></section>`;
 }
@@ -263,43 +388,107 @@ function faqLd(items) {
   };
 }
 
+function breadcrumbLd(L, page) {
+  const home = { '@type': 'ListItem', position: 1, name: 'vid-down', item: `${SITE}${lp(L, '/')}` };
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [home, { '@type': 'ListItem', position: 2, name: page.crumb || page.title.split(/ [—–|-] /)[0], item: `${SITE}${page.path}` }],
+  };
+}
+
+const WEBSITE_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'vid-down',
+  alternateName: 'vid-down.com',
+  url: `${SITE}/`,
+  inLanguage: ALL_LANGS.map((L) => L.code),
+};
+const ORG_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'vid-down',
+  url: `${SITE}/`,
+  logo: `${SITE}/icon-512.png`,
+  email: EMAIL,
+};
+
 // ---------------------------------------------------------------------------
 // Build
 // ---------------------------------------------------------------------------
 const BUILD_ID = Date.now().toString(36);
 const pages = [];
 
-for (const tool of content.tools) {
-  const body = [downloader(tool), steps(tool), features(tool), ad('content'), platformCards(tool.path), faq(tool.faq)].join('\n');
-  pages.push({
-    ...tool,
-    jsonld: [
+function toolPage(tool, L) {
+  const alternates = TRANSLATED.includes(tool.basePath) ? ALL_LANGS.map((X) => ({ code: X.code, locale: X.locale, path: lp(X, tool.basePath) })) : null;
+  const body = [downloader(tool, L), steps(tool, L), guide(tool.guide, L), features(tool, L), ad('content', L), platformCards(tool.basePath, L), faq(tool.faq, L)].join('\n');
+  const jsonld = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebApplication',
+      name: 'vid-down',
+      url: `${SITE}${tool.path}`,
+      description: tool.description,
+      inLanguage: L.code,
+      applicationCategory: 'MultimediaApplication',
+      operatingSystem: 'Any',
+      browserRequirements: 'Requires JavaScript',
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    },
+    faqLd(tool.faq),
+  ];
+  if (tool.basePath === '/') jsonld.unshift(WEBSITE_LD, ORG_LD);
+  else jsonld.push(breadcrumbLd(L, tool));
+  pages.push({ ...tool, lang: L, alternates, jsonld, html: body });
+}
+
+for (const tool of content.tools) toolPage({ ...tool, basePath: tool.path }, EN);
+
+for (const L of LANGS) {
+  for (const base of TRANSLATED) {
+    const en = toolByPath[base];
+    const t = L.pages[base];
+    toolPage(
       {
-        '@context': 'https://schema.org',
-        '@type': 'WebApplication',
-        name: 'vid-down',
-        url: `${SITE}${tool.path}`,
-        applicationCategory: 'MultimediaApplication',
-        operatingSystem: 'Any',
-        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+        ...en,
+        ...t,
+        basePath: base,
+        path: lp(L, base),
+        features: en.features.map(([ico], i) => [ico, ...L.features[i]]),
+        crumb: L.ui.nav[base],
       },
-      faqLd(tool.faq),
-    ],
-    html: body,
-  });
+      L
+    );
+  }
 }
 
 for (const doc of content.docs) {
   const html = doc.html.replace(/\{\{EMAIL\}\}/g, esc(EMAIL)).replace(/\{\{SITE\}\}/g, SITE);
-  const extra = doc.path === '/faq' ? faq(content.allFaq, 'Everything people ask us') : '';
-  pages.push({ ...doc, jsonld: doc.path === '/faq' ? [faqLd(content.allFaq)] : null, html: `<div class="wrap prose">${html}</div>${extra}` });
+  const extra = doc.path === '/faq' ? faq(content.allFaq, EN, 'Everything people ask us') : '';
+  const jsonld = doc.path === '/faq' ? [faqLd(content.allFaq)] : doc.noindex ? null : [breadcrumbLd(EN, doc)];
+  if (doc.article) {
+    jsonld.push({
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: doc.title.split(' | ')[0],
+      description: doc.description,
+      inLanguage: 'en',
+      dateModified: CONTENT_UPDATED,
+      author: { '@type': 'Organization', name: 'vid-down', url: `${SITE}/` },
+      publisher: { '@type': 'Organization', name: 'vid-down', logo: { '@type': 'ImageObject', url: `${SITE}/icon-512.png` } },
+      mainEntityOfPage: `${SITE}${doc.path}`,
+    });
+  }
+  pages.push({ ...doc, lang: EN, jsonld, html: `<div class="wrap prose">${html}</div>${extra}` });
 }
 
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(path.join(OUT, 'assets'), { recursive: true });
 
 for (const page of pages) {
-  const file = page.path === '/' ? 'index.html' : `${page.path.slice(1)}.html`;
+  const file = page.path.endsWith('/') ? `${page.path.slice(1)}index.html` : `${page.path.slice(1)}.html`;
+  fs.mkdirSync(path.dirname(path.join(OUT, file)), { recursive: true });
   fs.writeFileSync(path.join(OUT, file), layout(page, page.html));
 }
 
@@ -307,12 +496,24 @@ for (const f of ['styles.css', 'app.js']) fs.copyFileSync(path.join(ROOT, 'src/a
 for (const f of fs.readdirSync(path.join(ROOT, 'src/static'))) fs.copyFileSync(path.join(ROOT, 'src/static', f), path.join(OUT, f));
 fs.writeFileSync(path.join(OUT, 'favicon.svg'), LOGO.replace('aria-hidden="true"', 'xmlns="http://www.w3.org/2000/svg"'));
 
+// Sitemap with hreflang alternates, so Google links each language version.
 const indexable = pages.filter((p) => !p.noindex);
+const priority = (p) => (p.basePath === '/' ? '1.0' : p.tool ? (p.lang.code === 'en' ? '0.9' : '0.8') : p.article ? '0.6' : '0.4');
 fs.writeFileSync(
   path.join(OUT, 'sitemap.xml'),
-  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${indexable
-    .map((p) => `  <url><loc>${SITE}${p.path}</loc><changefreq>weekly</changefreq><priority>${p.path === '/' ? '1.0' : p.tool ? '0.9' : '0.4'}</priority></url>`)
-    .join('\n')}\n</urlset>\n`
+  `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${indexable
+  .map((p) => {
+    const alt = (p.alternates || [])
+      .map((a) => `\n    <xhtml:link rel="alternate" hreflang="${a.code}" href="${SITE}${a.path}"/>`)
+      .concat(p.alternates ? [`\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${p.alternates[0].path}"/>`] : [])
+      .join('');
+    return `  <url>\n    <loc>${SITE}${p.path}</loc>\n    <lastmod>${CONTENT_UPDATED}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${priority(p)}</priority>${alt}\n  </url>`;
+  })
+  .join('\n')}
+</urlset>
+`
 );
 fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: ${SITE}/sitemap.xml\n`);
 // ads.txt authorises Google to sell ads on this domain (required by AdSense).

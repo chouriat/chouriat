@@ -1,5 +1,6 @@
 'use strict';
 /** All page copy lives here so it can be edited without touching templates. */
+const { guides, networkGuide } = require('./guides');
 
 const platformPath = {
   tiktok: '/tiktok-downloader',
@@ -98,11 +99,11 @@ const tools = [
     tool: true,
     path: '/instagram-downloader',
     platform: 'instagram',
-    title: 'Instagram Video & Reels Downloader — Free, HD | vid-down',
-    description: 'Download Instagram Reels and videos in HD MP4 for free. Paste the link, save the clip. No login and no app required.',
-    eyebrow: 'Reels & video saver',
-    h1: 'Instagram Reels, <em>saved in a tap</em>',
-    lede: 'Hold on to the Reels and video posts you love in their original quality, ready to watch offline.',
+    title: 'Instagram Video Downloader — Save Reels & Posts in HD | vid-down',
+    description: 'Download Instagram videos, Reels and carousel clips in HD MP4 for free. Paste the link, save the clip. No login and no app required.',
+    eyebrow: 'Instagram video saver',
+    h1: 'Instagram videos, <em>saved in a tap</em>',
+    lede: 'Hold on to the feed videos, Reels and carousel clips you love in their original quality, ready to watch offline.',
     placeholder: 'Paste an Instagram link, e.g. https://www.instagram.com/reel/…',
     stepsTitle: 'How to download an Instagram Reel',
     stepsLede: 'Works with Reels, video posts and carousels that contain videos.',
@@ -174,6 +175,85 @@ const tools = [
       ['Do old twitter.com links still work?', 'Yes. Links that start with twitter.com and x.com are both supported.'],
       ['Can I download videos from protected accounts?', 'No. Posts from protected accounts are only visible to approved followers, so they cannot be fetched.'],
       ['Can I save a GIF from X?', 'GIFs on X are stored as short looping videos, so they download as an MP4 file.'],
+      ...generalFaq.slice(0, 2),
+      generalFaq[4],
+    ],
+  },
+  {
+    tool: true,
+    path: '/instagram-reels-downloader',
+    platform: 'instagram',
+    title: 'Instagram Reels Downloader — Save Reels in HD, Free | vid-down',
+    description: 'Download Instagram Reels in full HD MP4 or as MP3 audio. Free, no login, no app. Works on iPhone, Android and desktop.',
+    eyebrow: 'Reels saver',
+    h1: 'Instagram Reels, <em>kept in full HD</em>',
+    lede: 'Save any public Reel with its original picture and sound, ready to watch offline or keep as audio.',
+    placeholder: 'Paste a Reel link, e.g. https://www.instagram.com/reel/…',
+    stepsTitle: 'How to download an Instagram Reel',
+    stepsLede: 'Works with links copied from the Instagram app and from instagram.com.',
+    steps: [
+      ['Copy the Reel link', 'Open the Reel, tap the paper-plane icon and choose Copy link.'],
+      ['Paste it into vid-down', 'Tap Paste above, or drop the link in the box, and press Get video.'],
+      ['Save it', 'Pick MP4 HD for the full-quality Reel or MP3 to keep only the sound.'],
+    ],
+    featuresTitle: 'Made for Reels',
+    features: sharedFeatures,
+    faq: [
+      ['Does it keep the music of the Reel?', 'Yes. The MP4 has the original soundtrack. Music is copyrighted, so keep it for personal viewing unless you have permission to reuse it.'],
+      ['Can I download Reels from a private account?', 'No. Only Reels from public accounts can be fetched. vid-down never asks for your Instagram login.'],
+      ['Will the creator be notified?', 'No. vid-down does not use your Instagram account, so nothing is sent from it.'],
+      ...generalFaq.slice(0, 2),
+      generalFaq[4],
+    ],
+  },
+  {
+    tool: true,
+    path: '/facebook-reels-downloader',
+    platform: 'facebook',
+    title: 'Facebook Reels Downloader — Save FB Reels in HD | vid-down',
+    description: 'Download Facebook Reels as HD MP4 or MP3, free and without signing in. Paste the Reel link and save it on phone or desktop.',
+    eyebrow: 'Facebook Reels saver',
+    h1: 'Facebook Reels, <em>saved to your phone</em>',
+    lede: 'Keep the short videos you love from Facebook in HD, with sound, ready to watch offline.',
+    placeholder: 'Paste a Facebook Reel link, e.g. https://www.facebook.com/reel/…',
+    stepsTitle: 'How to download a Facebook Reel',
+    stepsLede: 'Works with public Reels from the Facebook app and facebook.com.',
+    steps: [
+      ['Copy the Reel link', 'Open the Reel, tap Share and choose Copy link.'],
+      ['Paste and fetch', 'Paste the link in the box above and press Get video.'],
+      ['Pick a format', 'Choose MP4 HD, a lighter SD file or MP3 audio.'],
+    ],
+    featuresTitle: 'Simple, quick and free',
+    features: sharedFeatures,
+    faq: [
+      ['Is a Facebook Reel different from a normal Facebook video?', 'Only in shape: Reels are short and vertical. vid-down saves both the same way.'],
+      ['Can I save Reels shared with friends only?', 'No. Only Reels set to Public can be fetched.'],
+      ...generalFaq.slice(0, 2),
+      generalFaq[4],
+    ],
+  },
+  {
+    tool: true,
+    path: '/twitter-gif-downloader',
+    platform: 'x',
+    title: 'Twitter (X) GIF Downloader — Save GIFs as MP4 | vid-down',
+    description: 'Save GIFs from X (Twitter) posts for free. GIFs on X are stored as looping MP4 videos; paste the post link and download the original file.',
+    eyebrow: 'X / Twitter GIF saver',
+    h1: 'GIFs from X, <em>saved in one tap</em>',
+    lede: 'Keep the reaction GIF you love. Paste the post link and save the original looping clip.',
+    placeholder: 'Paste a post link with a GIF, e.g. https://x.com/user/status/…',
+    stepsTitle: 'How to save a GIF from X',
+    stepsLede: 'Works with x.com and twitter.com links from the app or the website.',
+    steps: [
+      ['Copy the post link', 'Tap the share icon under the post with the GIF and choose Copy link.'],
+      ['Paste it above', 'Drop the link into vid-down and press Get video.'],
+      ['Save the clip', 'Tap the MP4 button. The file loops like a GIF in most players and chat apps.'],
+    ],
+    featuresTitle: 'The quick way to keep a GIF',
+    features: sharedFeatures,
+    faq: [
+      ['Why is my GIF an MP4 file?', 'X converts every GIF into a short looping MP4 video when it is posted. vid-down gives you that original file, which is smaller and sharper than a real GIF.'],
+      ['Can I share it in WhatsApp or iMessage?', 'Yes. Chat apps play short MP4 clips just like GIFs.'],
       ...generalFaq.slice(0, 2),
       generalFaq[4],
     ],
@@ -428,7 +508,31 @@ const more = [
   },
 ];
 
+
+/** One short, network-specific paragraph used in each secondary page's guide. */
+const about = {
+  pinterest: 'Pinterest is full of short how-to videos: recipes, crafts, hairstyles and home projects. Video Pins and Idea Pins can be saved as MP4 so you can follow along offline in the kitchen or the workshop.',
+  reddit: 'Videos uploaded to Reddit (v.redd.it) are stored as separate picture and sound streams, which is why many tools give you a silent clip. vid-down fetches both and joins them into one MP4 with audio.',
+  snapchat: 'Snapchat publishes Spotlight videos and some public Stories on the web at snapchat.com. Those public videos can be saved; private Snaps and chats never leave Snapchat.',
+  linkedin: 'LinkedIn posts often hold talks, product demos and short lessons worth keeping. Videos from posts that are visible to everyone can be saved as MP4 for later viewing.',
+  dailymotion: 'Dailymotion hosts news clips, sport highlights and longer shows. Public videos can be saved in HD or SD, or as MP3 if you only need the sound.',
+  twitch: 'Twitch clips are short highlights cut from a live stream by viewers or the streamer. vid-down saves them in the quality they were streamed, ready to share or rewatch.',
+  bluesky: 'Bluesky is an open social network where posts can include short videos. Videos from public posts are saved as standard MP4 files.',
+  tumblr: 'Tumblr blogs mix text, art and video. Videos uploaded directly to a public Tumblr post can be saved before they scroll out of your dashboard.',
+  vimeo: 'Vimeo is popular with filmmakers, teachers and companies. Many creators let anyone watch their videos; those public videos can be saved for offline viewing.',
+  vk: 'VK is one of the largest social networks in Eastern Europe, with its own video section and short clips. Videos visible without logging in can be saved.',
+  okru: 'OK.ru (Odnoklassniki) is a social network with a large video library. Public, recorded videos can be saved as MP4.',
+  rumble: 'Rumble hosts videos from independent creators, from news commentary to sport and vlogs. Public videos can be saved in HD or as audio only.',
+  bilibili: 'Bilibili is a video platform known for animation, gaming and creative content. It splits picture and sound into separate streams; vid-down joins them into one file.',
+  telegram: 'Many Telegram channels are public and can be opened in any browser at t.me. Videos posted in those public channels can be saved without the Telegram app.',
+  soundcloud: 'SoundCloud is home to independent musicians, DJs and podcasters. Public tracks can be saved as MP3 for listening offline, where the artist allows it.',
+  imgur: 'Imgur hosts images and short clips shared across the web. Animated posts are stored as MP4 video, which is what you get when you save them.',
+  '9gag': '9GAG is a community for memes and funny clips. Posts that contain a video or an animated clip can be saved as MP4.',
+  streamable: 'Streamable is a quick way to share a clip by link, often used for game and sport highlights. Free uploads expire, so save the clip while it is still online.',
+};
+
 for (const m of more) {
+  m.about = about[m.platform];
   const thing = m.audio ? 'track' : 'video';
   tools.push({
     tool: true,
@@ -455,17 +559,15 @@ for (const m of more) {
     features: sharedFeatures,
     card: { title: m.name, text: m.card },
     faq: [...m.faq, ...generalFaq.slice(0, 2), generalFaq[4]],
+    guide: networkGuide(m),
   });
 }
 
 const allFaq = [
   ...generalFaq,
-  tools[1].faq[0],
-  tools[1].faq[1],
-  tools[2].faq[0],
-  tools[3].faq[0],
-  tools[4].faq[0],
-  tools[5].faq[0],
+  ...['/tiktok-downloader', '/tiktok-downloader', '/instagram-downloader', '/facebook-downloader', '/twitter-video-downloader', '/tiktok-mp3', '/twitter-gif-downloader'].map(
+    (p, i, arr) => tools.find((t) => t.path === p).faq[arr.indexOf(p) === i ? 0 : 1]
+  ),
 ];
 
 const docs = [
@@ -474,6 +576,49 @@ const docs = [
     title: 'Frequently Asked Questions | vid-down',
     description: 'Answers to common questions about downloading videos with vid-down: formats, devices, privacy and troubleshooting.',
     html: `<h1>Help &amp; FAQ</h1><p>Short answers to the things people ask most. Still stuck? <a href="/contact">Get in touch</a>.</p>`,
+  },
+  {
+    path: '/how-to-save-videos-iphone-android',
+    article: true,
+    title: 'How to Save Videos on iPhone & Android | vid-down',
+    description: 'Step-by-step guide to saving TikTok, Instagram, Facebook and X videos on iPhone, iPad and Android: where the file goes and how to move it to Photos or your gallery.',
+    crumb: 'iPhone & Android guide',
+    html: `<h1>How to save videos on iPhone and Android</h1>
+<p class="updated">Updated 13 November 2026</p>
+<p>Most people use vid-down on their phone. The download itself is the same everywhere: copy the link of a public post, paste it into <a href="/">vid-down</a>, pick a format. What differs is where the file ends up and how you get it into your photo library. This guide covers both.</p>
+<h2>Step 1: copy the link of the post</h2>
+<ul>
+<li><strong>TikTok:</strong> tap the Share arrow on the right of the video, then Copy link.</li>
+<li><strong>Instagram:</strong> tap the paper-plane icon under the Reel or post, then Copy link.</li>
+<li><strong>Facebook:</strong> tap Share under the video, then Copy link.</li>
+<li><strong>X (Twitter):</strong> tap the share icon under the post, then Copy link.</li>
+</ul>
+<p>Only public posts work. If a post is from a private account or a closed group, no download tool can reach it.</p>
+<h2>Step 2 on iPhone and iPad (Safari)</h2>
+<ol>
+<li>Open <strong>vid-down.com</strong> in Safari. Tap <strong>Paste</strong> (or long-press the box and choose Paste), then <strong>Get video</strong>.</li>
+<li>Tap <strong>MP4 HD</strong>. Safari asks whether you want to download the file. Tap <strong>Download</strong>. A blue arrow appears in the address bar while it downloads.</li>
+<li>Open the <strong>Files</strong> app, go to <strong>Browse → On My iPhone → Downloads</strong> (or iCloud Drive → Downloads) and tap the video to play it.</li>
+<li>To put it in <strong>Photos</strong>, tap the Share button while the video is open and choose <strong>Save Video</strong>.</li>
+</ol>
+<p><strong>Tip:</strong> in Chrome for iPhone the steps are the same; the finished download opens from the Chrome menu under Downloads, where you can tap Open in… → Save Video.</p>
+<h2>Step 2 on Android (Chrome, Samsung Internet, Firefox)</h2>
+<ol>
+<li>Open <strong>vid-down.com</strong>, tap <strong>Paste</strong> and then <strong>Get video</strong>.</li>
+<li>Tap <strong>MP4 HD</strong>. The download starts straight away and a notification shows its progress.</li>
+<li>The video is saved in the <strong>Download</strong> folder. Most gallery apps (Google Photos, Samsung Gallery) show it within a few seconds; in Google Photos look under <strong>Library → Download</strong>.</li>
+</ol>
+<h2>Saving just the sound</h2>
+<p>Tap <strong>MP3</strong> instead of MP4 to keep only the audio. On iPhone the MP3 stays in Files and plays there; on Android it appears in the Download folder and in most music players. Music is protected by copyright, so keep downloaded songs for personal listening.</p>
+<h2>If something goes wrong</h2>
+<ul>
+<li><strong>“This post is private or requires a login”</strong>: the account is private, the post is limited to followers or friends, or it is age- or region-restricted.</li>
+<li><strong>Nothing happens after tapping MP4 on iPhone</strong>: check Settings → Safari → Downloads and make sure a download location is set, then try again.</li>
+<li><strong>The video has no sound</strong>: some posts are silent by design (GIFs on X, for example). Otherwise try the MP4 HD button again; vid-down merges sound and picture for networks that store them separately.</li>
+<li><strong>The link worked yesterday</strong>: the post may have been deleted or made private since.</li>
+</ul>
+<h2>Download responsibly</h2>
+<p>Save your own posts, videos you have permission to use, or clips for personal offline viewing where the law allows it. Do not re-upload other people's work as your own, and always credit the creator. More in our <a href="/faq">FAQ</a> and <a href="/terms">terms of use</a>.</p>`,
   },
   {
     path: '/about',
@@ -603,5 +748,7 @@ const docs = [
     html: `<h1>That page wandered off</h1><p>The link you followed does not exist any more. Head back to the <a href="/">downloader</a> and paste a video link to get going.</p>`,
   },
 ];
+
+for (const t of tools) if (!t.guide && guides[t.path]) t.guide = guides[t.path];
 
 module.exports = { tools, docs, allFaq, platformPath };

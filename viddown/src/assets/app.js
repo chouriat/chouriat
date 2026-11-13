@@ -36,6 +36,12 @@
   const tabs = document.querySelectorAll('.tab[data-platform]');
   const resultAd = $('#result-ad');
 
+  // Translated pages inject their strings as window.VD_T; English is the fallback.
+  const T = window.VD_T || {};
+  const t = (key, fallback) => T[key] || fallback;
+  const tl = (s) => (T.labels && T.labels[s]) || s;
+  const tDetail = (d) => String(d || '').split(' · ').map(tl).join(' · ');
+
   // The network list is injected by the build step from lib/platforms.js.
   const PLATFORMS = window.VD_PLATFORMS || [];
   function detect(value) {
@@ -84,7 +90,7 @@
 
   function setBusy(busy) {
     submit.disabled = busy;
-    submit.innerHTML = busy ? '<span class="spinner" aria-hidden="true"></span> Fetching…' : submit.dataset.label;
+    submit.innerHTML = busy ? `<span class="spinner" aria-hidden="true"></span> ${esc(t('fetching', 'Fetching…'))}` : submit.dataset.label;
   }
   submit.dataset.label = submit.innerHTML;
 
@@ -95,10 +101,10 @@
   function render(data) {
     const cards = data.items.map((item, i) => {
       const opts = item.options
-        .map((o, j) => `<a class="opt${j === 0 ? ' primary' : ''}" href="${esc(o.href)}" download data-kind="${esc(o.kind)}">${esc(o.label)}<small>${esc(o.detail)}</small></a>`)
+        .map((o, j) => `<a class="opt${j === 0 ? ' primary' : ''}" href="${esc(o.href)}" download data-kind="${esc(o.kind)}">${esc(tl(o.label))}<small>${esc(tDetail(o.detail))}</small></a>`)
         .join('');
       return `<article class="result">
-        <div class="thumb" ${item.thumbnail ? `style="background-image:url('${esc(item.thumbnail)}')"` : ''} role="img" aria-label="Video thumbnail">
+        <div class="thumb" ${item.thumbnail ? `style="background-image:url('${esc(item.thumbnail)}')"` : ''} role="img" aria-label="${esc(t('thumb', 'Video thumbnail'))}">
           ${item.duration ? `<span class="dur">${fmtDur(item.duration)}</span>` : ''}
         </div>
         <div class="meta">
@@ -109,7 +115,7 @@
       </article>`;
     });
     results.innerHTML = `${cards.join('')}
-      <div class="result-actions"><span>Links stay valid for 30 minutes.</span><button type="button" class="link-btn" id="again">← Download another video</button></div>`;
+      <div class="result-actions"><span>${esc(t('valid', 'Links stay valid for 30 minutes.'))}</span><button type="button" class="link-btn" id="again">${esc(t('another', '← Download another video'))}</button></div>`;
     $('#again').addEventListener('click', () => {
       results.innerHTML = '';
       input.value = '';
@@ -124,7 +130,7 @@
     const small = a.querySelector('small');
     const old = small.textContent;
     a.classList.add('busy');
-    small.textContent = 'Preparing file…';
+    small.textContent = t('preparing', 'Preparing file…');
     setTimeout(() => { a.classList.remove('busy'); small.textContent = old; }, 6000);
   });
 
@@ -133,7 +139,7 @@
     const url = input.value.trim();
     if (!url) { input.focus(); return; }
     if (!detect(url)) {
-      showError('That link is not from a network we support yet. Tip: open the post, use its Share button and choose "Copy link".');
+      showError(t('unsupported', 'That link is not from a network we support yet. Tip: open the post, use its Share button and choose "Copy link".'));
       return;
     }
     setBusy(true);
@@ -145,7 +151,10 @@
         body: JSON.stringify({ url }),
       });
       const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data.error || 'Something went wrong. Please try again.');
+      if (!res.ok) {
+        const translated = T.errors && data.code && T.errors[data.code];
+        throw new Error(translated || data.error || t('generic', 'Something went wrong. Please try again.'));
+      }
       render(data);
       if (resultAd) {
         resultAd.hidden = false;
@@ -155,7 +164,7 @@
         }
       }
     } catch (err) {
-      showError(err.message || 'Network error. Check your connection and try again.');
+      showError(err instanceof TypeError ? t('network', 'Network error. Check your connection and try again.') : err.message || t('generic', 'Something went wrong. Please try again.'));
     } finally {
       setBusy(false);
     }

@@ -38,13 +38,21 @@ server.js              Express app: /api/resolve, /api/download, /api/thumb + st
 lib/platforms.js       Supported networks and URL validation
 lib/extractor.js       yt-dlp wrapper and format selection (skips TikTok's watermarked copy)
 scripts/build.js       Static site generator: templates, ads, sitemap, robots.txt, ads.txt
-src/content/pages.js   ALL page copy (headlines, steps, FAQ, legal pages). Edit text here.
+src/content/pages.js   English page copy (headlines, steps, FAQ, legal pages). Edit text here.
+src/content/guides.js  English "Guide" text shown on each downloader page
+src/content/i18n/      German, French, Spanish and Arabic versions of the main pages
 src/assets/            styles.css and app.js
 src/static/            Icons, social preview image, web manifest
 blocklist.txt          URL fragments to refuse (copyright takedowns)
 ```
 
 After changing anything in `src/` or `.env`, run `npm run build` (or restart with `npm start`).
+
+## Languages and SEO
+
+The home page and the TikTok, Instagram, Facebook, X and TikTok MP3 pages also exist in German (`/de/`), French (`/fr/`), Spanish (`/es/`) and Arabic (`/ar/`, right-to-left). Each language file in `src/content/i18n/` holds the page text, the interface labels and the browser messages. The build refuses to run if a language is missing one of the translated pages.
+
+The build writes `hreflang` links on every translated page and in `sitemap.xml`, canonical tags, Open Graph tags, and structured data (FAQ, breadcrumbs, web app, website/organisation). When page text changes, bump `CONTENT_UPDATED` in `scripts/build.js` so the sitemap's `lastmod` stays honest.
 
 ## Google AdSense setup
 

@@ -1,6 +1,6 @@
 'use strict';
 /**
- * Static site generator for viddown.
+ * Static site generator for vid-down.
  * Reads src/ + .env and writes the finished site into public/.
  *   node scripts/build.js
  */
@@ -12,8 +12,8 @@ const { PLATFORMS } = require('../lib/platforms');
 
 const ROOT = path.join(__dirname, '..');
 const OUT = path.join(ROOT, 'public');
-const SITE = (process.env.SITE_URL || 'https://viddown.com').replace(/\/$/, '');
-const EMAIL = process.env.CONTACT_EMAIL || 'hello@viddown.com';
+const SITE = (process.env.SITE_URL || 'https://vid-down.com').replace(/\/$/, '');
+const EMAIL = process.env.CONTACT_EMAIL || 'hello@vid-down.com';
 const ADS = {
   client: /^ca-pub-\d{10,}$/.test(process.env.ADSENSE_CLIENT || '') ? process.env.ADSENSE_CLIENT : '',
   slots: {
@@ -60,6 +60,16 @@ const P = {
   twitch: { name: 'Twitch', color: '#7a3fd1', glyph: mono('T') },
   bluesky: { name: 'Bluesky', color: '#0f73d9', glyph: mono('B') },
   tumblr: { name: 'Tumblr', color: '#35465c', glyph: mono('t') },
+  vimeo: { name: 'Vimeo', color: '#1295c9', glyph: mono('V') },
+  vk: { name: 'VK', color: '#0077ff', glyph: mono('VK') },
+  okru: { name: 'OK.ru', color: '#ee8208', glyph: mono('OK') },
+  rumble: { name: 'Rumble', color: '#5aa215', glyph: mono('R') },
+  bilibili: { name: 'Bilibili', color: '#00a1d6', glyph: mono('B') },
+  telegram: { name: 'Telegram', color: '#229ed9', glyph: mono('T') },
+  soundcloud: { name: 'SoundCloud', color: '#ff5500', glyph: mono('SC') },
+  imgur: { name: 'Imgur', color: '#159f6b', glyph: mono('i') },
+  '9gag': { name: '9GAG', color: '#111', glyph: mono('9') },
+  streamable: { name: 'Streamable', color: '#0f90fa', glyph: mono('S') },
 };
 const PRIMARY = ['tiktok', 'instagram', 'facebook', 'x'];
 function mono(letter) {
@@ -107,7 +117,7 @@ function layout(page, body) {
 <link rel="canonical" href="${url}">
 <meta name="theme-color" content="#ff5b3a">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="viddown">
+<meta property="og:site_name" content="vid-down">
 <meta property="og:title" content="${esc(page.title)}">
 <meta property="og:description" content="${esc(page.description)}">
 <meta property="og:url" content="${url}">
@@ -128,7 +138,7 @@ ${ld}
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-header">
   <nav class="wrap nav" aria-label="Main">
-    <a class="brand" href="/" aria-label="viddown home">${LOGO}<span>vid<b>down</b></span></a>
+    <a class="brand" href="/" aria-label="vid-down home">${LOGO}<span>vid<b>-down</b></span></a>
     <button class="icon-btn menu-btn" id="menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">${I.menu}</button>
     <ul class="nav-links" id="nav-links">
       ${NAV.map(([href, label]) => `<li><a href="${href}"${href === page.path ? ' aria-current="page"' : ''}>${label}</a></li>`).join('')}
@@ -144,16 +154,16 @@ ${ad('footer')}
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <a class="brand" href="/">${LOGO}<span>vid<b>down</b></span></a>
+        <a class="brand" href="/">${LOGO}<span>vid<b>-down</b></span></a>
         <p style="margin-top:12px;max-width:320px">Save clips from your favourite networks in a couple of taps. Free, fast and with no sign-up.</p>
       </div>
       <div><h4>Downloaders</h4><ul>${NAV.map(([h, l]) => `<li><a href="${h}">${l}</a></li>`).join('')}</ul></div>
-      <div><h4>More networks</h4><ul>${content.tools.filter((t) => t.platform && !PRIMARY.includes(t.platform)).map((t) => `<li><a href="${t.path}">${P[t.platform].name}</a></li>`).join('')}</ul></div>
-      <div><h4>viddown</h4><ul><li><a href="/about">About</a></li><li><a href="/faq">FAQ</a></li><li><a href="/contact">Contact</a></li></ul></div>
+      <div><h4>More networks</h4><ul>${content.tools.filter((t) => t.platform && !PRIMARY.includes(t.platform)).slice(0, 7).map((t) => `<li><a href="${t.path}">${P[t.platform].name}</a></li>`).join('')}<li><a href="/#networks">All ${Object.keys(P).length} networks →</a></li></ul></div>
+      <div><h4>vid-down</h4><ul><li><a href="/about">About</a></li><li><a href="/faq">FAQ</a></li><li><a href="/contact">Contact</a></li></ul></div>
       <div><h4>Legal</h4><ul><li><a href="/terms">Terms of use</a></li><li><a href="/privacy">Privacy &amp; cookies</a></li><li><a href="/copyright">Copyright / DMCA</a></li></ul></div>
     </div>
     <div class="disclaimer">
-      <span>© ${YEAR} viddown. Not affiliated with any of the networks named on this site.</span>
+      <span>© ${YEAR} vid-down. Not affiliated with any of the networks named on this site.</span>
       <span>Download only content you own or have permission to use.</span>
     </div>
   </div>
@@ -211,7 +221,7 @@ function steps(tool) {
 
 function features(tool) {
   return `<section><div class="wrap band">
-  <div class="section-head"><span class="kicker" style="color:var(--sun)">Why viddown</span><h2>${esc(tool.featuresTitle)}</h2></div>
+  <div class="section-head"><span class="kicker" style="color:var(--sun)">Why vid-down</span><h2>${esc(tool.featuresTitle)}</h2></div>
   <div class="features">${tool.features.map(([ico, h, p]) => `<div class="feature"><div class="ico">${I[ico]}</div><h3>${esc(h)}</h3><p>${esc(p)}</p></div>`).join('')}</div>
 </div></section>`;
 }
@@ -258,7 +268,7 @@ for (const tool of content.tools) {
       {
         '@context': 'https://schema.org',
         '@type': 'WebApplication',
-        name: 'viddown',
+        name: 'vid-down',
         url: `${SITE}${tool.path}`,
         applicationCategory: 'MultimediaApplication',
         operatingSystem: 'Any',

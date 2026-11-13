@@ -73,18 +73,30 @@ function bestHeight(info) {
 function itemFrom(info, platform, sourceUrl, index) {
   const sel = formatSelectors(platform.id);
   const height = bestHeight(info);
-  const title = (info.description || info.title || `${platform.name} video`).replace(/\s+/g, ' ').trim();
-  const base = `viddown_${platform.id}_${safeName(info.id || info.title)}`;
-  const isImage = info.vcodec === 'none' && info.acodec === 'none' && !(info.formats || []).some((f) => f.vcodec && f.vcodec !== 'none');
+  const title = (info.description || info.title || `${platform.name} post`).replace(/\s+/g, ' ').trim();
+  const base = `vid-down_${platform.id}_${safeName(info.id || info.title)}`;
+  const formats = info.formats || [];
+  const hasVideo = formats.some((f) => f.vcodec && f.vcodec !== 'none') || (!formats.length && info.vcodec && info.vcodec !== 'none');
+  const hasAudio = formats.some((f) => f.acodec && f.acodec !== 'none') || (info.acodec && info.acodec !== 'none');
 
-  if (isImage) {
-    return null; // photo posts are not supported in v1
+  if (!hasVideo && !hasAudio) {
+    return null; // photo posts are not supported
   }
-  const options = [
-    { label: 'MP4 HD', detail: height ? `${height}p · no watermark` : 'Best quality · no watermark', kind: 'video', ext: 'mp4', format: sel.hd },
-    { label: 'MP4 SD', detail: 'Smaller file', kind: 'video', ext: 'mp4', format: sel.sd },
-    { label: 'MP3', detail: 'Audio only', kind: 'audio', ext: 'mp3', format: sel.audio },
-  ];
+  const mp3 = { label: 'MP3', detail: hasVideo ? 'Audio only' : '192 kbps audio', kind: 'audio', ext: 'mp3', format: sel.audio };
+  // Audio-only sources (music and podcast pages) get a single MP3 button.
+  const options = hasVideo
+    ? [
+        {
+          label: 'MP4 HD',
+          detail: [height ? `${height}p` : 'Best quality', platform.id === 'tiktok' ? 'no watermark' : null].filter(Boolean).join(' · '),
+          kind: 'video',
+          ext: 'mp4',
+          format: sel.hd,
+        },
+        { label: 'MP4 SD', detail: 'Smaller file', kind: 'video', ext: 'mp4', format: sel.sd },
+        mp3,
+      ]
+    : [mp3];
   return {
     index,
     source: sourceUrl,

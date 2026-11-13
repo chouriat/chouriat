@@ -1,4 +1,4 @@
-/* viddown — client */
+/* vid-down — client */
 (() => {
   'use strict';
   const $ = (s, el = document) => el.querySelector(s);

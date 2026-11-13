@@ -43,6 +43,16 @@ test('detects the additional networks', () => {
   assert.strictEqual(id('https://clips.twitch.tv/Abc'), 'twitch');
   assert.strictEqual(id('https://bsky.app/profile/a/post/1'), 'bluesky');
   assert.strictEqual(id('https://www.tumblr.com/a/1'), 'tumblr');
+  assert.strictEqual(id('https://vimeo.com/123'), 'vimeo');
+  assert.strictEqual(id('https://vkvideo.ru/video-1_2'), 'vk');
+  assert.strictEqual(id('https://ok.ru/video/123'), 'okru');
+  assert.strictEqual(id('https://rumble.com/v1abc-x.html'), 'rumble');
+  assert.strictEqual(id('https://b23.tv/abc'), 'bilibili');
+  assert.strictEqual(id('https://t.me/channel/12'), 'telegram');
+  assert.strictEqual(id('https://on.soundcloud.com/abc'), 'soundcloud');
+  assert.strictEqual(id('https://i.imgur.com/abc.mp4'), 'imgur');
+  assert.strictEqual(id('https://9gag.com/gag/abc'), '9gag');
+  assert.strictEqual(id('https://streamable.com/abc'), 'streamable');
   // Deliberately unsupported
   assert.strictEqual(id('https://www.youtube.com/watch?v=abc'), undefined);
   assert.strictEqual(id('https://youtu.be/abc'), undefined);

@@ -1,6 +1,6 @@
 'use strict';
 /**
- * viddown — server
+ * vid-down — server
  * Express app that serves the static site (public/) and a small JSON API that
  * resolves a social media link into downloadable media using yt-dlp.
  */
@@ -15,7 +15,7 @@ const helmet = require('helmet');
 const compression = require('compression');
 const rateLimit = require('express-rate-limit');
 
-const { detectPlatform, normalizeUrl, platformNames } = require('./lib/platforms');
+const { detectPlatform, normalizeUrl } = require('./lib/platforms');
 const { resolveMedia } = require('./lib/extractor');
 
 const PORT = Number(process.env.PORT || 3000);
@@ -24,7 +24,7 @@ const SECRET = process.env.TOKEN_SECRET || crypto.randomBytes(32).toString('hex'
 const TOKEN_TTL_MS = 30 * 60 * 1000; // download links are valid for 30 minutes
 
 if (!process.env.TOKEN_SECRET) {
-  console.warn('[viddown] TOKEN_SECRET is not set; using a random one (links reset on restart).');
+  console.warn('[vid-down] TOKEN_SECRET is not set; using a random one (links reset on restart).');
 }
 
 // Optional blocklist.txt: one URL fragment per line (used for copyright takedowns).
@@ -125,7 +125,7 @@ app.post('/api/resolve', apiLimiter, async (req, res) => {
   if (!url) return res.status(400).json({ error: 'Please paste a valid link.' });
   const platform = detectPlatform(url);
   if (!platform) {
-    return res.status(400).json({ error: `That link is not supported yet. Try ${platformNames()}.` });
+    return res.status(400).json({ error: "That link is not supported yet. Try TikTok, Instagram, Facebook, X or another network from the list on the home page." });
   }
   if (isBlocked(url)) return res.status(451).json({ error: 'This content is unavailable at the request of the rights holder.' });
   try {
@@ -155,7 +155,7 @@ app.get('/api/download', downloadLimiter, async (req, res) => {
   const data = verify(req.query.t);
   if (!data) return res.status(410).send('This download link has expired. Please go back and paste the link again.');
 
-  const dir = await fs.promises.mkdtemp(path.join(os.tmpdir(), 'viddown-'));
+  const dir = await fs.promises.mkdtemp(path.join(os.tmpdir(), 'vid-down-'));
   const cleanup = () => fs.promises.rm(dir, { recursive: true, force: true }).catch(() => {});
   const args = ['--no-warnings', '--quiet', '--no-progress', '--socket-timeout', '15', '--max-filesize', process.env.MAX_FILESIZE || '700M', '-f', data.f, '-o', path.join(dir, 'media.%(ext)s')];
   args.push(...(data.idx ? ['--playlist-items', String(data.idx)] : ['--no-playlist']));
@@ -195,7 +195,7 @@ app.get('/api/download', downloadLimiter, async (req, res) => {
     }
     const file = path.join(dir, files[0]);
     const ext = path.extname(file).slice(1) || data.ext;
-    const filename = `${data.name || 'viddown'}.${ext}`;
+    const filename = `${data.name || 'vid-down'}.${ext}`;
     res.download(file, filename, { headers: { 'Cache-Control': 'no-store' } }, () => cleanup());
   });
 });
@@ -244,15 +244,15 @@ function checkTools() {
   for (const [bin, args, name, hint] of tools) {
     const r = spawnSync(bin, args, { encoding: 'utf8', timeout: 15000 });
     if (r.error) {
-      console.error(`\n[viddown] MISSING TOOL: ${name} was not found ("${bin}"). Downloads will fail until it is installed.\n          ${hint}\n`);
+      console.error(`\n[vid-down] MISSING TOOL: ${name} was not found ("${bin}"). Downloads will fail until it is installed.\n          ${hint}\n`);
     } else {
-      console.log(`[viddown] ${name} ${String(r.stdout).split('\n')[0].replace(/^ffmpeg version /, '').split(' ')[0]} found`);
+      console.log(`[vid-down] ${name} ${String(r.stdout).split('\n')[0].replace(/^ffmpeg version /, '').split(' ')[0]} found`);
     }
   }
 }
 
 if (require.main === module) {
   checkTools();
-  app.listen(PORT, () => console.log(`[viddown] listening on http://localhost:${PORT}`));
+  app.listen(PORT, () => console.log(`[vid-down] listening on http://localhost:${PORT}`));
 }
 module.exports = app;

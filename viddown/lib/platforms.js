@@ -19,6 +19,16 @@ const PLATFORMS = [
   { id: 'twitch', name: 'Twitch', hosts: ['twitch.tv'] },
   { id: 'bluesky', name: 'Bluesky', hosts: ['bsky.app'] },
   { id: 'tumblr', name: 'Tumblr', hosts: ['tumblr.com'] },
+  { id: 'vimeo', name: 'Vimeo', hosts: ['vimeo.com'] },
+  { id: 'vk', name: 'VK', hosts: ['vk.com', 'vk.ru', 'vkvideo.ru'] },
+  { id: 'okru', name: 'OK.ru', hosts: ['ok.ru', 'odnoklassniki.ru'] },
+  { id: 'rumble', name: 'Rumble', hosts: ['rumble.com'] },
+  { id: 'bilibili', name: 'Bilibili', hosts: ['bilibili.com', 'bilibili.tv', 'b23.tv'] },
+  { id: 'telegram', name: 'Telegram', hosts: ['t.me', 'telegram.me'] },
+  { id: 'soundcloud', name: 'SoundCloud', hosts: ['soundcloud.com'] },
+  { id: 'imgur', name: 'Imgur', hosts: ['imgur.com'] },
+  { id: '9gag', name: '9GAG', hosts: ['9gag.com'] },
+  { id: 'streamable', name: 'Streamable', hosts: ['streamable.com'] },
 ];
 
 /** Pull the first http(s) URL out of whatever the user pasted (share text often wraps it). */

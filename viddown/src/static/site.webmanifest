@@ -1,6 +1,6 @@
 {
-  "name": "viddown — video downloader",
-  "short_name": "viddown",
+  "name": "vid-down — video downloader",
+  "short_name": "vid-down",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#fbf8f2",

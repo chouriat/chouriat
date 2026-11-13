@@ -1,6 +1,8 @@
-# viddown
+# vid-down
 
-Free, ad-supported website for saving public videos from **TikTok, Instagram, Facebook and X** (plus Pinterest, Reddit, Snapchat, LinkedIn, Dailymotion, Twitch clips, Bluesky and Tumblr) as HD/SD MP4 or MP3, without the TikTok watermark.
+> The site was first called "viddown", which is why this folder is still named `viddown/`. The public name is **vid-down**.
+
+Free, ad-supported website for saving public videos from **TikTok, Instagram, Facebook and X** (plus 18 more, listed in `lib/platforms.js`) as HD/SD MP4 or MP3, without the TikTok watermark.
 
 To add a network, add it to `lib/platforms.js` (link detection for server and browser), give it a mark in `scripts/build.js` and a page entry in `src/content/pages.js`.
 
@@ -70,8 +72,8 @@ AdSense policy notes that are already respected in the layout: ads are labelled 
 The app needs a normal server process (it runs yt-dlp and ffmpeg), so use a VPS or a container host such as Railway, Render, Fly.io or a Docker box. Serverless/static hosts like Vercel or Netlify will not work for the API.
 
 ```bash
-docker build -t viddown .
-docker run -d -p 3000:3000 --env-file .env --name viddown viddown
+docker build -t vid-down .
+docker run -d -p 3000:3000 --env-file .env --name vid-down vid-down
 ```
 
 Put it behind HTTPS (Caddy, Nginx or Cloudflare) and set `SITE_URL` to the public address.
@@ -87,4 +89,4 @@ Things to know in production:
 
 The Terms, Privacy and Copyright pages in `src/content/pages.js` are sensible starting templates, not legal advice. Review them (company name, contact email, log retention period) before launch. Downloading other people's content can breach copyright and the networks' terms of service; the site tells users to download only what they own or have permission to use, and `blocklist.txt` lets you honour takedown requests.
 
-viddown is not affiliated with any of the networks it supports.
+vid-down is not affiliated with any of the networks it supports.

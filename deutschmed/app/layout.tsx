@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Link from "next/link";
 import Script from "next/script";
 
 import { ADSENSE_CLIENT_ID, isAdSenseEnabled } from "@/lib/adsense";
@@ -28,6 +29,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="de">
       <body className="min-h-dvh">
         {children}
+        <footer className="border-t border-slate-200 px-4 py-4 text-center text-xs text-slate-500">
+          <Link href="/datenschutz" className="hover:text-slate-700 hover:underline">
+            Datenschutz
+          </Link>
+        </footer>
         {isAdSenseEnabled && (
           // AdSense Auto ads: Google picks ad placements. In the EU, the consent
           // banner comes from AdSense > Privacy & messaging (Google-certified CMP).

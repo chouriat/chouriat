@@ -4,15 +4,23 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { MEDICAL_CASES } from '@/lib/medical-cases';
 import { useProgressStore } from '@/lib/store';
+import { localFeedback, localPatientReply } from '@/lib/local-patient';
 import { CaseSelector } from '@/components/case-selector';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { AiKeySettings } from '@/components/ai-key-settings';
+import { aiKeyHeaders, useUserAiKey } from '@/lib/ai-key';
+
+// The web app calls its own API route. The mobile (static export) build sets
+// NEXT_PUBLIC_API_BASE_URL to the deployed web app, e.g. https://example.vercel.app
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? '';
 
 interface ChatMessage {
   role: 'doctor' | 'patient';
   text: string;
   feedback?: string;
+  isError?: boolean;
 }
 
 export default function AnamnesePage() {
@@ -28,6 +36,7 @@ export default function AnamnesePage() {
   const [aiProvider, setAiProvider] = useState<string | null>(null);
 
   const { progress, markAnamneseCompleted } = useProgressStore();
+  const { aiKey, saveKey, clearKey } = useUserAiKey();
 
   const currentCase =
     MEDICAL_CASES.find((c) => c.id === selectedCaseId) || MEDICAL_CASES[0];
@@ -51,44 +60,75 @@ export default function AnamnesePage() {
     setInputText('');
     setIsLoading(true);
 
+    // Optimistic UI: show the doctor's question immediately.
+    const history = messages
+      .filter((m) => !m.isError)
+      .map((m) => ({ role: m.role, text: m.text }));
+    setMessages((prev) => [...prev, { role: 'doctor', text: doctorQuestion }]);
+
     try {
-      const response = await fetch('/api/anamnese', {
+      const response = await fetch(`${API_BASE_URL}/api/anamnese`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...aiKeyHeaders(aiKey) },
         body: JSON.stringify({
           caseId: currentCase.id,
           message: doctorQuestion,
-          history: messages.map((m) => ({ role: m.role, text: m.text })),
+          history,
         }),
       });
 
-      const data = await response.json();
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok || !data.patientReply) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: 'patient',
+            text:
+              data.error ||
+              'Die Anfrage ist fehlgeschlagen. Bitte versuchen Sie es erneut.',
+            isError: true,
+          },
+        ]);
+        return;
+      }
 
       if (data.provider) {
         setAiProvider(data.provider);
       }
 
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: 'doctor',
-          text: doctorQuestion,
-          feedback: data.feedback,
-        },
-        {
-          role: 'patient',
-          text:
-            data.patientReply ||
-            currentCase.patient.chiefComplaint,
-        },
-      ]);
+      setMessages((prev) => {
+        const next = [...prev];
+        const last = next[next.length - 1];
+        if (last && last.role === 'doctor' && last.text === doctorQuestion) {
+          next[next.length - 1] = { ...last, feedback: data.feedback };
+        }
+        return [...next, { role: 'patient', text: data.patientReply }];
+      });
     } catch {
+      if (!aiKey) {
+        // No AI key and no connection (e.g. mobile offline): answer locally
+        // from the case's written patient dialogue.
+        setAiProvider('fallback');
+        setMessages((prev) => {
+          const next = [...prev];
+          const last = next[next.length - 1];
+          if (last && last.role === 'doctor' && last.text === doctorQuestion) {
+            next[next.length - 1] = { ...last, feedback: localFeedback(doctorQuestion) };
+          }
+          return [
+            ...next,
+            { role: 'patient', text: localPatientReply(currentCase, doctorQuestion, history.length === 0) },
+          ];
+        });
+        return;
+      }
       setMessages((prev) => [
         ...prev,
-        { role: 'doctor', text: doctorQuestion },
         {
           role: 'patient',
-          text: currentCase.patient.chiefComplaint,
+          text: 'Keine Verbindung zum Server. Bitte prüfen Sie Ihre Internetverbindung.',
+          isError: true,
         },
       ]);
     } finally {
@@ -157,6 +197,11 @@ export default function AnamnesePage() {
               <strong>Patient:</strong> {currentCase.patient.name} ({currentCase.patient.age} J.,{' '}
               {currentCase.patient.occupation})
             </p>
+            {currentCase.speaker && (
+              <p>
+                <strong>Gesprächspartner:</strong> {currentCase.speaker}
+              </p>
+            )}
             <p>
               <strong>Leitsymptom:</strong> „{currentCase.patient.chiefComplaint}“
             </p>
@@ -186,7 +231,7 @@ export default function AnamnesePage() {
                         ? '⚡ OpenAI aktiv'
                         : aiProvider === 'anthropic'
                         ? '⚡ Claude AI aktiv'
-                        : '💡 Lokaler Simulator (API-Key optional)'}
+                        : '💡 Lokaler Simulator (ohne KI)'}
                     </Badge>
                   )}
                 </div>
@@ -195,6 +240,17 @@ export default function AnamnesePage() {
                 </p>
               </CardHeader>
               <CardContent className="space-y-4">
+                <AiKeySettings
+                  aiKey={aiKey}
+                  onSave={(key) => {
+                    saveKey(key);
+                    setAiProvider(null);
+                  }}
+                  onClear={() => {
+                    clearKey();
+                    setAiProvider(null);
+                  }}
+                />
                 <div className="h-80 overflow-y-auto rounded-xl border bg-slate-50 p-4 space-y-3">
                   {messages.length === 0 ? (
                     <p className="text-xs text-slate-500 text-center py-12">
@@ -210,13 +266,21 @@ export default function AnamnesePage() {
                       >
                         <div
                           className={`max-w-[85%] rounded-xl px-4 py-2.5 text-sm ${
-                            msg.role === 'doctor'
+                            msg.isError
+                              ? 'bg-red-50 border border-red-200 text-red-800'
+                              : msg.role === 'doctor'
                               ? 'bg-blue-600 text-white'
                               : 'bg-white border text-slate-800'
                           }`}
                         >
                           <div className="text-[10px] font-semibold opacity-75 mb-1">
-                            {msg.role === 'doctor' ? 'Sie (Arzt/Ärztin)' : currentCase.patient.name}
+                            {msg.isError
+                              ? '⚠️ Hinweis'
+                              : msg.role === 'doctor'
+                              ? 'Sie (Arzt/Ärztin)'
+                              : currentCase.speaker
+                              ? currentCase.speaker.replace(/\s*\(Fremdanamnese\)/, '')
+                              : currentCase.patient.name}
                           </div>
                           {msg.text}
                         </div>

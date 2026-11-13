@@ -70,13 +70,13 @@ p { margin: 0 0 1em; }
 .nav { display: flex; align-items: center; gap: 20px; height: 68px; }
 .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--font-display); font-weight: 800; font-size: 1.45rem; letter-spacing: -0.03em; }
 .brand span b { color: var(--coral); font-weight: 800; }
-.nav-links { display: flex; gap: 4px; margin-left: auto; list-style: none; padding: 0; margin-block: 0; }
+.nav-links { display: flex; gap: 4px; margin-inline-start: auto; list-style: none; padding: 0; margin-block: 0; }
 .nav-links a { text-decoration: none; font-weight: 500; font-size: 0.95rem; padding: 8px 12px; border-radius: 999px; color: var(--ink-2); }
 .nav-links a:hover, .nav-links a[aria-current='page'] { background: var(--card); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
 .icon-btn { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; }
 .menu-btn { display: none; }
 @media (max-width: 860px) {
-  .menu-btn { display: inline-grid; margin-left: auto; }
+  .menu-btn { display: inline-grid; margin-inline-start: auto; }
   .nav-links { display: none; position: absolute; top: 68px; left: 0; right: 0; flex-direction: column; background: var(--paper); border-bottom: 1px solid var(--line); padding: 10px 16px 16px; }
   .nav-links.open { display: flex; }
   .nav-links a { display: block; padding: 12px; }
@@ -105,7 +105,7 @@ p { margin: 0 0 1em; }
 
 .grab { background: var(--card); border: 2px solid var(--ink); border-radius: 22px; padding: 8px; display: flex; gap: 8px; box-shadow: 6px 6px 0 var(--ink); transition: box-shadow 0.15s, transform 0.15s; }
 .grab:focus-within { box-shadow: 3px 3px 0 var(--coral); transform: translate(2px, 2px); border-color: var(--coral); }
-.grab-field { position: relative; flex: 1; display: flex; align-items: center; gap: 10px; padding-left: 12px; min-width: 0; }
+.grab-field { position: relative; flex: 1; display: flex; align-items: center; gap: 10px; padding-inline-start: 12px; min-width: 0; }
 .grab-field svg { flex: none; color: var(--muted); }
 .grab input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: 500 1.05rem var(--font-body); color: var(--ink); padding: 14px 0; }
 .grab input::placeholder { color: var(--muted); }
@@ -236,3 +236,32 @@ section { padding: 72px 0; }
 .tab .mono { font-size: 0.8rem; width: 16px; text-align: center; }
 .tab-more { border-style: dashed; color: var(--muted); }
 #networks { scroll-margin-top: 80px; }
+
+/* ---------- Guide (long-form help text) ---------- */
+.guide-body { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+.guide-body > * { min-width: 0; }
+.guide-body p { overflow-wrap: anywhere; }
+.guide-body article { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+.guide-body h3 { margin-bottom: 0.6em; }
+.guide-body p { color: var(--ink-2); }
+.guide-body p:last-child { margin-bottom: 0; }
+@media (max-width: 900px) { .guide-body { grid-template-columns: 1fr; } .guide-body article { padding: 20px; } }
+.other-nets { margin-top: 24px; color: var(--muted); font-size: 0.95rem; line-height: 1.9; }
+.other-nets a { color: var(--ink-2); }
+.prose ol, .prose ul { padding-inline-start: 1.3em; }
+.prose li { margin-bottom: 0.4em; }
+.foot-grid { grid-template-columns: 1.3fr repeat(5, 1fr); }
+@media (max-width: 1000px) { .foot-grid { grid-template-columns: repeat(3, 1fr); } .foot-grid > :first-child { grid-column: 1 / -1; } }
+@media (max-width: 560px) { .foot-grid { grid-template-columns: 1fr 1fr; } }
+.langs a[aria-current] { color: var(--ink); font-weight: 700; }
+
+/* ---------- Right-to-left (Arabic) ---------- */
+[dir='rtl'] body { font-family: 'Noto Sans Arabic', var(--font-body); }
+[dir='rtl'] h1, [dir='rtl'] h2, [dir='rtl'] h3, [dir='rtl'] .steps li::before { font-family: 'Noto Sans Arabic', var(--font-display); letter-spacing: 0; }
+[dir='rtl'] h1, [dir='rtl'] h2 { line-height: 1.3; }
+[dir='rtl'] .kicker, [dir='rtl'] .ad-label { letter-spacing: 0; }
+[dir='rtl'] .brand { direction: ltr; }
+[dir='rtl'] .stack { direction: ltr; }
+[dir='rtl'] .grab input:placeholder-shown { direction: rtl; }
+[dir='rtl'] .skip { left: auto; right: -999px; }
+[dir='rtl'] .skip:focus { right: 8px; }

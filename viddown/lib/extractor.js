@@ -49,19 +49,24 @@ function runJson(url, platformId) {
         const e = new Error((stderr || err.message).trim().split('\n').pop());
         if (err.code === 'ENOENT') {
           e.message = `yt-dlp was not found (looked for "${YTDLP}"). Install it or set YTDLP_PATH.`;
+          e.userCode = 'setup';
           e.userMessage = 'The server is not set up yet: its video tool (yt-dlp) is missing. Please contact the site owner.';
           return reject(e);
         }
         if (err.killed) {
           e.message = `yt-dlp timed out after ${TIMEOUT_MS} ms`;
+          e.userCode = 'timeout';
           e.userMessage = 'This is taking too long. Please try again in a moment.';
           return reject(e);
         }
         if (/private|login|log in|cookies|authenticat/i.test(stderr)) {
+          e.userCode = 'private';
           e.userMessage = 'This post is private or requires a login, so it cannot be downloaded.';
         } else if (/unsupported url/i.test(stderr)) {
+          e.userCode = 'not_video';
           e.userMessage = "This link doesn't point to a video. Open the post and copy its link.";
         } else if (/no video/i.test(stderr)) {
+          e.userCode = 'no_video';
           e.userMessage = 'We could not find a video in this post.';
         }
         return reject(e);
@@ -164,6 +169,7 @@ async function resolveMedia(url, platform) {
   }
   if (!items.length) {
     const e = new Error('no downloadable media');
+    e.userCode = 'no_video';
     e.userMessage = 'We could not find a video in this post.';
     throw e;
   }

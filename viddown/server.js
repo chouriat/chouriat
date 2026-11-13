@@ -111,7 +111,7 @@ const apiLimiter = rateLimit({
   limit: Number(process.env.RATE_LIMIT_PER_MIN || 20),
   standardHeaders: 'draft-7',
   legacyHeaders: false,
-  message: { error: 'Too many requests. Please wait a minute and try again.' },
+  message: { error: 'Too many requests. Please wait a minute and try again.', code: 'rate' },
 });
 const downloadLimiter = rateLimit({
   windowMs: 60 * 1000,
@@ -123,12 +123,12 @@ const downloadLimiter = rateLimit({
 app.post('/api/resolve', apiLimiter, async (req, res) => {
   const raw = (req.body && req.body.url) || '';
   const url = normalizeUrl(raw);
-  if (!url) return res.status(400).json({ error: 'Please paste a valid link.' });
+  if (!url) return res.status(400).json({ error: 'Please paste a valid link.', code: 'invalid' });
   const platform = detectPlatform(url);
   if (!platform) {
-    return res.status(400).json({ error: "That link is not supported yet. Try TikTok, Instagram, Facebook, X or another network from the list on the home page." });
+    return res.status(400).json({ error: "That link is not supported yet. Try TikTok, Instagram, Facebook, X or another network from the list on the home page.", code: 'unsupported' });
   }
-  if (isBlocked(url)) return res.status(451).json({ error: 'This content is unavailable at the request of the rights holder.' });
+  if (isBlocked(url)) return res.status(451).json({ error: 'This content is unavailable at the request of the rights holder.', code: 'blocked' });
   try {
     const media = await resolveMedia(url, platform);
     // Only proxied platforms need the cached metadata (see /api/download).
@@ -152,7 +152,7 @@ app.post('/api/resolve', apiLimiter, async (req, res) => {
     res.json({ platform: platform.id, platformName: platform.name, author: media.author, items });
   } catch (err) {
     console.error('[resolve]', platform.id, err.message);
-    res.status(422).json({ error: err.userMessage || "We couldn't fetch this post. It may be private, deleted or region-locked." });
+    res.status(422).json({ error: err.userMessage || "We couldn't fetch this post. It may be private, deleted or region-locked.", code: err.userCode || 'failed' });
   }
 });
 

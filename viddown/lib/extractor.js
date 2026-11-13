@@ -126,8 +126,28 @@ function itemFrom(info, platform, sourceUrl, index) {
   };
 }
 
+// Residential proxies rotate through home connections, and one of them
+// occasionally drops mid-request. Those failures are worth a retry.
+const TRANSIENT = /SSL|EOF|timed out|Connection (reset|aborted|refused)|ProxyError|Tunnel connection failed|Unable to download webpage|HTTP Error 5\d\d/i;
+const RESOLVE_ATTEMPTS = Math.max(1, Number(process.env.RESOLVE_ATTEMPTS || 3));
+
+function isTransient(err) {
+  return !err.userMessage && TRANSIENT.test(err.message || '');
+}
+
+async function runJsonWithRetry(url, platformId) {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      return await runJson(url, platformId);
+    } catch (err) {
+      if (attempt >= RESOLVE_ATTEMPTS || !isTransient(err)) throw err;
+      console.warn(`[resolve] retry ${attempt}/${RESOLVE_ATTEMPTS - 1} after: ${err.message}`);
+    }
+  }
+}
+
 async function resolveMedia(url, platform) {
-  const info = await runJson(url, platform.id);
+  const info = await runJsonWithRetry(url, platform.id);
   const author = info.uploader || info.channel || info.creator || info.uploader_id || null;
   let items;
   if (Array.isArray(info.entries) && info.entries.length) {
@@ -147,4 +167,4 @@ async function resolveMedia(url, platform) {
   return { author, items };
 }
 
-module.exports = { resolveMedia, formatSelectors, authArgs };
+module.exports = { resolveMedia, formatSelectors, authArgs, isTransient };

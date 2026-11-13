@@ -89,6 +89,9 @@ function ad(name, { hidden = false } = {}) {
     return `<aside class="ad wrap"${id}${hide} aria-label="Advertisement"><span class="ad-label">Advertisement</span>
 <ins class="adsbygoogle" style="display:block" data-ad-client="${ADS.client}" data-ad-slot="${esc(slot)}" data-ad-format="auto" data-full-width-responsive="true"></ins>${push}</aside>`;
   }
+  // Publisher ID set but no slot ID yet: show nothing (the head script still
+  // verifies the site and lets Auto ads run) instead of a public placeholder.
+  if (ADS.client) return '';
   return `<aside class="ad wrap"${id}${hide} aria-label="Advertisement placeholder"><span class="ad-label">Advertisement</span>
 <div class="ad-placeholder">Ad space · "${name}" slot · set ADSENSE_CLIENT and ADSENSE_SLOT_${name.toUpperCase()} in .env</div></aside>`;
 }
